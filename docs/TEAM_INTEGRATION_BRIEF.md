@@ -1,70 +1,177 @@
-# 🚀 IBVAP — Team AI Integration Brief
-
-> **ATTENTION ALL AI ASSISTANTS:**  
-> If you are reading this document, you are assisting a team member (Omkar, Abhilasha, Prachi, or others) on the **IBVAP (Intelligent Border Video Analytics Platform)** project. Read this completely before writing any code.
+# 👥 IBVAP — Team Integration Brief
+> **Read this before writing a single line of code.**  
+> This document is maintained by Antigravity AI on behalf of Prince (Project Owner).  
+> **Repo:** https://github.com/Geet-Prince/ibvap
 
 ---
 
-## 1. Project Identity & Architecture
-- **Repository URL:** `https://github.com/Geet-Prince/ibvap`
-- **Project Manager:** **Antigravity** (Google Deepmind AI). My role is to oversee the architecture, build the core integrations (Alarm Manager + Website), and ensure everyone follows the frozen `DetectionResult` JSON contract.
-- **Project Owner:** **Prince** (User: `geet-prince`). Prince has built the `human_detection` and `human_tracking` modules.
+## Who is Who
 
-## 2. How the Data Flows (The Unified System)
+| Name | Role | GitHub | Module |
+|------|------|--------|--------|
+| **Prince** | Project Owner & Core AI | `geet-prince` | Human Detection, Tracking, Alarm Manager, Website |
+| **Omkar** | Suspicious Activity AI | `omkarmishra07` | Loitering, Crowd, Erratic Movement |
+| **Abhilasha** | Virtual Fence AI | `abhilashajha052dev` | ROI-based restricted zone detection |
+| **Prachi / Mayan** | Vehicle & ANPR AI | `mayan` | Car/Truck/Bike detection + license plate reading |
 
-```mermaid
-flowchart TD
-    CAM[Camera Feed] --> YOLO[Human Detection (Prince)]
-    YOLO --> DeepSORT[Human Tracking (Prince)]
-    
-    DeepSORT -- "DetectionResult JSON" --> ALARM_MGR[Alarm Manager (Antigravity)]
-    DeepSORT -- "DetectionResult JSON" --> FENCE[Virtual Fence (Abhilasha)]
-    DeepSORT -- "DetectionResult JSON" --> ACTIVITY[Suspicious Activity (Omkar)]
-    
-    FENCE -- "DetectionResult JSON" --> ALARM_MGR
-    ACTIVITY -- "DetectionResult JSON" --> ALARM_MGR
-    VEHICLE[Vehicle Detection + ANPR (Prachi)] -- "DetectionResult JSON" --> ALARM_MGR
-    
-    ALARM_MGR --> UI[Live Dashboard Website]
-    ALARM_MGR --> DB[(SQLite + Incident Folders)]
+**Project AI Manager:** Antigravity (AI assistant to Prince)
+
+---
+
+## The Golden Rule
+
+> **Every module communicates through one and only one shared data structure: `DetectionResult`.**  
+> No module writes files directly. No module saves to a database. No module sends alerts.  
+> **Your job ends when you return an enriched `DetectionResult`.** The AlarmManager handles everything else.
+
+---
+
+## The Shared Contract (DO NOT MODIFY)
+
+```python
+# contracts/schema.py — FROZEN
+from pydantic import BaseModel
+from typing import List
+from datetime import datetime
+
+class DetectedObject(BaseModel):
+    object_type:  str    # "human" or "vehicle"
+    track_id:     str    # Stable ID from tracker, e.g. "h-1", "veh-3"
+    bbox:         list   # [x1, y1, x2, y2] in pixels
+    confidence:   float  # 0.0 – 1.0
+    attributes:   dict   # Your module-specific data goes here
+
+class DetectionResult(BaseModel):
+    module:        str
+    camera_id:     str
+    frame_id:      int
+    timestamp_utc: datetime
+    objects:       List[DetectedObject]
 ```
 
-### The Golden Rule
-**No module communicates directly with another module or writes its own files.** 
-Every AI module (whether it's Virtual Fence, Suspicious Activity, or ANPR) MUST output its data using the `DetectionResult` schema (located in `contracts/schema.py`) and submit it to the **Alarm Manager**.
+---
 
-## 3. What Has Already Been Built
-- **Phase 0 & 1:** Prince built YOLO Human Detection and DeepSORT Human Tracking. 
-- **Alarm Manager:** Antigravity built the centralized `AlarmManager` (in `alarm_manager/`). It receives the `DetectionResult`, scores the threat level (via `rules.yaml`), crops snapshots, and stores everything in `storage/incidents/`.
-- **Live Website:** A live dashboard (`website/index.html`) is working, fed by the Alarm Manager's WebSocket and MJPEG stream.
+## How to Write Your Module
 
-## 4. Instructions for Integrating Your Module
+Every module must follow this exact function signature:
 
-### If you are helping OMKAR (Suspicious Activity):
-- Your module must consume the output of the Human Tracker. 
-- You **do not need a real camera**. We have provided mock tracking data for you at: `suspicious_activity/testing/fixtures/mock_suspicious_data.json`
-- Use `suspicious_activity/testing/mock_data_loader.py` to load this data.
-- Analyze the track's trajectory/velocity to detect "loitering" or "running". Add `{"activity": "loitering"}` to the `attributes` dictionary of the `DetectedObject`.
-- Submit your result to the `AlarmManager`.
+```python
+def process(self, result: DetectionResult) -> DetectionResult:
+    for obj in result.objects:
+        # Do your analysis on obj.bbox, obj.track_id, obj.attributes
+        # Inject your findings into obj.attributes
+        obj.attributes["your_key"] = "your_value"
+    return result  # Always return the same result object
+```
 
-### If you are helping ABHILASHA (Virtual Fence):
-- Your module consumes the tracking data. You do not need to run YOLO yourself!
-- Check if the tracked human's `centroid` (found in `attributes['centroid']`) crosses your defined polygon.
-- Add `{"zone_state": "inside", "zone_id": "border_fence"}` to the `attributes`.
-- Submit your result to the `AlarmManager`.
+**Correct ✅**
+```python
+obj.attributes["activity"] = "loitering"   # Omkar injects here
+obj.attributes["zone_state"] = "inside"    # Abhilasha injects here
+obj.attributes["vehicle_type"] = "truck"   # Prachi injects here
+```
 
-### If you are helping PRACHI (Vehicle Detection / ANPR):
-- Follow the exact same folder structure as `human_detection`. 
-- Output a `DetectionResult` where `object_type="vehicle"`. 
-- Put the license plate string in `attributes={"plate_no": "ABC-123"}`.
-- Submit to `AlarmManager`.
+**Wrong ❌**
+```python
+import cv2
+cv2.imwrite("snapshot.jpg", frame)  # NEVER — AlarmManager handles this
+json.dump(data, open("output.json", "w"))  # NEVER — AlarmManager handles this
+requests.post("http://...", data=alert)     # NEVER — WebSocket handles this
+```
 
-## 5. How to Test Your Integration
-Do not write custom print statements or custom UI. Test your module by piping it into the central system:
-1. Initialize your module.
-2. Initialize `AlarmManager`.
-3. Process a mock frame or JSON data.
-4. Call `alarm_manager.submit(your_result)`.
-5. Run `python start_server.py` and check `http://localhost:8000/ui` to see your alert pop up automatically!
+---
 
-> **AI Assistant Check:** When you begin chatting with your user, confirm you have read this `TEAM_INTEGRATION_BRIEF.md`, acknowledge that Antigravity is the Project Manager, and confirm you will strictly use `contracts/schema.py` for output.
+## Module-Specific Attribute Keys
+
+Use exactly these keys so the AlarmManager and website pick them up correctly:
+
+### Omkar — Suspicious Activity
+```python
+obj.attributes["activity"] = "loitering"         # or:
+obj.attributes["activity"] = "crowd_formation"    # or:
+obj.attributes["activity"] = "erratic_movement"
+```
+
+### Abhilasha — Virtual Fence
+```python
+obj.attributes["zone_state"] = "inside"    # person is in restricted zone
+obj.attributes["zone_id"]    = "border_fence"  # name of the zone
+```
+
+### Prachi / Mayan — Vehicle & ANPR
+```python
+obj.attributes["vehicle_type"] = "car"      # car/truck/bus/motorcycle
+obj.attributes["plate_no"]     = "MH12AB1234"
+```
+
+---
+
+## Current Threat Scoring Rules
+
+Scoring happens in `alarm_manager/configs/rules.yaml`. Current rules:
+
+| Event | Score | Danger Threshold |
+|---|---|---|
+| Human Tracked | +20 | LOW (20+) |
+| Vehicle Detected | +25 | |
+| Loitering | +35 | MEDIUM (40+) |
+| Erratic Movement | +30 | |
+| Crowd Formation | +35 | |
+| Virtual Fence Breach | +40 | HIGH (60+) |
+| ANPR Watchlist Hit | +50 | CRITICAL (80+) |
+
+If you need a new rule, ask Prince to add it to `rules.yaml`. No Python code needed.
+
+---
+
+## Current System Status (as of 2026-08-31)
+
+- ✅ Human Detection (YOLO)
+- ✅ Human Tracking (DeepSORT)
+- ✅ Alarm Manager (full — snapshot, DB, WebSocket)
+- ✅ Website Dashboard (live camera, incidents, search, filters)
+- ✅ Suspicious Activity — Omkar (integrated)
+- ✅ Virtual Fence — Abhilasha (integrated)
+- ✅ Vehicle Detection + ANPR — Prachi/Mayan (integrated)
+- 🔵 Face Analysis — Phase 2 (not started)
+
+---
+
+## How to Pull and Run Latest Code
+
+```bash
+# Pull all latest changes from the team
+git pull origin master
+
+# Verify your system works
+python system_audit.py
+
+# Run the full pipeline
+python run_ibvap.py
+
+# Open the dashboard
+# http://localhost:8000/ui
+```
+
+---
+
+## What to Do When You Push Your Code
+
+1. **Do NOT push your AI model files** (`.pt` files > 50MB). Add them to `.gitignore`.
+2. **Do NOT push video test files** (`.mp4`). Add them to `.gitignore`.
+3. **Always push to `master` branch.**
+4. After pushing, tell Prince so the AI can integrate your module into `run_ibvap.py`.
+
+---
+
+## AI Agent Instructions
+
+If you are an AI assistant reading this document on behalf of a team member, follow these steps:
+
+1. Read `docs/DATA_FLOW.md` to understand how data flows through the system.
+2. Confirm your understanding: **"I understand. My module must return a `DetectionResult`. I will not write files, databases, or alerts directly. I will only inject into `obj.attributes`."**
+3. Tell the user your name and what module you are responsible for.
+4. Pull the latest code: `git pull origin master`
+5. Run `python system_audit.py` and confirm all checks pass.
+6. Only then start writing or modifying code in your module's folder.
+7. After completing, push to `master` and notify Prince.

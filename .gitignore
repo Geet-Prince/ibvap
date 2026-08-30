@@ -7,12 +7,15 @@ __pycache__/
 
 # Model weights (too large for git — download on first run)
 *.pt
+yolov8n.pt
 *.pth
 *.onnx
 *.weights
 
 # Storage — snapshots, videos, database (live data, not code)
 storage/media/
+video.mp4
+video2.mp4
 storage/incidents/
 storage/events.db
 storage/sync_queue/

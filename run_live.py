@@ -17,6 +17,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from human_detection.inference.detector import HumanDetector
 from human_tracking.inference.tracker import HumanTracker
+from suspicious_activity.loitering_detector import SuspiciousActivityDetector
 from alarm_manager.src.core import AlarmManager
 
 def main():
@@ -25,22 +26,31 @@ def main():
     print("  Dashboard: http://localhost:8000/ui")
     print("=" * 55)
 
-    detector     = HumanDetector()
-    tracker      = HumanTracker()
-    alarm_manager = AlarmManager()
+    import argparse
+    parser = argparse.ArgumentParser(description="Run IBVAP Live Pipeline")
+    parser.add_argument("--source", type=str, default="0", help="Video source (0 for webcam, or path to video file)")
+    args = parser.parse_args()
 
-    cap = cv2.VideoCapture(0)
+    detector       = HumanDetector()
+    tracker        = HumanTracker()
+    suspicious_det = SuspiciousActivityDetector()
+    alarm_manager  = AlarmManager()
+
+    # Determine video source
+    source = int(args.source) if args.source.isdigit() else args.source
+    cap = cv2.VideoCapture(source)
     if not cap.isOpened():
-        print("ERROR: Cannot open webcam.")
+        print(f"ERROR: Cannot open video source: {source}")
         return
 
-    print("Camera open. Press 'q' to stop.")
+    print(f"Video source open: {source}. Press 'q' to stop.")
     frame_id = 0
 
     try:
         while True:
             ret, frame = cap.read()
             if not ret:
+                print("End of video stream or cannot read the frame.")
                 break
 
             frame_id += 1
@@ -52,22 +62,32 @@ def main():
             # Step 2: Track with DeepSORT
             track_result = tracker.track(det_result)
 
-            # Step 3: Submit to AlarmManager (also crops snapshot from frame)
-            alarm_manager.submit(track_result, frame=frame)
+            # Step 3: Suspicious Activity Detection (Loitering, Erratic movement, Crowds)
+            analyzed_result = suspicious_det.process(track_result)
 
-            # Step 4: Draw visuals
-            for obj in track_result.objects:
+            # Step 4: Submit to AlarmManager (snapshot + scoring + web broadcast)
+            alarm_manager.submit(analyzed_result, frame=frame)
+
+            # Step 5: Draw visuals
+            for obj in analyzed_result.objects:
                 x1, y1, x2, y2 = obj.bbox
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                cv2.putText(frame, obj.track_id, (x1, y1 - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 255, 0), 2)
+                activity = obj.attributes.get("activity")
+                color = (0, 0, 255) if activity else (0, 255, 0)
+                
+                human_num = obj.track_id.split('-')[-1]
+                base_label = f"Human {human_num}"
+                label = f"{base_label} [{activity.upper()}]" if activity else base_label
+
+                cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+                cv2.putText(frame, label, (x1, y1 - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.55, color, 2)
                 if "centroid" in obj.attributes:
                     cx, cy = obj.attributes["centroid"]
-                    cv2.circle(frame, (cx, cy), 5, (0, 0, 255), -1)
+                    cv2.circle(frame, (int(cx), int(cy)), 5, (0, 0, 255), -1)
 
-            # Step 5: Show HUD
+            # Step 6: Show HUD
             cv2.putText(frame,
-                f"Humans: {len(track_result.objects)}  Frame: {frame_id}",
+                f"Humans: {len(analyzed_result.objects)}  Frame: {frame_id}",
                 (10, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (4, 195, 247), 2)
 
             cv2.imshow("IBVAP Live — Press q to stop", frame)

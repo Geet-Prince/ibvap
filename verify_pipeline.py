@@ -43,8 +43,16 @@ def run_test():
     
     print(f"Tracking Result (Objects tracked: {len(track_result.objects)}):")
     print(track_result.model_dump_json(indent=2))
+
+    print("Running suspicious activity detection...")
+    from suspicious_activity.loitering_detector import SuspiciousActivityDetector
+    suspicious = SuspiciousActivityDetector()
+    analyzed_result = suspicious.process(track_result)
+
+    print(f"Suspicious Activity Analysis Result:")
+    print(analyzed_result.model_dump_json(indent=2))
     
-    print("Pipeline executed successfully!")
+    print("Full Detection -> Tracking -> Suspicious Activity Pipeline executed successfully!")
 
 if __name__ == "__main__":
     run_test()

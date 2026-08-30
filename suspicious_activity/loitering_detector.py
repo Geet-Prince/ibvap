@@ -14,7 +14,7 @@ class SuspiciousActivityDetector:
                  cleanup_threshold=2.0,
                  crowd_distance_threshold=150.0,
                  crowd_min_people=3,
-                 speed_threshold=150.0):
+                 speed_threshold=50.0):
         # Slightly tuned thresholds for real-time testing
         self.time_threshold = time_threshold
         self.distance_threshold = distance_threshold
@@ -72,7 +72,7 @@ class SuspiciousActivityDetector:
                     history['activities'].add("erratic_movement")
                 
                 if history['activities']:
-                    track.attributes['activity'] = list(history['activities'])[0] # Expose primary activity
+                    track.attributes['activity'] = ", ".join(list(history['activities']))
 
         # 2. GROUP HEURISTICS (Crowd Formation)
         if len(active_human_tracks) >= self.crowd_min_people:
@@ -80,7 +80,12 @@ class SuspiciousActivityDetector:
             for cluster in clusters:
                 if len(cluster) >= self.crowd_min_people:
                     for member in cluster:
-                        member.attributes['activity'] = "crowd_formation"
+                        existing = member.attributes.get('activity', '')
+                        if existing:
+                            if "crowd_formation" not in existing:
+                                member.attributes['activity'] = existing + ", crowd_formation"
+                        else:
+                            member.attributes['activity'] = "crowd_formation"
 
         # 3. CLEANUP
         self._cleanup_stale_tracks(timestamp)

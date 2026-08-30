@@ -43,23 +43,31 @@ def main():
     time.sleep(1.5)   # let server boot
     print("  Server ready. Starting camera pipeline...\n")
 
+    import argparse
+    parser = argparse.ArgumentParser(description="Run IBVAP Pipeline")
+    parser.add_argument("--source", type=str, default="0", help="Video source (0 for webcam, or path to video file)")
+    args = parser.parse_args()
+
     detector      = HumanDetector()
     tracker       = HumanTracker()
     suspicious    = SuspiciousActivityDetector()
     alarm_manager = AlarmManager()
 
-    cap = cv2.VideoCapture(0)
+    # Determine video source
+    source = int(args.source) if args.source.isdigit() else args.source
+    cap = cv2.VideoCapture(source)
     if not cap.isOpened():
-        print("ERROR: Cannot open webcam.")
+        print(f"ERROR: Cannot open video source: {source}")
         return
 
-    print("  Camera open. Press 'q' in the video window to stop.\n")
+    print(f"  Video source open: {source}. Press 'q' in the video window to stop.\n")
     frame_id = 0
 
     try:
         while True:
             ret, frame = cap.read()
             if not ret:
+                print("End of video stream or cannot read the frame.")
                 break
             frame_id += 1
             ts = datetime.now(timezone.utc)
@@ -76,18 +84,25 @@ def main():
             # Step 4: Alarm Manager (snapshot + scoring + broadcast)
             alarm_manager.submit(analyzed, frame=frame)
 
-            # Step 4: Draw on frame
-            for obj in tracked.objects:
+            # Step 5: Draw on frame
+            for obj in analyzed.objects:
                 x1, y1, x2, y2 = obj.bbox
-                cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                cv2.putText(frame, obj.track_id, (x1, y1 - 10),
-                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
+                activity = obj.attributes.get("activity")
+                color = (0, 0, 255) if activity else (0, 255, 0)
+                
+                human_num = obj.track_id.split('-')[-1]
+                base_label = f"Human {human_num}"
+                label = f"{base_label} [{activity.upper()}]" if activity else base_label
+
+                cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
+                cv2.putText(frame, label, (x1, y1 - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
                 if "centroid" in obj.attributes:
                     cx, cy = obj.attributes["centroid"]
-                    cv2.circle(frame, (cx, cy), 5, (0, 0, 255), -1)
+                    cv2.circle(frame, (int(cx), int(cy)), 5, (0, 0, 255), -1)
 
             cv2.putText(frame,
-                f"IBVAP | Humans: {len(tracked.objects)} | Frame: {frame_id}",
+                f"IBVAP | Humans: {len(analyzed.objects)} | Frame: {frame_id}",
                 (10, 26), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (4, 195, 247), 2)
 
             # Step 5: Push frame to MJPEG buffer (for website live view)

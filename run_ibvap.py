@@ -20,6 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from human_detection.inference.detector import HumanDetector
 from human_tracking.inference.tracker import HumanTracker
+from vehicle_detection.inference.vehicle_anpr import VehicleANPR
 from suspicious_activity.loitering_detector import SuspiciousActivityDetector
 from virtual_fence.fence_detector import VirtualFence
 from alarm_manager.src.core import AlarmManager
@@ -65,6 +66,7 @@ def main():
 
     detector      = HumanDetector()
     tracker       = HumanTracker()
+    vehicle_anpr  = VehicleANPR()
     suspicious    = SuspiciousActivityDetector()
     fence         = VirtualFence(frame_w=frame_w, frame_h=frame_h)
     alarm_manager = AlarmManager()
@@ -81,14 +83,19 @@ def main():
             frame_id += 1
             ts = datetime.now(timezone.utc)
 
-            # Step 1: Detect
+            # Step 1: Detect & Track Humans
             det = detector.detect(frame, "CAM_LIVE", frame_id, ts)
-
-            # Step 2: Track
-            tracked = tracker.track(det)
+            tracked_humans = tracker.track(det)
+            
+            # Step 2: Detect & Track Vehicles (Prachi's Module)
+            tracked_vehicles = vehicle_anpr.process(frame, "CAM_LIVE", frame_id, ts)
+            
+            # Combine objects into one unified DetectionResult payload
+            tracked_humans.objects.extend(tracked_vehicles.objects)
+            analyzed = tracked_humans
             
             # Step 3: Suspicious Activity (Omkar) & Virtual Fence (Abhilasha)
-            analyzed = suspicious.process(tracked)
+            analyzed = suspicious.process(analyzed)
             analyzed = fence.process(analyzed)
 
             # Step 4: Alarm Manager (snapshot + scoring + broadcast)
@@ -103,29 +110,35 @@ def main():
                 activity = obj.attributes.get("activity")
                 is_breaching = (obj.attributes.get("zone_state") == "inside")
                 
-                # Red if breaching or suspicious, green otherwise
-                color = (0, 0, 255) if (activity or is_breaching) else (0, 255, 0)
+                # Colors: Vehicle=Blue, Breaching/Suspicious=Red, Normal Human=Green
+                if obj.object_type == "vehicle":
+                    color = (255, 0, 0)  # Blue for vehicles
+                else:
+                    color = (0, 0, 255) if (activity or is_breaching) else (0, 255, 0)
                 
-                human_num = obj.track_id.split('-')[-1]
-                base_label = f"Human {human_num}"
+                track_num = obj.track_id.split('-')[-1]
+                base_label = f"{obj.object_type.capitalize()} {track_num}"
                 
                 tags = []
+                if obj.object_type == "vehicle" and "vehicle_type" in obj.attributes:
+                    tags.append(obj.attributes["vehicle_type"].upper())
+                if obj.object_type == "vehicle" and "plate_no" in obj.attributes:
+                    tags.append(f"[{obj.attributes['plate_no']}]")
                 if activity: tags.append(activity.upper())
                 if is_breaching: tags.append("BREACH")
                 
-                label = f"{base_label} [{','.join(tags)}]" if tags else base_label
+                label = f"{base_label} {' '.join(tags)}" if tags else base_label
 
-                cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
-                cv2.putText(frame, label, (x1, y1 - 10),
+                cv2.rectangle(frame, (int(x1), int(y1)), (int(x2), int(y2)), color, 2)
+                cv2.putText(frame, label, (int(x1), int(y1) - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
                 
-                # Draw centroid
                 if "centroid" in obj.attributes:
                     cx, cy = obj.attributes["centroid"]
                     cv2.circle(frame, (int(cx), int(cy)), 5, (0, 0, 255), -1)
 
             cv2.putText(frame,
-                f"IBVAP | Humans: {len(analyzed.objects)} | Frame: {frame_id}",
+                f"IBVAP | Objects: {len(analyzed.objects)} | Frame: {frame_id}",
                 (10, 26), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (4, 195, 247), 2)
 
             # Step 6: Push frame to MJPEG buffer (for website live view)

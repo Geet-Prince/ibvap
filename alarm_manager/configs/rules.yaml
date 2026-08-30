@@ -16,7 +16,7 @@ rules:
     capture_snapshot: true      # Always snapshot a confirmed tracked human
 
   - name: "Virtual Fence Breach"
-    module: virtual_fence
+    module: human_tracking
     attribute: zone_state
     equals: inside
     score: 40
@@ -35,6 +35,36 @@ rules:
     equals: true
     score: 50
     severity: critical
+    capture_snapshot: true
+
+  - name: "Vehicle Detected"
+    module: vehicle_detection
+    score: 25
+    severity: informational
+    capture_snapshot: true
+
+  - name: "Loitering"
+    module: human_tracking
+    attribute: activity
+    equals: loitering
+    score: 35
+    severity: medium
+    capture_snapshot: true
+
+  - name: "Erratic Movement"
+    module: human_tracking
+    attribute: activity
+    equals: erratic_movement
+    score: 30
+    severity: medium
+    capture_snapshot: true
+
+  - name: "Crowd Formation"
+    module: human_tracking
+    attribute: activity
+    equals: crowd_formation
+    score: 35
+    severity: medium
     capture_snapshot: true
 
 # Danger thresholds

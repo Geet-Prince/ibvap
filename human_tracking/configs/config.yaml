@@ -1,0 +1,9 @@
+# Human Tracking — Module Config
+
+tracker:
+  max_age: 30
+  n_init: 3
+  nms_max_overlap: 1.0
+
+output:
+  track_id_prefix: "trk"

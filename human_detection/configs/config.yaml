@@ -1,0 +1,21 @@
+# Human Detection — Module Config
+# Overrides values in the root configs/system.yaml for this module only.
+# All other settings inherit from system.yaml.
+
+model:
+  weights: "models/current/best.pt"     # relative to human_detection/
+  pretrained_fallback: "yolov8n.pt"     # downloaded automatically if weights missing
+  confidence_threshold: 0.50
+  iou_threshold: 0.45
+  device: "cpu"                          # "cpu" | "cuda:0" | "mps"
+  target_classes: [0]                    # COCO class 0 = person
+
+video:
+  input_width: 640                       # resize frames before inference
+  input_height: 640
+  frame_skip: 0                          # process every N+1 frames (0 = every frame)
+
+output:
+  # track_id format for raw detections (before Human Tracking assigns stable IDs)
+  # pattern: "det-<frame_id>-<object_index>"
+  track_id_prefix: "det"

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>IBVAP — Border Intelligence Dashboard</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:#080c18;color:#dde4f0;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* ── Top bar ── */
+#topbar{display:flex;align-items:center;justify-content:space-between;padding:10px 20px;background:#0b0f1e;border-bottom:1px solid #1a2540;flex-shrink:0}
+#topbar h1{font-size:1rem;letter-spacing:2px;color:#4fc3f7;text-transform:uppercase}
+.conn{display:flex;align-items:center;gap:7px;font-size:.78rem;color:#607d8b}
+.dot{width:9px;height:9px;border-radius:50%;background:#f44336;transition:background .3s}
+.dot.live{background:#4caf50;animation:blink 1.4s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+/* ── Stats ── */
+#statsbar{display:flex;gap:10px;padding:8px 20px;background:#0b0f1e;border-bottom:1px solid #1a2540;flex-shrink:0}
+.sc{flex:1;text-align:center;padding:8px 4px;background:#0e1525;border-radius:7px;border:1px solid #1a2540}
+.sc .n{font-size:1.5rem;font-weight:700}.sc .l{font-size:.65rem;color:#607d8b;text-transform:uppercase;letter-spacing:1px}
+.g{color:#4caf50}.y{color:#ffc107}.o{color:#ff9800}.r{color:#f44336}
+
+/* ── 3-column layout ── */
+#main{display:flex;flex:1;overflow:hidden}
+
+/* ── LEFT: live cam ── */
+#cam-panel{width:360px;min-width:280px;display:flex;flex-direction:column;border-right:1px solid #1a2540;background:#0b0f1e}
+#cam-panel h2{padding:10px 14px;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:#607d8b;border-bottom:1px solid #1a2540}
+#cam-wrap{position:relative;background:#000;flex:1;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#cam-img{width:100%;height:100%;object-fit:contain}
+#cam-offline{position:absolute;color:#37474f;font-size:.85rem;display:none}
+#cam-overlay{position:absolute;top:6px;left:6px;background:rgba(0,0,0,.6);padding:3px 8px;border-radius:4px;font-size:.7rem;color:#4fc3f7}
+
+/* ── CENTER: alerts + incidents ── */
+#center{flex:1;display:flex;flex-direction:column;overflow:hidden}
+#tabs{display:flex;border-bottom:1px solid #1a2540;background:#0b0f1e;flex-shrink:0}
+.tab{padding:10px 20px;font-size:.78rem;cursor:pointer;text-transform:uppercase;letter-spacing:1px;color:#607d8b;border-bottom:2px solid transparent}
+.tab.active{color:#4fc3f7;border-bottom-color:#4fc3f7}
+
+#tab-alerts{overflow-y:auto;flex:1}
+#tab-incidents{flex:1;display:none;flex-direction:column}
+
+/* Alert card */
+.a-card{padding:12px 16px;border-bottom:1px solid #0e1525;cursor:pointer;transition:background .15s;animation:slideIn .25s ease}
+@keyframes slideIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:none}}
+.a-card:hover{background:#0e1525}
+.a-card .row1{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.badge{padding:2px 7px;border-radius:4px;font-size:.65rem;font-weight:700;letter-spacing:1px}
+.CRITICAL{background:#b71c1c;color:#fff}.HIGH{background:#e65100;color:#fff}
+.MEDIUM{background:#f57f17;color:#fff}.LOW{background:#1b5e20;color:#fff}
+.informational{background:#1a2540;color:#78909c}
+.score-pill{font-size:.7rem;font-weight:700;padding:2px 9px;border-radius:10px;background:#1a2540}
+.a-card .title{font-size:.9rem;font-weight:600;margin-bottom:3px}
+.a-card .meta{font-size:.72rem;color:#607d8b}
+.mini-snap{width:48px;height:48px;object-fit:cover;border-radius:4px;float:right;margin-left:8px;border:1px solid #1a2540}
+
+/* Incident card */
+.i-card{margin:10px;border-radius:8px;background:#0e1525;border:1px solid #1a2540;overflow:hidden;cursor:pointer;transition:border-color .2s}
+.i-card:hover{border-color:#4fc3f7}
+.i-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:flex-start}
+.i-title{font-size:.85rem;font-weight:600;margin-bottom:4px}
+.i-meta{font-size:.72rem;color:#607d8b}
+.i-stats{display:flex;gap:10px;padding:8px 14px;border-top:1px solid #1a2540;border-bottom:1px solid #1a2540;flex-wrap:wrap}
+.i-stat{text-align:center}.i-stat .v{font-size:1.1rem;font-weight:700}.i-stat .k{font-size:.62rem;color:#607d8b;text-transform:uppercase}
+.i-snaps{display:flex;gap:6px;padding:10px 14px;overflow-x:auto}
+.i-snaps img{height:70px;width:70px;object-fit:cover;border-radius:5px;border:1px solid #1a2540;flex-shrink:0}
+.i-snaps .no-img{height:70px;width:70px;background:#080c18;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#37474f;border:1px solid #1a2540;text-align:center;flex-shrink:0}
+.tag{display:inline-block;background:#1a2540;padding:1px 7px;border-radius:10px;font-size:.65rem;margin:2px;color:#90a4ae}
+
+/* Meter */
+.meter-wrap{padding:0 14px 10px}
+.meter-track{height:6px;background:#1a2540;border-radius:3px;overflow:hidden}
+.meter-fill{height:100%;border-radius:3px;transition:width .5s}
+
+/* ── RIGHT: detail ── */
+#detail{width:320px;min-width:260px;overflow-y:auto;border-left:1px solid #1a2540;background:#0b0f1e}
+#detail h2{padding:10px 14px;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:#607d8b;border-bottom:1px solid #1a2540}
+#detail-body{padding:14px;display:flex;flex-direction:column;gap:12px}
+.d-sec{background:#0e1525;border-radius:7px;border:1px solid #1a2540;overflow:hidden}
+.d-sec h3{padding:8px 12px;font-size:.68rem;text-transform:uppercase;letter-spacing:1px;color:#607d8b;border-bottom:1px solid #1a2540}
+.d-sec .content{padding:10px 12px}
+.kv{width:100%;border-collapse:collapse;font-size:.78rem}
+.kv td{padding:5px 6px;border-bottom:1px solid #1a2540}
+.kv td:first-child{color:#607d8b;width:45%}.kv td:last-child{font-weight:500;word-break:break-all}
+#big-snap{width:100%;max-height:200px;object-fit:contain;background:#050810;border-radius:6px;border:1px solid #1a2540}
+.no-detail{padding:40px 20px;text-align:center;color:#37474f;font-size:.82rem}
+
+/* Snap gallery in detail */
+#detail-gallery{display:flex;flex-wrap:wrap;gap:5px;padding:8px}
+#detail-gallery img{width:70px;height:70px;object-fit:cover;border-radius:4px;cursor:pointer;border:1px solid #1a2540}
+#detail-gallery img:hover{border-color:#4fc3f7}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:#080c18}
+::-webkit-scrollbar-thumb{background:#1a2540;border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- Top bar -->
+<div id="topbar">
+  <h1>⚡ IBVAP — Border Intelligence</h1>
+  <div class="conn"><div class="dot" id="dot"></div><span id="conn-txt">Connecting…</span></div>
+</div>
+
+<!-- Stats -->
+<div id="statsbar">
+  <div class="sc"><div class="n g" id="s-total">0</div><div class="l">Events</div></div>
+  <div class="sc"><div class="n g" id="s-humans">0</div><div class="l">Humans</div></div>
+  <div class="sc"><div class="n y" id="s-medium">0</div><div class="l">Medium</div></div>
+  <div class="sc"><div class="n o" id="s-high">0</div><div class="l">High</div></div>
+  <div class="sc"><div class="n r" id="s-critical">0</div><div class="l">Critical</div></div>
+  <div class="sc"><div class="n r" id="s-incidents">0</div><div class="l">Incidents</div></div>
+</div>
+
+<!-- 3-column main -->
+<div id="main">
+
+  <!-- LEFT: Live Cam -->
+  <div id="cam-panel">
+    <h2>📹 Live Camera</h2>
+    <div id="cam-wrap">
+      <img id="cam-img" src="" alt="live"
+           onerror="handleCamError(this)"/>
+      <div id="cam-offline">📷 Camera Offline</div>
+      <div id="cam-overlay">CAM_LIVE ● REC</div>
+    </div>
+  </div>
+
+  <!-- CENTER -->
+  <div id="center">
+    <div id="tabs">
+      <div class="tab active" onclick="switchTab('alerts',this)">🚨 Live Alerts</div>
+      <div class="tab" onclick="switchTab('incidents',this)">📁 Incidents</div>
+    </div>
+    <div id="tab-alerts"></div>
+    <div id="tab-incidents">
+      <div id="inc-toolbar" style="padding:10px 14px; background:#0e1525; border-bottom:1px solid #1a2540; display:flex; gap:10px; align-items:center;">
+        <input type="text" id="inc-search" placeholder="🔍 Search ID or Tags..." onkeyup="renderIncidents()"
+               style="flex:1; background:#050810; border:1px solid #1a2540; color:#dde4f0; padding:6px 10px; border-radius:4px; font-size:.75rem;">
+        <select id="inc-filter" onchange="renderIncidents()"
+                style="background:#050810; border:1px solid #1a2540; color:#dde4f0; padding:6px; border-radius:4px; font-size:.75rem;">
+          <option value="all">All Incidents</option>
+          <option value="has_human">Humans Detected</option>
+          <option value="has_face">Faces Captured</option>
+          <option value="has_vehicle">Vehicles Detected</option>
+          <option value="has_weapon">Weapons Detected</option>
+          <option value="high_threat">High/Critical Threat</option>
+        </select>
+      </div>
+      <div id="inc-list" style="overflow-y:auto; flex:1;"></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Detail -->
+  <div id="detail">
+    <h2>📋 Detail View</h2>
+    <div id="detail-body">
+      <div class="no-detail">Select an alert or incident to view details</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const API = 'http://localhost:8000';
+const WS  = 'ws://localhost:8000/ws/alerts';
+
+const stats = {total:0,humans:0,medium:0,high:0,critical:0,incidents:new Set()};
+let   alerts = [], incidents = [];
+
+// ── Webcam Feed ────────────────────────────────────────────
+function initCam() {
+  const img = document.getElementById('cam-img');
+  img.style.display = 'block';
+  document.getElementById('cam-offline').style.display = 'none';
+  img.src = `${API}/stream/live?t=${new Date().getTime()}`;
+}
+function handleCamError(img) {
+  img.style.display = 'none';
+  document.getElementById('cam-offline').style.display = 'block';
+  setTimeout(initCam, 3000); // retry every 3s
+}
+initCam();
+
+// ── Tab switch ─────────────────────────────────────────────
+function switchTab(name, el) {
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-alerts').style.display    = name==='alerts'    ? 'block':'none';
+  document.getElementById('tab-incidents').style.display = name==='incidents' ? 'block':'none';
+  if (name==='incidents') loadIncidents();
+}
+
+// ── Colour helpers ──────────────────────────────────────────
+const C = {CRITICAL:'#f44336',HIGH:'#ff9800',MEDIUM:'#ffc107',LOW:'#4caf50'};
+function col(label){ return C[label] || '#607d8b'; }
+
+// ── Stats update ────────────────────────────────────────────
+function updateStats(a) {
+  stats.total++;
+  stats.humans = Math.max(stats.humans, a.humans_detected || 0);
+  if (a.severity==='medium')   stats.medium++;
+  if (a.severity==='high')     stats.high++;
+  if (a.severity==='critical') stats.critical++;
+  if (a.incident_id) stats.incidents.add(a.incident_id);
+  document.getElementById('s-total').textContent     = stats.total;
+  document.getElementById('s-humans').textContent    = stats.humans;
+  document.getElementById('s-medium').textContent    = stats.medium;
+  document.getElementById('s-high').textContent      = stats.high;
+  document.getElementById('s-critical').textContent  = stats.critical;
+  document.getElementById('s-incidents').textContent = stats.incidents.size;
+}
+
+// ── Alert card ──────────────────────────────────────────────
+function renderAlert(a) {
+  const div = document.createElement('div');
+  div.className='a-card'; div.id='ac-'+a.incident_id;
+  const snapTag = a.snapshot
+    ? `<img class="mini-snap" src="${API}/storage/incidents/${a.incident_id}/${a.snapshot}" onerror="this.style.display='none'"/>`
+    : '';
+  div.innerHTML=`
+    ${snapTag}
+    <div class="row1">
+      <span class="badge ${a.danger_label}">${a.danger_label}</span>
+      <span class="score-pill" style="color:${col(a.danger_label)}">${a.danger_score} pts</span>
+    </div>
+    <div class="title">${a.event_type}</div>
+    <div class="meta">📷 ${a.camera_id} &nbsp;|&nbsp; 🎯 ${a.track_id} &nbsp;|&nbsp; 👤 ${a.humans_detected||0} human(s) &nbsp;|&nbsp; 🕐 ${new Date(a.timestamp).toLocaleTimeString()}</div>
+  `;
+  div.onclick=()=>showAlertDetail(a);
+  document.getElementById('tab-alerts').prepend(div);
+}
+
+// ── Alert detail ────────────────────────────────────────────
+function showAlertDetail(a) {
+  const score = a.danger_score, pct = Math.min(score,100), c = col(a.danger_label);
+  const snapHTML = a.snapshot
+    ? `<img id="big-snap" src="${API}/storage/incidents/${a.incident_id}/${a.snapshot}"/>`
+    : `<div style="padding:20px;text-align:center;color:#37474f;font-size:.8rem">No snapshot yet</div>`;
+  document.getElementById('detail-body').innerHTML=`
+    <div class="d-sec">
+      <h3>Threat Score</h3>
+      <div class="content">
+        <div class="meter-track"><div class="meter-fill" style="width:${pct}%;background:${c}"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:.72rem;color:#607d8b;margin-top:4px">
+          <span>${a.danger_label} — ${score}/100</span><span>${a.event_type}</span>
+        </div>
+      </div>
+    </div>
+    <div class="d-sec"><h3>Latest Snapshot</h3><div class="content">${snapHTML}</div></div>
+    <div class="d-sec"><h3>Event Data</h3><div class="content">
+      <table class="kv">
+        <tr><td>Incident ID</td><td>${a.incident_id}</td></tr>
+        <tr><td>Module</td><td>${a.module}</td></tr>
+        <tr><td>Camera</td><td>${a.camera_id}</td></tr>
+        <tr><td>Track ID</td><td>${a.track_id}</td></tr>
+        <tr><td>Confidence</td><td>${(a.confidence*100).toFixed(1)}%</td></tr>
+        <tr><td>Humans</td><td>${a.humans_detected||0}</td></tr>
+        <tr><td>BBox</td><td>[${(a.bbox||[]).join(', ')}]</td></tr>
+        <tr><td>Timestamp</td><td>${new Date(a.timestamp).toLocaleString()}</td></tr>
+      </table>
+    </div></div>
+    <div class="d-sec"><h3>Tags</h3><div class="content">
+      ${(a.zone_breaches||[]).map(z=>`<span class="tag">🚧 ${z}</span>`).join('')}
+      ${(a.activities||[]).map(ac=>`<span class="tag">🔍 ${ac}</span>`).join('')}
+    </div></div>
+  `;
+}
+
+// ── Incidents ───────────────────────────────────────────────
+function loadIncidents() {
+  fetch(`${API}/api/incidents`)
+    .then(r=>r.json()).then(data=>{ incidents=data; renderIncidents(); })
+    .catch(()=>{});
+}
+
+function renderIncidents() {
+  const el = document.getElementById('inc-list');
+  const q = document.getElementById('inc-search').value.toLowerCase();
+  const f = document.getElementById('inc-filter').value;
+  
+  let filtered = incidents.filter(i => {
+    // text search
+    if (q && !i.incident_id.toLowerCase().includes(q) && 
+        !i.camera_id.toLowerCase().includes(q) && 
+        !(i.activities_detected||[]).join(' ').toLowerCase().includes(q) &&
+        !(i.vehicle_types||[]).join(' ').toLowerCase().includes(q)) return false;
+    
+    // dropdown filter
+    if (f === 'has_human' && !(i.humans_detected > 0)) return false;
+    if (f === 'has_face' && !(i.faces_captured > 0)) return false;
+    if (f === 'has_vehicle' && !(i.vehicles_detected > 0)) return false;
+    if (f === 'has_weapon' && !(i.weapons_detected > 0)) return false;
+    if (f === 'high_threat' && (i.danger_score < 40)) return false;
+    
+    return true;
+  });
+
+  el.innerHTML = filtered.length===0
+    ? '<div class="no-detail">No incidents found.</div>' : '';
+    
+  filtered.forEach(i=>{
+    const c = col(i.danger_label||'LOW');
+    const pct = Math.min(i.danger_score||0, 100);
+    const snapsHTML = (i.snapshots||[]).slice(0,6).map(s=>
+      `<img src="${API}/storage/incidents/${i.incident_id}/${s}" onerror="this.style.display='none'" title="${s}"/>`
+    ).join('') || `<div class="no-img">No<br>snapshots</div>`;
+
+    const div = document.createElement('div');
+    div.className='i-card';
+    div.innerHTML=`
+      <div class="i-header">
+        <div>
+          <div class="i-title">${i.incident_id}</div>
+          <div class="i-meta">📷 ${i.camera_id} &nbsp;|&nbsp; Started: ${new Date(i.started_at).toLocaleString()}</div>
+        </div>
+        <span class="badge ${i.danger_label||'LOW'}">${i.danger_label||'LOW'}</span>
+      </div>
+      <div class="i-stats">
+        <div class="i-stat"><div class="v" style="color:${c}">${i.danger_score||0}</div><div class="k">Score</div></div>
+        <div class="i-stat"><div class="v g">${i.humans_detected||0}</div><div class="k">Humans</div></div>
+        <div class="i-stat"><div class="v y">${i.vehicles_detected||0}</div><div class="k">Vehicles</div></div>
+        <div class="i-stat"><div class="v r">${i.weapons_detected||0}</div><div class="k">Weapons</div></div>
+        <div class="i-stat"><div class="v">${i.snapshot_count||0}</div><div class="k">Photos</div></div>
+      </div>
+      <div class="meter-wrap">
+        <div class="meter-track"><div class="meter-fill" style="width:${pct}%;background:${c}"></div></div>
+      </div>
+      <div style="padding:0 14px 8px;font-size:.7rem">
+        ${(i.modules_triggered||[]).map(m=>`<span class="tag">${m}</span>`).join('')}
+        ${(i.vehicle_types||[]).map(v=>`<span class="tag">🚗 ${v}</span>`).join('')}
+        ${(i.activities_detected||[]).map(a=>`<span class="tag">🔍 ${a}</span>`).join('')}
+        ${(i.zone_breaches||[]).map(z=>`<span class="tag">🚧 ${z}</span>`).join('')}
+        ${(i.faces_captured>0)?'<span class="tag" style="color:#4fc3f7">👤 Face Captured</span>':''}
+      </div>
+      <div class="i-snaps">${snapsHTML}</div>
+    `;
+    div.onclick=()=>showIncidentDetail(i);
+    el.appendChild(div);
+  });
+}
+
+function showIncidentDetail(i) {
+  const c = col(i.danger_label||'LOW'), pct = Math.min(i.danger_score||0,100);
+  const galleryHTML = (i.snapshots||[]).map(s=>
+    `<img src="${API}/storage/incidents/${i.incident_id}/${s}" title="${s}"
+      onclick="document.getElementById('big-snap').src=this.src"/>`
+  ).join('') || '<div style="color:#37474f;font-size:.8rem">No snapshots</div>';
+
+  document.getElementById('detail-body').innerHTML=`
+    <div class="d-sec"><h3>Threat Score</h3><div class="content">
+      <div class="meter-track"><div class="meter-fill" style="width:${pct}%;background:${c}"></div></div>
+      <div style="display:flex;justify-content:space-between;font-size:.72rem;color:#607d8b;margin-top:4px">
+        <span>${i.danger_label} — ${i.danger_score}/100</span>
+      </div>
+    </div></div>
+    <div class="d-sec"><h3>Main Snapshot</h3><div class="content">
+      ${(i.snapshots||[]).length>0
+        ? `<img id="big-snap" src="${API}/storage/incidents/${i.incident_id}/${i.snapshots[0]}"/>`
+        : '<div style="padding:20px;text-align:center;color:#37474f;font-size:.8rem">No snapshots</div>'}
+    </div></div>
+    <div class="d-sec"><h3>Incident Data</h3><div class="content">
+      <table class="kv">
+        <tr><td>Incident ID</td><td>${i.incident_id}</td></tr>
+        <tr><td>Camera</td><td>${i.camera_id}</td></tr>
+        <tr><td>Humans</td><td>${i.humans_detected||0}</td></tr>
+        <tr><td>Faces Captured</td><td>${i.faces_captured||0}</td></tr>
+        <tr><td>Vehicles</td><td>${i.vehicles_detected||0}</td></tr>
+        <tr><td>Vehicle Types</td><td>${(i.vehicle_types||[]).join(', ')||'None'}</td></tr>
+        <tr><td>Weapons</td><td>${i.weapons_detected||0}</td></tr>
+        <tr><td>Snapshots</td><td>${i.snapshot_count||0}</td></tr>
+        <tr><td>Started</td><td>${new Date(i.started_at).toLocaleString()}</td></tr>
+        <tr><td>Last Update</td><td>${new Date(i.last_updated).toLocaleString()}</td></tr>
+      </table>
+    </div></div>
+    <div class="d-sec"><h3>All Snapshots (click to preview)</h3>
+      <div id="detail-gallery">${galleryHTML}</div>
+    </div>
+  `;
+}
+
+// ── WebSocket ────────────────────────────────────────────────
+function connect() {
+  const dot=document.getElementById('dot'), txt=document.getElementById('conn-txt');
+  const ws = new WebSocket(WS);
+  ws.onopen=()=>{ dot.classList.add('live'); txt.textContent='Live';
+    fetch(`${API}/api/events`).then(r=>r.json()).then(evts=>evts.reverse().forEach(e=>{renderAlert(e);updateStats(e);})).catch(()=>{}); };
+  ws.onmessage=e=>{ const a=JSON.parse(e.data); alerts.unshift(a); renderAlert(a); updateStats(a); };
+  ws.onclose=()=>{ dot.classList.remove('live'); txt.textContent='Reconnecting…'; setTimeout(connect,3000); };
+}
+connect();
+</script>
+</body>
+</html>

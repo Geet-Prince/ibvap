@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.env
+*.egg-info/
+
+# Model weights (too large for git — download on first run)
+*.pt
+*.pth
+*.onnx
+*.weights
+
+# Storage — snapshots, videos, database (live data, not code)
+storage/media/
+storage/incidents/
+storage/events.db
+storage/sync_queue/
+
+# Test/verify scripts
+verify_pipeline.py
+
+# OS
+.DS_Store
+Thumbs.db

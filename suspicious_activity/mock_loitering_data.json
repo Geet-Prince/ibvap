@@ -1,0 +1,6002 @@
+[
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094590.4181774,
+    "frame_id": 0,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 469.51244920117574,
+          "y1": 340.42704894125524,
+          "x2": 519.5124492011757,
+          "y2": 460.42704894125524
+        },
+        "confidence": 0.95,
+        "velocity_x": -27.437753994121394,
+        "velocity_y": 2.1352447062762847
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094590.6181774,
+    "frame_id": 1,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.6261441664455,
+          "y1": 338.65022339578496,
+          "x2": 530.6261441664456,
+          "y2": 458.65022339578496
+        },
+        "confidence": 0.95,
+        "velocity_x": 28.13072083222737,
+        "velocity_y": -6.748883021075303
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094590.8181775,
+    "frame_id": 2,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.5577692351299,
+          "y1": 335.2912549648627,
+          "x2": 520.5577692351299,
+          "y2": 455.2912549648627
+        },
+        "confidence": 0.95,
+        "velocity_x": -22.211153824350482,
+        "velocity_y": -23.543725175686703
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094591.0181773,
+    "frame_id": 3,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.37622898018844,
+          "y1": 338.9275831094539,
+          "x2": 533.3762289801884,
+          "y2": 458.9275831094539
+        },
+        "confidence": 0.95,
+        "velocity_x": 41.881144900942076,
+        "velocity_y": -5.362084452730405
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094591.2181773,
+    "frame_id": 4,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.37866987028514,
+          "y1": 339.2814021640738,
+          "x2": 511.37866987028514,
+          "y2": 459.2814021640738
+        },
+        "confidence": 0.95,
+        "velocity_x": -68.10665064857427,
+        "velocity_y": -3.592989179630961
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094591.4181774,
+    "frame_id": 5,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.0553439735966,
+          "y1": 343.3831304940208,
+          "x2": 511.0553439735966,
+          "y2": 463.3831304940208
+        },
+        "confidence": 0.95,
+        "velocity_x": -69.72328013201697,
+        "velocity_y": 16.91565247010411
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094591.6181774,
+    "frame_id": 6,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 482.15573958560697,
+          "y1": 338.60938307808425,
+          "x2": 532.155739585607,
+          "y2": 458.60938307808425
+        },
+        "confidence": 0.95,
+        "velocity_x": 35.77869792803476,
+        "velocity_y": -6.953084609578797
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094591.8181775,
+    "frame_id": 7,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.55713685820086,
+          "y1": 341.64849386994996,
+          "x2": 515.5571368582009,
+          "y2": 461.64849386994996
+        },
+        "confidence": 0.95,
+        "velocity_x": -47.2143157089957,
+        "velocity_y": 8.242469349749824
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094592.0181773,
+    "frame_id": 8,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 469.82737960366285,
+          "y1": 336.43454257213136,
+          "x2": 519.8273796036628,
+          "y2": 456.43454257213136
+        },
+        "confidence": 0.95,
+        "velocity_x": -25.863101981685617,
+        "velocity_y": -17.827287139343078
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094592.2181773,
+    "frame_id": 9,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.8178610888347,
+          "y1": 339.3085262959752,
+          "x2": 515.8178610888347,
+          "y2": 459.3085262959752
+        },
+        "confidence": 0.95,
+        "velocity_x": -45.910694555826375,
+        "velocity_y": -3.457368520123998
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094592.4181774,
+    "frame_id": 10,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 473.2316520508403,
+          "y1": 341.33570822396945,
+          "x2": 523.2316520508402,
+          "y2": 461.33570822396945
+        },
+        "confidence": 0.95,
+        "velocity_x": -8.841739745798547,
+        "velocity_y": 6.678541119847212
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094592.6181774,
+    "frame_id": 11,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.64362586824024,
+          "y1": 342.1714892061819,
+          "x2": 515.6436258682402,
+          "y2": 462.1714892061819
+        },
+        "confidence": 0.95,
+        "velocity_x": -46.781870658798745,
+        "velocity_y": 10.85744603090931
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094592.8181775,
+    "frame_id": 12,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.15670615334756,
+          "y1": 340.67341029440416,
+          "x2": 515.1567061533476,
+          "y2": 460.67341029440416
+        },
+        "confidence": 0.95,
+        "velocity_x": -49.21646923326213,
+        "velocity_y": 3.3670514720207034
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094593.0181773,
+    "frame_id": 13,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 489.39199103942394,
+          "y1": 343.77104788483314,
+          "x2": 539.3919910394239,
+          "y2": 463.77104788483314
+        },
+        "confidence": 0.95,
+        "velocity_x": 71.95995519711964,
+        "velocity_y": 18.855239424165553
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094593.2181773,
+    "frame_id": 14,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.9240777463241,
+          "y1": 335.53135733015716,
+          "x2": 535.9240777463241,
+          "y2": 455.53135733015716
+        },
+        "confidence": 0.95,
+        "velocity_x": 54.62038873162058,
+        "velocity_y": -22.34321334921411
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094593.4181774,
+    "frame_id": 15,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.81908934572743,
+          "y1": 344.8980802157603,
+          "x2": 514.8190893457274,
+          "y2": 464.8980802157603
+        },
+        "confidence": 0.95,
+        "velocity_x": -50.90455327136289,
+        "velocity_y": 24.490401078801387
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094593.6181774,
+    "frame_id": 16,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.5453146525837,
+          "y1": 337.7088962158791,
+          "x2": 530.5453146525838,
+          "y2": 457.7088962158791
+        },
+        "confidence": 0.95,
+        "velocity_x": 27.726573262918723,
+        "velocity_y": -11.455518920604513
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094593.8181775,
+    "frame_id": 17,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 463.7952500495203,
+          "y1": 342.14475186645967,
+          "x2": 513.7952500495203,
+          "y2": 462.14475186645967
+        },
+        "confidence": 0.95,
+        "velocity_x": -56.0237497523986,
+        "velocity_y": 10.723759332298224
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094594.0181773,
+    "frame_id": 18,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.06945860716525,
+          "y1": 343.85207467862983,
+          "x2": 514.0694586071652,
+          "y2": 463.85207467862983
+        },
+        "confidence": 0.95,
+        "velocity_x": -54.65270696417364,
+        "velocity_y": 19.260373393149067
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094594.2181773,
+    "frame_id": 19,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.41681714413517,
+          "y1": 335.0297528258551,
+          "x2": 514.4168171441352,
+          "y2": 455.0297528258551
+        },
+        "confidence": 0.95,
+        "velocity_x": -52.915914279324085,
+        "velocity_y": -24.8512358707245
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094594.4181774,
+    "frame_id": 20,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.37558123899566,
+          "y1": 340.9963955929019,
+          "x2": 526.3755812389957,
+          "y2": 460.9963955929019
+        },
+        "confidence": 0.95,
+        "velocity_x": 6.877906194978305,
+        "velocity_y": 4.981977964509436
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094594.6181774,
+    "frame_id": 21,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.3696449725594,
+          "y1": 339.365691912206,
+          "x2": 538.3696449725594,
+          "y2": 459.365691912206
+        },
+        "confidence": 0.95,
+        "velocity_x": 66.84822486279705,
+        "velocity_y": -3.1715404389699886
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094594.8181775,
+    "frame_id": 22,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.63843079504795,
+          "y1": 342.31379847070986,
+          "x2": 526.638430795048,
+          "y2": 462.31379847070986
+        },
+        "confidence": 0.95,
+        "velocity_x": 8.19215397523978,
+        "velocity_y": 11.568992353549184
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094595.0181773,
+    "frame_id": 23,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.8107836027882,
+          "y1": 341.8971465797283,
+          "x2": 530.8107836027882,
+          "y2": 461.8971465797283
+        },
+        "confidence": 0.95,
+        "velocity_x": 29.053918013940994,
+        "velocity_y": 9.485732898641555
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094595.2181773,
+    "frame_id": 24,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 482.0617621521216,
+          "y1": 335.2209423131885,
+          "x2": 532.0617621521217,
+          "y2": 455.2209423131885
+        },
+        "confidence": 0.95,
+        "velocity_x": 35.30881076060819,
+        "velocity_y": -23.895288434057463
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094595.4181774,
+    "frame_id": 25,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.18673130330524,
+          "y1": 343.5610788001306,
+          "x2": 512.1867313033052,
+          "y2": 463.5610788001306
+        },
+        "confidence": 0.95,
+        "velocity_x": -64.0663434834739,
+        "velocity_y": 17.805394000652804
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094595.6181774,
+    "frame_id": 26,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.57240477888416,
+          "y1": 338.2961836348421,
+          "x2": 526.5724047788842,
+          "y2": 458.2961836348421
+        },
+        "confidence": 0.95,
+        "velocity_x": 7.86202389442078,
+        "velocity_y": -8.51908182578931
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094595.8181775,
+    "frame_id": 27,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 472.9433465907143,
+          "y1": 337.85357841117576,
+          "x2": 522.9433465907143,
+          "y2": 457.85357841117576
+        },
+        "confidence": 0.95,
+        "velocity_x": -10.283267046428488,
+        "velocity_y": -10.73210794412114
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094596.0181773,
+    "frame_id": 28,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 479.915910728619,
+          "y1": 338.3242817570033,
+          "x2": 529.915910728619,
+          "y2": 458.3242817570033
+        },
+        "confidence": 0.95,
+        "velocity_x": 24.579553643094982,
+        "velocity_y": -8.378591214983437
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094596.2181773,
+    "frame_id": 29,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.7254016615404,
+          "y1": 342.5067841839017,
+          "x2": 536.7254016615404,
+          "y2": 462.5067841839017
+        },
+        "confidence": 0.95,
+        "velocity_x": 58.627008307701956,
+        "velocity_y": 12.533920919508432
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094596.4181774,
+    "frame_id": 30,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.4960328596317,
+          "y1": 336.92107546229744,
+          "x2": 530.4960328596317,
+          "y2": 456.92107546229744
+        },
+        "confidence": 0.95,
+        "velocity_x": 27.48016429815868,
+        "velocity_y": -15.394622688512843
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094596.6181774,
+    "frame_id": 31,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.099311266787,
+          "y1": 343.66759112506634,
+          "x2": 512.099311266787,
+          "y2": 463.66759112506634
+        },
+        "confidence": 0.95,
+        "velocity_x": -64.50344366606475,
+        "velocity_y": 18.33795562533176
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094596.8181775,
+    "frame_id": 32,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.67882498617365,
+          "y1": 337.45884967693945,
+          "x2": 530.6788249861736,
+          "y2": 457.45884967693945
+        },
+        "confidence": 0.95,
+        "velocity_x": 28.39412493086817,
+        "velocity_y": -12.705751615302818
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094597.0181773,
+    "frame_id": 33,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 472.4543526242068,
+          "y1": 341.0103322440066,
+          "x2": 522.4543526242069,
+          "y2": 461.0103322440066
+        },
+        "confidence": 0.95,
+        "velocity_x": -12.728236878965857,
+        "velocity_y": 5.051661220032901
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094597.2181773,
+    "frame_id": 34,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.37678002333246,
+          "y1": 339.32509755555594,
+          "x2": 524.3767800233325,
+          "y2": 459.32509755555594
+        },
+        "confidence": 0.95,
+        "velocity_x": -3.1160998833377995,
+        "velocity_y": -3.374512222220325
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094597.4181774,
+    "frame_id": 35,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.70968727793377,
+          "y1": 341.5502961288214,
+          "x2": 526.7096872779338,
+          "y2": 461.5502961288214
+        },
+        "confidence": 0.95,
+        "velocity_x": 8.548436389668872,
+        "velocity_y": 7.751480644107023
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094597.6181774,
+    "frame_id": 36,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.81501566439067,
+          "y1": 336.4962341457653,
+          "x2": 527.8150156643907,
+          "y2": 456.4962341457653
+        },
+        "confidence": 0.95,
+        "velocity_x": 14.07507832195341,
+        "velocity_y": -17.51882927117346
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094597.8181775,
+    "frame_id": 37,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.39762922087874,
+          "y1": 338.86906678793594,
+          "x2": 534.3976292208788,
+          "y2": 458.86906678793594
+        },
+        "confidence": 0.95,
+        "velocity_x": 46.98814610439369,
+        "velocity_y": -5.654666060320328
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094598.0181773,
+    "frame_id": 38,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.0362502717512,
+          "y1": 338.6183375876406,
+          "x2": 524.0362502717512,
+          "y2": 458.6183375876406
+        },
+        "confidence": 0.95,
+        "velocity_x": -4.8187486412439995,
+        "velocity_y": -6.908312061796846
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094598.2181773,
+    "frame_id": 39,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.9342898258104,
+          "y1": 341.8668856026236,
+          "x2": 533.9342898258104,
+          "y2": 461.8668856026236
+        },
+        "confidence": 0.95,
+        "velocity_x": 44.67144912905219,
+        "velocity_y": 9.334428013117947
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094598.4181774,
+    "frame_id": 40,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.4555222750785,
+          "y1": 338.75628247377375,
+          "x2": 515.4555222750785,
+          "y2": 458.75628247377375
+        },
+        "confidence": 0.95,
+        "velocity_x": -47.722388624607284,
+        "velocity_y": -6.218587631131194
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094598.6181774,
+    "frame_id": 41,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 472.79921180816183,
+          "y1": 335.2449276293756,
+          "x2": 522.7992118081618,
+          "y2": 455.2449276293756
+        },
+        "confidence": 0.95,
+        "velocity_x": -11.003940959190839,
+        "velocity_y": -23.77536185312203
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094598.8181775,
+    "frame_id": 42,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.8623396095325,
+          "y1": 339.2759916252271,
+          "x2": 515.8623396095325,
+          "y2": 459.2759916252271
+        },
+        "confidence": 0.95,
+        "velocity_x": -45.688301952337504,
+        "velocity_y": -3.620041873864328
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094599.0181773,
+    "frame_id": 43,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.7444116366896,
+          "y1": 341.98575608141385,
+          "x2": 515.7444116366896,
+          "y2": 461.98575608141385
+        },
+        "confidence": 0.95,
+        "velocity_x": -46.27794181655203,
+        "velocity_y": 9.928780407069219
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094599.2181773,
+    "frame_id": 44,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.7333395895314,
+          "y1": 336.13806193360386,
+          "x2": 514.7333395895314,
+          "y2": 456.13806193360386
+        },
+        "confidence": 0.95,
+        "velocity_x": -51.33330205234294,
+        "velocity_y": -19.309690331980722
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094599.4181774,
+    "frame_id": 45,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 467.057927148852,
+          "y1": 343.93425197327764,
+          "x2": 517.0579271488521,
+          "y2": 463.93425197327764
+        },
+        "confidence": 0.95,
+        "velocity_x": -39.71036425573991,
+        "velocity_y": 19.671259866388098
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094599.6181774,
+    "frame_id": 46,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.88338221021917,
+          "y1": 342.18919820718673,
+          "x2": 525.8833822102192,
+          "y2": 462.18919820718673
+        },
+        "confidence": 0.95,
+        "velocity_x": 4.416911051095802,
+        "velocity_y": 10.945991035933718
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094599.8181775,
+    "frame_id": 47,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.6802391677869,
+          "y1": 336.63047949177246,
+          "x2": 514.6802391677869,
+          "y2": 456.63047949177246
+        },
+        "confidence": 0.95,
+        "velocity_x": -51.59880416106552,
+        "velocity_y": -16.847602541137768
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094600.0181773,
+    "frame_id": 48,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.8157363460352,
+          "y1": 335.12782990299445,
+          "x2": 530.8157363460352,
+          "y2": 455.12782990299445
+        },
+        "confidence": 0.95,
+        "velocity_x": 29.0786817301759,
+        "velocity_y": -24.360850485027754
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094600.2181773,
+    "frame_id": 49,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.19469119795644,
+          "y1": 337.92342927869345,
+          "x2": 538.1946911979564,
+          "y2": 457.92342927869345
+        },
+        "confidence": 0.95,
+        "velocity_x": 65.97345598978231,
+        "velocity_y": -10.382853606532649
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094600.4181774,
+    "frame_id": 50,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.2118699400327,
+          "y1": 335.7314586221984,
+          "x2": 533.2118699400328,
+          "y2": 455.7314586221984
+        },
+        "confidence": 0.95,
+        "velocity_x": 41.059349700163565,
+        "velocity_y": -21.34270688900799
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094600.6181774,
+    "frame_id": 51,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.1073655640528,
+          "y1": 342.3727008999587,
+          "x2": 510.1073655640528,
+          "y2": 462.3727008999587
+        },
+        "confidence": 0.95,
+        "velocity_x": -74.46317217973588,
+        "velocity_y": 11.863504499793475
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094600.8181775,
+    "frame_id": 52,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.29811411410225,
+          "y1": 336.02796188094163,
+          "x2": 510.29811411410225,
+          "y2": 456.02796188094163
+        },
+        "confidence": 0.95,
+        "velocity_x": -73.5094294294887,
+        "velocity_y": -19.860190595291954
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094601.0181773,
+    "frame_id": 53,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.9022578696195,
+          "y1": 340.40291436638535,
+          "x2": 527.9022578696195,
+          "y2": 460.40291436638535
+        },
+        "confidence": 0.95,
+        "velocity_x": 14.511289348097716,
+        "velocity_y": 2.0145718319268324
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094601.2181773,
+    "frame_id": 54,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.8523638292704,
+          "y1": 338.3015570188204,
+          "x2": 533.8523638292704,
+          "y2": 458.3015570188204
+        },
+        "confidence": 0.95,
+        "velocity_x": 44.26181914635212,
+        "velocity_y": -8.492214905897848
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094601.4181774,
+    "frame_id": 55,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 463.38927260509615,
+          "y1": 343.31316325065615,
+          "x2": 513.3892726050962,
+          "y2": 463.31316325065615
+        },
+        "confidence": 0.95,
+        "velocity_x": -58.05363697451927,
+        "velocity_y": 16.56581625328065
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094601.6181774,
+    "frame_id": 56,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.0212810085656,
+          "y1": 339.68615218206287,
+          "x2": 528.0212810085657,
+          "y2": 459.68615218206287
+        },
+        "confidence": 0.95,
+        "velocity_x": 15.106405042827937,
+        "velocity_y": -1.5692390896857766
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094601.8181775,
+    "frame_id": 57,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 487.8114906060355,
+          "y1": 339.1224120322795,
+          "x2": 537.8114906060355,
+          "y2": 459.1224120322795
+        },
+        "confidence": 0.95,
+        "velocity_x": 64.05745303017764,
+        "velocity_y": -4.387939838602399
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094602.0181773,
+    "frame_id": 58,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.2458940117274,
+          "y1": 339.45173429177646,
+          "x2": 528.2458940117274,
+          "y2": 459.45173429177646
+        },
+        "confidence": 0.95,
+        "velocity_x": 16.229470058637006,
+        "velocity_y": -2.741328541117567
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094602.2181773,
+    "frame_id": 59,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.27887700148693,
+          "y1": 336.4512805951642,
+          "x2": 536.278877001487,
+          "y2": 456.4512805951642
+        },
+        "confidence": 0.95,
+        "velocity_x": 56.39438500743456,
+        "velocity_y": -17.74359702417918
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094602.4181774,
+    "frame_id": 60,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 471.2686582332298,
+          "y1": 339.9716537530417,
+          "x2": 521.2686582332299,
+          "y2": 459.9716537530417
+        },
+        "confidence": 0.95,
+        "velocity_x": -18.656708833850814,
+        "velocity_y": -0.14173123479129135
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094602.6181774,
+    "frame_id": 61,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.2734301092943,
+          "y1": 342.0127487808831,
+          "x2": 538.2734301092943,
+          "y2": 462.0127487808831
+        },
+        "confidence": 0.95,
+        "velocity_x": 66.36715054647135,
+        "velocity_y": 10.063743904415375
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094602.8181775,
+    "frame_id": 62,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 469.11003606317746,
+          "y1": 336.22890632007653,
+          "x2": 519.1100360631774,
+          "y2": 456.22890632007653
+        },
+        "confidence": 0.95,
+        "velocity_x": -29.44981968411281,
+        "velocity_y": -18.855468399617216
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094603.0181773,
+    "frame_id": 63,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.3543784354143,
+          "y1": 344.516317751215,
+          "x2": 526.3543784354142,
+          "y2": 464.516317751215
+        },
+        "confidence": 0.95,
+        "velocity_x": 6.771892177071308,
+        "velocity_y": 22.581588756075092
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094603.2181773,
+    "frame_id": 64,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.0471528344875,
+          "y1": 341.3733242728664,
+          "x2": 510.0471528344875,
+          "y2": 461.3733242728664
+        },
+        "confidence": 0.95,
+        "velocity_x": -74.76423582756244,
+        "velocity_y": 6.86662136433196
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094603.4181774,
+    "frame_id": 65,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.07780163094026,
+          "y1": 336.32769821391344,
+          "x2": 530.0778016309403,
+          "y2": 456.32769821391344
+        },
+        "confidence": 0.95,
+        "velocity_x": 25.38900815470134,
+        "velocity_y": -18.36150893043292
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094603.6181774,
+    "frame_id": 66,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.2130162992483,
+          "y1": 336.35288324902336,
+          "x2": 512.2130162992482,
+          "y2": 456.35288324902336
+        },
+        "confidence": 0.95,
+        "velocity_x": -63.93491850375848,
+        "velocity_y": -18.235583754883045
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094603.8181775,
+    "frame_id": 67,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.206190386116,
+          "y1": 336.0430711289198,
+          "x2": 536.2061903861161,
+          "y2": 456.0430711289198
+        },
+        "confidence": 0.95,
+        "velocity_x": 56.03095193058003,
+        "velocity_y": -19.784644355401014
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094604.0181773,
+    "frame_id": 68,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.4213589068989,
+          "y1": 341.86947140095185,
+          "x2": 528.4213589068988,
+          "y2": 461.86947140095185
+        },
+        "confidence": 0.95,
+        "velocity_x": 17.106794534494476,
+        "velocity_y": 9.347357004759239
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094604.2181773,
+    "frame_id": 69,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.93686179508484,
+          "y1": 343.7807561975942,
+          "x2": 512.9368617950848,
+          "y2": 463.7807561975942
+        },
+        "confidence": 0.95,
+        "velocity_x": -60.31569102457573,
+        "velocity_y": 18.90378098797104
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094604.4181774,
+    "frame_id": 70,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.2528478976496,
+          "y1": 335.95351333639167,
+          "x2": 511.2528478976496,
+          "y2": 455.95351333639167
+        },
+        "confidence": 0.95,
+        "velocity_x": -68.73576051175206,
+        "velocity_y": -20.232433318041654
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094604.6181774,
+    "frame_id": 71,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.19267849804123,
+          "y1": 343.3901844285483,
+          "x2": 512.1926784980412,
+          "y2": 463.3901844285483
+        },
+        "confidence": 0.95,
+        "velocity_x": -64.03660750979378,
+        "velocity_y": 16.95092214274167
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094604.8181775,
+    "frame_id": 72,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.97523052298374,
+          "y1": 335.5767920816139,
+          "x2": 525.9752305229838,
+          "y2": 455.5767920816139
+        },
+        "confidence": 0.95,
+        "velocity_x": 4.8761526149186185,
+        "velocity_y": -22.11603959193038
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094605.0181773,
+    "frame_id": 73,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.2581888716425,
+          "y1": 341.09354490831015,
+          "x2": 536.2581888716425,
+          "y2": 461.09354490831015
+        },
+        "confidence": 0.95,
+        "velocity_x": 56.29094435821267,
+        "velocity_y": 5.467724541550889
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094605.2181773,
+    "frame_id": 74,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.38902489786744,
+          "y1": 343.61410468788574,
+          "x2": 524.3890248978674,
+          "y2": 463.61410468788574
+        },
+        "confidence": 0.95,
+        "velocity_x": -3.0548755106628267,
+        "velocity_y": 18.070523439428847
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094605.4181774,
+    "frame_id": 75,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.23707450969636,
+          "y1": 339.318236985752,
+          "x2": 535.2370745096964,
+          "y2": 459.318236985752
+        },
+        "confidence": 0.95,
+        "velocity_x": 51.18537254848172,
+        "velocity_y": -3.408815071239961
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094605.6181774,
+    "frame_id": 76,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.37379055348185,
+          "y1": 341.5070615332074,
+          "x2": 525.3737905534819,
+          "y2": 461.5070615332074
+        },
+        "confidence": 0.95,
+        "velocity_x": 1.8689527674093132,
+        "velocity_y": 7.535307666036832
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094605.8181775,
+    "frame_id": 77,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 466.09482594022916,
+          "y1": 335.0541514669785,
+          "x2": 516.0948259402292,
+          "y2": 455.0541514669785
+        },
+        "confidence": 0.95,
+        "velocity_x": -44.5258702988543,
+        "velocity_y": -24.729242665107453
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094606.0181773,
+    "frame_id": 78,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.9146297070216,
+          "y1": 341.72328141347026,
+          "x2": 510.9146297070216,
+          "y2": 461.72328141347026
+        },
+        "confidence": 0.95,
+        "velocity_x": -70.42685146489202,
+        "velocity_y": 8.616407067351336
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094606.2181773,
+    "frame_id": 79,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.27438847461707,
+          "y1": 341.8869021740446,
+          "x2": 512.2743884746171,
+          "y2": 461.8869021740446
+        },
+        "confidence": 0.95,
+        "velocity_x": -63.62805762691464,
+        "velocity_y": 9.434510870223054
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094606.4181774,
+    "frame_id": 80,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.2710082937381,
+          "y1": 338.773698393662,
+          "x2": 531.2710082937381,
+          "y2": 458.773698393662
+        },
+        "confidence": 0.95,
+        "velocity_x": 31.35504146869044,
+        "velocity_y": -6.131508031689881
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094606.6181774,
+    "frame_id": 81,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 463.7496540595448,
+          "y1": 342.17808087994763,
+          "x2": 513.7496540595448,
+          "y2": 462.17808087994763
+        },
+        "confidence": 0.95,
+        "velocity_x": -56.251729702275945,
+        "velocity_y": 10.890404399738278
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094606.8181775,
+    "frame_id": 82,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.75057939425494,
+          "y1": 339.4619711277079,
+          "x2": 536.7505793942549,
+          "y2": 459.4619711277079
+        },
+        "confidence": 0.95,
+        "velocity_x": 58.75289697127485,
+        "velocity_y": -2.6901443614604625
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094607.0181773,
+    "frame_id": 83,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 473.3597396152805,
+          "y1": 343.068052052558,
+          "x2": 523.3597396152804,
+          "y2": 463.068052052558
+        },
+        "confidence": 0.95,
+        "velocity_x": -8.201301923597661,
+        "velocity_y": 15.340260262790153
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094607.2181773,
+    "frame_id": 84,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.2426862501598,
+          "y1": 340.16143790095794,
+          "x2": 530.2426862501597,
+          "y2": 460.16143790095794
+        },
+        "confidence": 0.95,
+        "velocity_x": 26.213431250798926,
+        "velocity_y": 0.8071895047895739
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094607.4181774,
+    "frame_id": 85,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.2547491406484,
+          "y1": 343.236081232766,
+          "x2": 520.2547491406484,
+          "y2": 463.236081232766
+        },
+        "confidence": 0.95,
+        "velocity_x": -23.72625429675793,
+        "velocity_y": 16.18040616383005
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094607.6181774,
+    "frame_id": 86,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 472.3695186817645,
+          "y1": 344.0504094465426,
+          "x2": 522.3695186817645,
+          "y2": 464.0504094465426
+        },
+        "confidence": 0.95,
+        "velocity_x": -13.152406591177552,
+        "velocity_y": 20.252047232712993
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094607.8181775,
+    "frame_id": 87,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.3517613956163,
+          "y1": 340.65383076003474,
+          "x2": 525.3517613956162,
+          "y2": 460.65383076003474
+        },
+        "confidence": 0.95,
+        "velocity_x": 1.7588069780814308,
+        "velocity_y": 3.2691538001736564
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094608.0181773,
+    "frame_id": 88,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.53821218428186,
+          "y1": 341.5546963759444,
+          "x2": 515.5382121842819,
+          "y2": 461.5546963759444
+        },
+        "confidence": 0.95,
+        "velocity_x": -47.30893907859073,
+        "velocity_y": 7.773481879722044
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094608.2181773,
+    "frame_id": 89,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 472.4718238170579,
+          "y1": 341.4501717683978,
+          "x2": 522.4718238170578,
+          "y2": 461.4501717683978
+        },
+        "confidence": 0.95,
+        "velocity_x": -12.64088091471053,
+        "velocity_y": 7.250858841989034
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094608.4181774,
+    "frame_id": 90,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 466.4117761377289,
+          "y1": 341.20696806145463,
+          "x2": 516.4117761377289,
+          "y2": 461.20696806145463
+        },
+        "confidence": 0.95,
+        "velocity_x": -42.941119311355365,
+        "velocity_y": 6.034840307273228
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094608.6181774,
+    "frame_id": 91,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.1450661265176,
+          "y1": 340.0461478589861,
+          "x2": 512.1450661265176,
+          "y2": 460.0461478589861
+        },
+        "confidence": 0.95,
+        "velocity_x": -64.27466936741206,
+        "velocity_y": 0.23073929493040435
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094608.8181775,
+    "frame_id": 92,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.81667802460873,
+          "y1": 339.34080048729277,
+          "x2": 533.8166780246088,
+          "y2": 459.34080048729277
+        },
+        "confidence": 0.95,
+        "velocity_x": 44.083390123043706,
+        "velocity_y": -3.2959975635362504
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094609.0181773,
+    "frame_id": 93,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.9886869130358,
+          "y1": 341.6953721062997,
+          "x2": 533.9886869130357,
+          "y2": 461.6953721062997
+        },
+        "confidence": 0.95,
+        "velocity_x": 44.943434565178876,
+        "velocity_y": 8.476860531498499
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094609.2181773,
+    "frame_id": 94,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.48864094240423,
+          "y1": 344.21596536118653,
+          "x2": 524.4886409424042,
+          "y2": 464.21596536118653
+        },
+        "confidence": 0.95,
+        "velocity_x": -2.556795287978799,
+        "velocity_y": 21.079826805932687
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094609.4181774,
+    "frame_id": 95,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.71034306940567,
+          "y1": 336.14107422176744,
+          "x2": 514.7103430694057,
+          "y2": 456.14107422176744
+        },
+        "confidence": 0.95,
+        "velocity_x": -51.44828465297181,
+        "velocity_y": -19.294628891162823
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094609.6181774,
+    "frame_id": 96,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.1203130583245,
+          "y1": 335.0397038725704,
+          "x2": 520.1203130583244,
+          "y2": 455.0397038725704
+        },
+        "confidence": 0.95,
+        "velocity_x": -24.398434708377525,
+        "velocity_y": -24.80148063714794
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094609.8181775,
+    "frame_id": 97,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.60269963030885,
+          "y1": 335.1342645513829,
+          "x2": 510.60269963030885,
+          "y2": 455.1342645513829
+        },
+        "confidence": 0.95,
+        "velocity_x": -71.98650184845562,
+        "velocity_y": -24.32867724308545
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094610.0181773,
+    "frame_id": 98,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.6182225034899,
+          "y1": 339.96274540534864,
+          "x2": 536.61822250349,
+          "y2": 459.96274540534864
+        },
+        "confidence": 0.95,
+        "velocity_x": 58.09111251744955,
+        "velocity_y": -0.1862729732568269
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094610.2181773,
+    "frame_id": 99,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.5152376568312,
+          "y1": 335.42314481490973,
+          "x2": 531.5152376568312,
+          "y2": 455.42314481490973
+        },
+        "confidence": 0.95,
+        "velocity_x": 32.57618828415595,
+        "velocity_y": -22.88427592545127
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094610.4181774,
+    "frame_id": 100,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.87551563202413,
+          "y1": 344.4623300437604,
+          "x2": 512.8755156320242,
+          "y2": 464.4623300437604
+        },
+        "confidence": 0.95,
+        "velocity_x": -60.62242183987935,
+        "velocity_y": 22.31165021880195
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094610.6181774,
+    "frame_id": 101,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.50649785196447,
+          "y1": 344.14647202953705,
+          "x2": 535.5064978519645,
+          "y2": 464.14647202953705
+        },
+        "confidence": 0.95,
+        "velocity_x": 52.532489259822285,
+        "velocity_y": 20.73236014768525
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094610.8181775,
+    "frame_id": 102,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 487.8421991147426,
+          "y1": 337.80169020796586,
+          "x2": 537.8421991147426,
+          "y2": 457.80169020796586
+        },
+        "confidence": 0.95,
+        "velocity_x": 64.21099557371299,
+        "velocity_y": -10.991548960170757
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094611.0181773,
+    "frame_id": 103,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.8404875891763,
+          "y1": 342.84966070123863,
+          "x2": 520.8404875891763,
+          "y2": 462.84966070123863
+        },
+        "confidence": 0.95,
+        "velocity_x": -20.797562054118536,
+        "velocity_y": 14.24830350619307
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094611.2181773,
+    "frame_id": 104,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.5169605913119,
+          "y1": 341.7045341990146,
+          "x2": 528.5169605913119,
+          "y2": 461.7045341990146
+        },
+        "confidence": 0.95,
+        "velocity_x": 17.584802956559535,
+        "velocity_y": 8.522670995072739
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094611.4181774,
+    "frame_id": 105,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 473.753031915536,
+          "y1": 337.82634456352343,
+          "x2": 523.753031915536,
+          "y2": 457.82634456352343
+        },
+        "confidence": 0.95,
+        "velocity_x": -6.234840422320156,
+        "velocity_y": -10.868277182382684
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094611.6181774,
+    "frame_id": 106,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 472.81663897171995,
+          "y1": 336.74281006006987,
+          "x2": 522.81663897172,
+          "y2": 456.74281006006987
+        },
+        "confidence": 0.95,
+        "velocity_x": -10.91680514140017,
+        "velocity_y": -16.28594969965057
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094611.8181775,
+    "frame_id": 107,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.0193223822142,
+          "y1": 341.74277386235127,
+          "x2": 520.0193223822142,
+          "y2": 461.74277386235127
+        },
+        "confidence": 0.95,
+        "velocity_x": -24.903388088928953,
+        "velocity_y": 8.713869311756381
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094612.0181773,
+    "frame_id": 108,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.505630818812,
+          "y1": 339.7154903067571,
+          "x2": 510.505630818812,
+          "y2": 459.7154903067571
+        },
+        "confidence": 0.95,
+        "velocity_x": -72.47184590593997,
+        "velocity_y": -1.422548466214657
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094612.2181773,
+    "frame_id": 109,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.34370810791904,
+          "y1": 343.28671468937796,
+          "x2": 531.343708107919,
+          "y2": 463.28671468937796
+        },
+        "confidence": 0.95,
+        "velocity_x": 31.718540539595192,
+        "velocity_y": 16.433573446889753
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094612.4181774,
+    "frame_id": 110,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.3568828546039,
+          "y1": 341.4122115560986,
+          "x2": 528.3568828546039,
+          "y2": 461.4122115560986
+        },
+        "confidence": 0.95,
+        "velocity_x": 16.784414273019568,
+        "velocity_y": 7.061057780492956
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094612.6181774,
+    "frame_id": 111,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.16160679441896,
+          "y1": 343.1968785699141,
+          "x2": 538.161606794419,
+          "y2": 463.1968785699141
+        },
+        "confidence": 0.95,
+        "velocity_x": 65.80803397209465,
+        "velocity_y": 15.984392849570392
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094612.8181775,
+    "frame_id": 112,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.4258917524205,
+          "y1": 337.1033572375357,
+          "x2": 525.4258917524205,
+          "y2": 457.1033572375357
+        },
+        "confidence": 0.95,
+        "velocity_x": 2.129458762102665,
+        "velocity_y": -14.483213812321342
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094613.0181773,
+    "frame_id": 113,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.24054853907415,
+          "y1": 338.39096539361447,
+          "x2": 514.2405485390741,
+          "y2": 458.39096539361447
+        },
+        "confidence": 0.95,
+        "velocity_x": -53.79725730462914,
+        "velocity_y": -8.045173031927577
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094613.2181773,
+    "frame_id": 114,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.4953090313171,
+          "y1": 337.85224169832463,
+          "x2": 511.4953090313171,
+          "y2": 457.85224169832463
+        },
+        "confidence": 0.95,
+        "velocity_x": -67.52345484341444,
+        "velocity_y": -10.738791508376721
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094613.4181774,
+    "frame_id": 115,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.3849160072884,
+          "y1": 339.19706438860385,
+          "x2": 524.3849160072884,
+          "y2": 459.19706438860385
+        },
+        "confidence": 0.95,
+        "velocity_x": -3.075419963558206,
+        "velocity_y": -4.014678056980898
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094613.6181774,
+    "frame_id": 116,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.18299419183,
+          "y1": 338.6321501578571,
+          "x2": 534.18299419183,
+          "y2": 458.6321501578571
+        },
+        "confidence": 0.95,
+        "velocity_x": 45.91497095915001,
+        "velocity_y": -6.839249210714438
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094613.8181775,
+    "frame_id": 117,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.66423444912976,
+          "y1": 335.64622872606583,
+          "x2": 535.6642344491297,
+          "y2": 455.64622872606583
+        },
+        "confidence": 0.95,
+        "velocity_x": 53.32117224564886,
+        "velocity_y": -21.768856369670853
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094614.0181773,
+    "frame_id": 118,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 468.6875193202221,
+          "y1": 337.5459029405333,
+          "x2": 518.6875193202221,
+          "y2": 457.5459029405333
+        },
+        "confidence": 0.95,
+        "velocity_x": -31.56240339888938,
+        "velocity_y": -12.270485297333252
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094614.2181773,
+    "frame_id": 119,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.6078030893864,
+          "y1": 338.6344694368015,
+          "x2": 510.6078030893864,
+          "y2": 458.6344694368015
+        },
+        "confidence": 0.95,
+        "velocity_x": -71.96098455306817,
+        "velocity_y": -6.827652815992591
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094614.4181774,
+    "frame_id": 120,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.76157335551824,
+          "y1": 344.2553048313131,
+          "x2": 524.7615733555183,
+          "y2": 464.2553048313131
+        },
+        "confidence": 0.95,
+        "velocity_x": -1.1921332224087688,
+        "velocity_y": 21.27652415656531
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094614.6181774,
+    "frame_id": 121,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.7419605176117,
+          "y1": 342.7037660836481,
+          "x2": 531.7419605176117,
+          "y2": 462.7037660836481
+        },
+        "confidence": 0.95,
+        "velocity_x": 33.70980258805847,
+        "velocity_y": 13.518830418240428
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094614.8181775,
+    "frame_id": 122,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.7187649002981,
+          "y1": 342.84224459352754,
+          "x2": 525.7187649002981,
+          "y2": 462.84224459352754
+        },
+        "confidence": 0.95,
+        "velocity_x": 3.5938245014902925,
+        "velocity_y": 14.211222967637651
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094615.0181773,
+    "frame_id": 123,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.1692596973958,
+          "y1": 339.83587034403575,
+          "x2": 511.1692596973958,
+          "y2": 459.83587034403575
+        },
+        "confidence": 0.95,
+        "velocity_x": -69.15370151302115,
+        "velocity_y": -0.8206482798213344
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094615.2181773,
+    "frame_id": 124,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.5496967997964,
+          "y1": 340.0440330701522,
+          "x2": 533.5496967997964,
+          "y2": 460.0440330701522
+        },
+        "confidence": 0.95,
+        "velocity_x": 42.74848399898198,
+        "velocity_y": 0.22016535076077481
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094615.4181774,
+    "frame_id": 125,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.95831884501797,
+          "y1": 336.48636620772095,
+          "x2": 525.958318845018,
+          "y2": 456.48636620772095
+        },
+        "confidence": 0.95,
+        "velocity_x": 4.791594225089764,
+        "velocity_y": -17.568168961395195
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094615.6181774,
+    "frame_id": 126,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.16408810270684,
+          "y1": 339.03769101660987,
+          "x2": 524.1640881027068,
+          "y2": 459.03769101660987
+        },
+        "confidence": 0.95,
+        "velocity_x": -4.179559486465836,
+        "velocity_y": -4.8115449169505276
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094615.8181775,
+    "frame_id": 127,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 482.6288632786745,
+          "y1": 341.5679983405699,
+          "x2": 532.6288632786745,
+          "y2": 461.5679983405699
+        },
+        "confidence": 0.95,
+        "velocity_x": 38.14431639337242,
+        "velocity_y": 7.839991702849498
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094616.0181773,
+    "frame_id": 128,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.5071484899382,
+          "y1": 344.68433684770315,
+          "x2": 527.5071484899381,
+          "y2": 464.68433684770315
+        },
+        "confidence": 0.95,
+        "velocity_x": 12.535742449690783,
+        "velocity_y": 23.421684238515795
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094616.2181773,
+    "frame_id": 129,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 467.22217180501156,
+          "y1": 336.9372630554877,
+          "x2": 517.2221718050116,
+          "y2": 456.9372630554877
+        },
+        "confidence": 0.95,
+        "velocity_x": -38.88914097494233,
+        "velocity_y": -15.313684722561742
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094616.4181774,
+    "frame_id": 130,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.725577891473,
+          "y1": 339.5901328221516,
+          "x2": 510.725577891473,
+          "y2": 459.5901328221516
+        },
+        "confidence": 0.95,
+        "velocity_x": -71.37211054263496,
+        "velocity_y": -2.049335889241952
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094616.6181774,
+    "frame_id": 131,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 487.3463084403579,
+          "y1": 337.05547363993566,
+          "x2": 537.3463084403579,
+          "y2": 457.05547363993566
+        },
+        "confidence": 0.95,
+        "velocity_x": 61.731542201789566,
+        "velocity_y": -14.722631800321583
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094616.8181775,
+    "frame_id": 132,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.65346737965166,
+          "y1": 343.5172469367393,
+          "x2": 514.6534673796516,
+          "y2": 463.5172469367393
+        },
+        "confidence": 0.95,
+        "velocity_x": -51.73266310174169,
+        "velocity_y": 17.58623468369663
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094617.0181773,
+    "frame_id": 133,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.9937971896402,
+          "y1": 335.82374789849746,
+          "x2": 524.9937971896402,
+          "y2": 455.82374789849746
+        },
+        "confidence": 0.95,
+        "velocity_x": -0.031014051799012066,
+        "velocity_y": -20.88126050751265
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094617.2181773,
+    "frame_id": 134,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 471.25337976981297,
+          "y1": 335.15813557910747,
+          "x2": 521.2533797698129,
+          "y2": 455.15813557910747
+        },
+        "confidence": 0.95,
+        "velocity_x": -18.73310115093508,
+        "velocity_y": -24.20932210446267
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094617.4181774,
+    "frame_id": 135,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.574155660417,
+          "y1": 344.83853996205437,
+          "x2": 531.574155660417,
+          "y2": 464.83853996205437
+        },
+        "confidence": 0.95,
+        "velocity_x": 32.87077830208497,
+        "velocity_y": 24.19269981027181
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094617.6181774,
+    "frame_id": 136,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.2061087641867,
+          "y1": 339.64660425205005,
+          "x2": 534.2061087641866,
+          "y2": 459.64660425205005
+        },
+        "confidence": 0.95,
+        "velocity_x": 46.03054382093346,
+        "velocity_y": -1.7669787397497316
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094617.8181775,
+    "frame_id": 137,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.4831854786447,
+          "y1": 335.60095333004784,
+          "x2": 515.4831854786447,
+          "y2": 455.60095333004784
+        },
+        "confidence": 0.95,
+        "velocity_x": -47.58407260677654,
+        "velocity_y": -21.995233349760703
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094618.0181773,
+    "frame_id": 138,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.90760643154175,
+          "y1": 338.15488963597113,
+          "x2": 510.90760643154175,
+          "y2": 458.15488963597113
+        },
+        "confidence": 0.95,
+        "velocity_x": -70.46196784229133,
+        "velocity_y": -9.225551820144462
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094618.2181773,
+    "frame_id": 139,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.1504247981826,
+          "y1": 335.9323160913612,
+          "x2": 512.1504247981826,
+          "y2": 455.9323160913612
+        },
+        "confidence": 0.95,
+        "velocity_x": -64.24787600908704,
+        "velocity_y": -20.338419543194114
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094618.4181774,
+    "frame_id": 140,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.74978200057205,
+          "y1": 341.50450817179143,
+          "x2": 528.749782000572,
+          "y2": 461.50450817179143
+        },
+        "confidence": 0.95,
+        "velocity_x": 18.748910002860377,
+        "velocity_y": 7.522540858957156
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094618.6181774,
+    "frame_id": 141,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.23855128341904,
+          "y1": 344.86191706864156,
+          "x2": 511.23855128341904,
+          "y2": 464.86191706864156
+        },
+        "confidence": 0.95,
+        "velocity_x": -68.80724358290473,
+        "velocity_y": 24.309585343207818
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094618.8181775,
+    "frame_id": 142,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.7890779942451,
+          "y1": 344.1414837001329,
+          "x2": 511.7890779942451,
+          "y2": 464.1414837001329
+        },
+        "confidence": 0.95,
+        "velocity_x": -66.05461002877468,
+        "velocity_y": 20.70741850066434
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094619.0181773,
+    "frame_id": 143,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 489.19772132079424,
+          "y1": 335.82190608001196,
+          "x2": 539.1977213207942,
+          "y2": 455.82190608001196
+        },
+        "confidence": 0.95,
+        "velocity_x": 70.98860660397094,
+        "velocity_y": -20.89046959994025
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094619.2181773,
+    "frame_id": 144,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.4342362452425,
+          "y1": 341.2981663007314,
+          "x2": 511.4342362452425,
+          "y2": 461.2981663007314
+        },
+        "confidence": 0.95,
+        "velocity_x": -67.82881877378733,
+        "velocity_y": 6.490831503656871
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094619.4181774,
+    "frame_id": 145,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 471.6261561234917,
+          "y1": 339.0624548110548,
+          "x2": 521.6261561234917,
+          "y2": 459.0624548110548
+        },
+        "confidence": 0.95,
+        "velocity_x": -16.86921938254165,
+        "velocity_y": -4.687725944725845
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094619.6181774,
+    "frame_id": 146,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.97944180312646,
+          "y1": 342.32950204469034,
+          "x2": 524.9794418031265,
+          "y2": 462.32950204469034
+        },
+        "confidence": 0.95,
+        "velocity_x": -0.10279098436764222,
+        "velocity_y": 11.647510223451789
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094619.8181775,
+    "frame_id": 147,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.0485445840294,
+          "y1": 344.98173509721244,
+          "x2": 512.0485445840294,
+          "y2": 464.98173509721244
+        },
+        "confidence": 0.95,
+        "velocity_x": -64.75727707985313,
+        "velocity_y": 24.90867548606227
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094620.0181773,
+    "frame_id": 148,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 463.6618776241495,
+          "y1": 342.7684659223054,
+          "x2": 513.6618776241495,
+          "y2": 462.7684659223054
+        },
+        "confidence": 0.95,
+        "velocity_x": -56.69061187925238,
+        "velocity_y": 13.842329611526981
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094620.2181773,
+    "frame_id": 149,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.8452400015556,
+          "y1": 338.76563839027796,
+          "x2": 530.8452400015556,
+          "y2": 458.76563839027796
+        },
+        "confidence": 0.95,
+        "velocity_x": 29.2262000077781,
+        "velocity_y": -6.17180804861015
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094620.4181774,
+    "frame_id": 150,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 471.5159550884642,
+          "y1": 336.5692053000627,
+          "x2": 521.5159550884641,
+          "y2": 456.5692053000627
+        },
+        "confidence": 0.95,
+        "velocity_x": -17.420224557678967,
+        "velocity_y": -17.153973499686337
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094620.6181774,
+    "frame_id": 151,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.5191456403263,
+          "y1": 343.5658351726525,
+          "x2": 526.5191456403263,
+          "y2": 463.5658351726525
+        },
+        "confidence": 0.95,
+        "velocity_x": 7.595728201631573,
+        "velocity_y": 17.8291758632625
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094620.8181775,
+    "frame_id": 152,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.4509715414804,
+          "y1": 343.32591670946067,
+          "x2": 524.4509715414804,
+          "y2": 463.32591670946067
+        },
+        "confidence": 0.95,
+        "velocity_x": -2.7451422925981017,
+        "velocity_y": 16.629583547303397
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094621.0181773,
+    "frame_id": 153,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 468.9652004673798,
+          "y1": 343.43677412487096,
+          "x2": 518.9652004673799,
+          "y2": 463.43677412487096
+        },
+        "confidence": 0.95,
+        "velocity_x": -30.17399766310089,
+        "velocity_y": 17.183870624354753
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094621.2181773,
+    "frame_id": 154,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.3175664316745,
+          "y1": 342.7210339641538,
+          "x2": 515.3175664316745,
+          "y2": 462.7210339641538
+        },
+        "confidence": 0.95,
+        "velocity_x": -48.41216784162761,
+        "velocity_y": 13.605169820768808
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094621.4181774,
+    "frame_id": 155,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.0375440598952,
+          "y1": 338.14780337010654,
+          "x2": 520.0375440598953,
+          "y2": 458.14780337010654
+        },
+        "confidence": 0.95,
+        "velocity_x": -24.812279700524034,
+        "velocity_y": -9.2609831494673
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094621.6181774,
+    "frame_id": 156,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.2278609389906,
+          "y1": 335.540044468796,
+          "x2": 531.2278609389906,
+          "y2": 455.540044468796
+        },
+        "confidence": 0.95,
+        "velocity_x": 31.139304694953065,
+        "velocity_y": -22.29977765602004
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094621.8181775,
+    "frame_id": 157,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.1412444513268,
+          "y1": 342.8241361104792,
+          "x2": 524.1412444513269,
+          "y2": 462.8241361104792
+        },
+        "confidence": 0.95,
+        "velocity_x": -4.29377774336599,
+        "velocity_y": 14.120680552395806
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094622.0181773,
+    "frame_id": 158,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 473.2069544511118,
+          "y1": 342.24535181906316,
+          "x2": 523.2069544511119,
+          "y2": 462.24535181906316
+        },
+        "confidence": 0.95,
+        "velocity_x": -8.965227744440885,
+        "velocity_y": 11.226759095315892
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094622.2181773,
+    "frame_id": 159,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 471.7827929658532,
+          "y1": 335.894253607093,
+          "x2": 521.7827929658532,
+          "y2": 455.894253607093
+        },
+        "confidence": 0.95,
+        "velocity_x": -16.086035170733794,
+        "velocity_y": -20.52873196453513
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094622.4181774,
+    "frame_id": 160,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.0891851920135,
+          "y1": 344.3260943650343,
+          "x2": 526.0891851920135,
+          "y2": 464.3260943650343
+        },
+        "confidence": 0.95,
+        "velocity_x": 5.445925960067459,
+        "velocity_y": 21.630471825171533
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094622.6181774,
+    "frame_id": 161,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.05759480146315,
+          "y1": 339.23149336880886,
+          "x2": 527.0575948014632,
+          "y2": 459.23149336880886
+        },
+        "confidence": 0.95,
+        "velocity_x": 10.287974007315697,
+        "velocity_y": -3.842533155955765
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094622.8181775,
+    "frame_id": 162,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 469.6180883661894,
+          "y1": 344.4353727978137,
+          "x2": 519.6180883661893,
+          "y2": 464.4353727978137
+        },
+        "confidence": 0.95,
+        "velocity_x": -26.909558169053007,
+        "velocity_y": 22.176863989068636
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094623.0181773,
+    "frame_id": 163,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 466.6231589179991,
+          "y1": 343.77917741636,
+          "x2": 516.623158917999,
+          "y2": 463.77917741636
+        },
+        "confidence": 0.95,
+        "velocity_x": -41.88420541000461,
+        "velocity_y": 18.895887081800193
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094623.2181773,
+    "frame_id": 164,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.5009439434259,
+          "y1": 342.52531545628756,
+          "x2": 531.5009439434259,
+          "y2": 462.52531545628756
+        },
+        "confidence": 0.95,
+        "velocity_x": 32.504719717129404,
+        "velocity_y": 12.62657728143784
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094623.4181774,
+    "frame_id": 165,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.62217326003685,
+          "y1": 340.22955957960033,
+          "x2": 525.6221732600368,
+          "y2": 460.22955957960033
+        },
+        "confidence": 0.95,
+        "velocity_x": 3.110866300184165,
+        "velocity_y": 1.1477978980015902
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094623.6181774,
+    "frame_id": 166,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.67070685332203,
+          "y1": 340.32865146255904,
+          "x2": 514.670706853322,
+          "y2": 460.32865146255904
+        },
+        "confidence": 0.95,
+        "velocity_x": -51.64646573338974,
+        "velocity_y": 1.6432573127951677
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094623.8181775,
+    "frame_id": 167,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.79325883474075,
+          "y1": 336.5161371601285,
+          "x2": 527.7932588347408,
+          "y2": 456.5161371601285
+        },
+        "confidence": 0.95,
+        "velocity_x": 13.966294173703755,
+        "velocity_y": -17.419314199357558
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094624.0181773,
+    "frame_id": 168,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.69801702426554,
+          "y1": 336.9419756391726,
+          "x2": 512.6980170242655,
+          "y2": 456.9419756391726
+        },
+        "confidence": 0.95,
+        "velocity_x": -61.50991487867229,
+        "velocity_y": -15.290121804137014
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094624.2181773,
+    "frame_id": 169,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 463.92419721650873,
+          "y1": 340.6825065753087,
+          "x2": 513.9241972165087,
+          "y2": 460.6825065753087
+        },
+        "confidence": 0.95,
+        "velocity_x": -55.37901391745631,
+        "velocity_y": 3.4125328765434926
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094624.4181774,
+    "frame_id": 170,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 466.0086337047561,
+          "y1": 337.5349185587411,
+          "x2": 516.0086337047561,
+          "y2": 457.5349185587411
+        },
+        "confidence": 0.95,
+        "velocity_x": -44.95683147621943,
+        "velocity_y": -12.325407206294681
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094624.6181774,
+    "frame_id": 171,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.26365464895264,
+          "y1": 340.40797084600496,
+          "x2": 538.2636546489526,
+          "y2": 460.40797084600496
+        },
+        "confidence": 0.95,
+        "velocity_x": 66.31827324476326,
+        "velocity_y": 2.039854230024698
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094624.8181775,
+    "frame_id": 172,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 463.5964784012215,
+          "y1": 344.15616301292243,
+          "x2": 513.5964784012215,
+          "y2": 464.15616301292243
+        },
+        "confidence": 0.95,
+        "velocity_x": -57.01760799389276,
+        "velocity_y": 20.780815064612035
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094625.0181773,
+    "frame_id": 173,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.6089796476401,
+          "y1": 335.88514140232354,
+          "x2": 515.6089796476401,
+          "y2": 455.88514140232354
+        },
+        "confidence": 0.95,
+        "velocity_x": -46.95510176179938,
+        "velocity_y": -20.57429298838234
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094625.2181773,
+    "frame_id": 174,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.88466007101584,
+          "y1": 337.5634558384835,
+          "x2": 531.8846600710158,
+          "y2": 457.5634558384835
+        },
+        "confidence": 0.95,
+        "velocity_x": 34.423300355079164,
+        "velocity_y": -12.182720807582577
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094625.4181774,
+    "frame_id": 175,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.2757903785791,
+          "y1": 342.737045321904,
+          "x2": 520.2757903785791,
+          "y2": 462.737045321904
+        },
+        "confidence": 0.95,
+        "velocity_x": -23.621048107104752,
+        "velocity_y": 13.685226609520047
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094625.6181774,
+    "frame_id": 176,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.81693544034147,
+          "y1": 340.84154699478813,
+          "x2": 538.8169354403415,
+          "y2": 460.84154699478813
+        },
+        "confidence": 0.95,
+        "velocity_x": 69.08467720170755,
+        "velocity_y": 4.20773497394074
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094625.8181775,
+    "frame_id": 177,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.64896308652226,
+          "y1": 340.35237899771573,
+          "x2": 536.6489630865223,
+          "y2": 460.35237899771573
+        },
+        "confidence": 0.95,
+        "velocity_x": 58.24481543261135,
+        "velocity_y": 1.7618949885786162
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094626.0181773,
+    "frame_id": 178,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 482.80530172416366,
+          "y1": 343.04237318973895,
+          "x2": 532.8053017241637,
+          "y2": 463.04237318973895
+        },
+        "confidence": 0.95,
+        "velocity_x": 39.02650862081815,
+        "velocity_y": 15.2118659486948
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094626.2181773,
+    "frame_id": 179,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 466.52313197472796,
+          "y1": 344.6021876546183,
+          "x2": 516.5231319747279,
+          "y2": 464.6021876546183
+        },
+        "confidence": 0.95,
+        "velocity_x": -42.384340126360094,
+        "velocity_y": 23.010938273091668
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094626.4181774,
+    "frame_id": 180,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 467.7795736242239,
+          "y1": 337.885808975563,
+          "x2": 517.7795736242239,
+          "y2": 457.885808975563
+        },
+        "confidence": 0.95,
+        "velocity_x": -36.10213187888056,
+        "velocity_y": -10.570955122184866
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094626.6181774,
+    "frame_id": 181,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.5884683086619,
+          "y1": 341.27234543284953,
+          "x2": 530.588468308662,
+          "y2": 461.27234543284953
+        },
+        "confidence": 0.95,
+        "velocity_x": 27.94234154330958,
+        "velocity_y": 6.361727164247757
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094626.8181775,
+    "frame_id": 182,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.6567610604504,
+          "y1": 343.6062469964586,
+          "x2": 533.6567610604504,
+          "y2": 463.6062469964586
+        },
+        "confidence": 0.95,
+        "velocity_x": 43.283805302251785,
+        "velocity_y": 18.031234982293036
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094627.0181773,
+    "frame_id": 183,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.40008278505076,
+          "y1": 342.6853152583919,
+          "x2": 534.4000827850507,
+          "y2": 462.6853152583919
+        },
+        "confidence": 0.95,
+        "velocity_x": 47.00041392525382,
+        "velocity_y": 13.426576291959474
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094627.2181773,
+    "frame_id": 184,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.20731358527576,
+          "y1": 336.2930281505377,
+          "x2": 524.2073135852758,
+          "y2": 456.2930281505377
+        },
+        "confidence": 0.95,
+        "velocity_x": -3.9634320736213446,
+        "velocity_y": -18.53485924731171
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094627.4181774,
+    "frame_id": 185,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.8123576128495,
+          "y1": 336.0595815733354,
+          "x2": 530.8123576128495,
+          "y2": 456.0595815733354
+        },
+        "confidence": 0.95,
+        "velocity_x": 29.061788064247587,
+        "velocity_y": -19.702092133323077
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094627.6181774,
+    "frame_id": 186,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.68067408730946,
+          "y1": 340.065386823547,
+          "x2": 520.6806740873094,
+          "y2": 460.065386823547
+        },
+        "confidence": 0.95,
+        "velocity_x": -21.596629563452847,
+        "velocity_y": 0.3269341177350604
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094627.8181775,
+    "frame_id": 187,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.5065003662178,
+          "y1": 341.31125577144223,
+          "x2": 533.5065003662178,
+          "y2": 461.31125577144223
+        },
+        "confidence": 0.95,
+        "velocity_x": 42.53250183108886,
+        "velocity_y": 6.556278857211155
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094628.0181773,
+    "frame_id": 188,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 489.5717093884273,
+          "y1": 341.17868086945464,
+          "x2": 539.5717093884273,
+          "y2": 461.17868086945464
+        },
+        "confidence": 0.95,
+        "velocity_x": 72.85854694213626,
+        "velocity_y": 5.893404347273066
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094628.2181773,
+    "frame_id": 189,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.1607379425188,
+          "y1": 343.1095321342992,
+          "x2": 536.1607379425188,
+          "y2": 463.1095321342992
+        },
+        "confidence": 0.95,
+        "velocity_x": 55.80368971259386,
+        "velocity_y": 15.54766067149596
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094628.4181774,
+    "frame_id": 190,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 466.98694465847746,
+          "y1": 341.50330245663037,
+          "x2": 516.9869446584775,
+          "y2": 461.50330245663037
+        },
+        "confidence": 0.95,
+        "velocity_x": -40.06527670761259,
+        "velocity_y": 7.516512283151853
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094628.6181774,
+    "frame_id": 191,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.729035921524,
+          "y1": 340.5567819623616,
+          "x2": 512.729035921524,
+          "y2": 460.5567819623616
+        },
+        "confidence": 0.95,
+        "velocity_x": -61.35482039238013,
+        "velocity_y": 2.78390981180781
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094628.8181775,
+    "frame_id": 192,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.0164480385575,
+          "y1": 340.9312637757305,
+          "x2": 526.0164480385574,
+          "y2": 460.9312637757305
+        },
+        "confidence": 0.95,
+        "velocity_x": 5.082240192787388,
+        "velocity_y": 4.656318878652392
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094629.0181773,
+    "frame_id": 193,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.65734226195696,
+          "y1": 340.0113399655493,
+          "x2": 535.657342261957,
+          "y2": 460.0113399655493
+        },
+        "confidence": 0.95,
+        "velocity_x": 53.286711309784884,
+        "velocity_y": 0.05669982774650251
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094629.2181773,
+    "frame_id": 194,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 479.75343784713044,
+          "y1": 343.8503330750804,
+          "x2": 529.7534378471305,
+          "y2": 463.8503330750804
+        },
+        "confidence": 0.95,
+        "velocity_x": 23.767189235652317,
+        "velocity_y": 19.251665375402016
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094629.4181774,
+    "frame_id": 195,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 489.67528411853186,
+          "y1": 344.9815517484471,
+          "x2": 539.6752841185319,
+          "y2": 464.9815517484471
+        },
+        "confidence": 0.95,
+        "velocity_x": 73.37642059265914,
+        "velocity_y": 24.90775874223555
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094629.6181774,
+    "frame_id": 196,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.50959594453656,
+          "y1": 341.6040506095293,
+          "x2": 535.5095959445366,
+          "y2": 461.6040506095293
+        },
+        "confidence": 0.95,
+        "velocity_x": 52.54797972268291,
+        "velocity_y": 8.02025304764651
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094629.8181775,
+    "frame_id": 197,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 468.0746157824818,
+          "y1": 343.33693715729305,
+          "x2": 518.0746157824818,
+          "y2": 463.33693715729305
+        },
+        "confidence": 0.95,
+        "velocity_x": -34.626921087590844,
+        "velocity_y": 16.684685786465153
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094630.0181773,
+    "frame_id": 198,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.1235938159336,
+          "y1": 337.9773868275023,
+          "x2": 515.1235938159336,
+          "y2": 457.9773868275023
+        },
+        "confidence": 0.95,
+        "velocity_x": -49.38203092033214,
+        "velocity_y": -10.113065862488417
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094630.2181773,
+    "frame_id": 199,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 468.34933185958886,
+          "y1": 335.2068076728292,
+          "x2": 518.3493318595888,
+          "y2": 455.2068076728292
+        },
+        "confidence": 0.95,
+        "velocity_x": -33.25334070205571,
+        "velocity_y": -23.96596163585386
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094630.4181774,
+    "frame_id": 200,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 471.2047452026333,
+          "y1": 335.15031702773086,
+          "x2": 521.2047452026334,
+          "y2": 455.15031702773086
+        },
+        "confidence": 0.95,
+        "velocity_x": -18.976273986833316,
+        "velocity_y": -24.24841486134561
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094630.6181774,
+    "frame_id": 201,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.67640606309027,
+          "y1": 343.61106158282985,
+          "x2": 528.6764060630903,
+          "y2": 463.61106158282985
+        },
+        "confidence": 0.95,
+        "velocity_x": 18.3820303154514,
+        "velocity_y": 18.05530791414928
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094630.8181775,
+    "frame_id": 202,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.5462049951474,
+          "y1": 338.88534528263017,
+          "x2": 531.5462049951474,
+          "y2": 458.88534528263017
+        },
+        "confidence": 0.95,
+        "velocity_x": 32.73102497573689,
+        "velocity_y": -5.573273586849199
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094631.0181773,
+    "frame_id": 203,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 487.2060665227058,
+          "y1": 341.7631387651808,
+          "x2": 537.2060665227058,
+          "y2": 461.7631387651808
+        },
+        "confidence": 0.95,
+        "velocity_x": 61.03033261352897,
+        "velocity_y": 8.81569382590409
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094631.2181773,
+    "frame_id": 204,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.0109262605911,
+          "y1": 335.1893561809247,
+          "x2": 531.0109262605911,
+          "y2": 455.1893561809247
+        },
+        "confidence": 0.95,
+        "velocity_x": 30.054631302955475,
+        "velocity_y": -24.05321909537672
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094631.4181774,
+    "frame_id": 205,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 466.3906625903456,
+          "y1": 339.8893538283935,
+          "x2": 516.3906625903455,
+          "y2": 459.8893538283935
+        },
+        "confidence": 0.95,
+        "velocity_x": -43.04668704827215,
+        "velocity_y": -0.5532308580325118
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094631.6181774,
+    "frame_id": 206,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 479.78031531858767,
+          "y1": 338.76383757759845,
+          "x2": 529.7803153185877,
+          "y2": 458.76383757759845
+        },
+        "confidence": 0.95,
+        "velocity_x": 23.90157659293827,
+        "velocity_y": -6.180812112007645
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094631.8181775,
+    "frame_id": 207,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.39184384628305,
+          "y1": 343.78979116897386,
+          "x2": 535.3918438462831,
+          "y2": 463.78979116897386
+        },
+        "confidence": 0.95,
+        "velocity_x": 51.9592192314153,
+        "velocity_y": 18.948955844869346
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094632.0181773,
+    "frame_id": 208,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 482.3114738951589,
+          "y1": 339.73199206824415,
+          "x2": 532.3114738951589,
+          "y2": 459.73199206824415
+        },
+        "confidence": 0.95,
+        "velocity_x": 36.5573694757944,
+        "velocity_y": -1.340039658779233
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094632.2181773,
+    "frame_id": 209,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.5307629896298,
+          "y1": 342.6459859304383,
+          "x2": 538.5307629896298,
+          "y2": 462.6459859304383
+        },
+        "confidence": 0.95,
+        "velocity_x": 67.65381494814906,
+        "velocity_y": 13.229929652191604
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094632.4181774,
+    "frame_id": 210,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.2972333840448,
+          "y1": 342.03985328693284,
+          "x2": 526.2972333840448,
+          "y2": 462.03985328693284
+        },
+        "confidence": 0.95,
+        "velocity_x": 6.48616692022399,
+        "velocity_y": 10.199266434664196
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094632.6181774,
+    "frame_id": 211,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.3920356046334,
+          "y1": 340.33149416281435,
+          "x2": 514.3920356046334,
+          "y2": 460.33149416281435
+        },
+        "confidence": 0.95,
+        "velocity_x": -53.039821976832975,
+        "velocity_y": 1.657470814071833
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094632.8181775,
+    "frame_id": 212,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.10292202723485,
+          "y1": 338.16648743214745,
+          "x2": 512.1029220272349,
+          "y2": 458.16648743214745
+        },
+        "confidence": 0.95,
+        "velocity_x": -64.48538986382584,
+        "velocity_y": -9.167562839262771
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094633.0181773,
+    "frame_id": 213,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.4331023200725,
+          "y1": 342.34471797190497,
+          "x2": 524.4331023200725,
+          "y2": 462.34471797190497
+        },
+        "confidence": 0.95,
+        "velocity_x": -2.8344883996375003,
+        "velocity_y": 11.723589859524806
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094633.2181773,
+    "frame_id": 214,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 479.60287282657225,
+          "y1": 335.6088390439118,
+          "x2": 529.6028728265723,
+          "y2": 455.6088390439118
+        },
+        "confidence": 0.95,
+        "velocity_x": 23.014364132861242,
+        "velocity_y": -21.955804780440886
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094633.4181774,
+    "frame_id": 215,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.34161270619967,
+          "y1": 343.2432810440352,
+          "x2": 524.3416127061996,
+          "y2": 463.2432810440352
+        },
+        "confidence": 0.95,
+        "velocity_x": -3.291936469001575,
+        "velocity_y": 16.21640522017591
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094633.6181774,
+    "frame_id": 216,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 469.126979130765,
+          "y1": 342.70014440937825,
+          "x2": 519.126979130765,
+          "y2": 462.70014440937825
+        },
+        "confidence": 0.95,
+        "velocity_x": -29.365104346174977,
+        "velocity_y": 13.500722046891408
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094633.8181775,
+    "frame_id": 217,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.19243415220035,
+          "y1": 343.83849896440927,
+          "x2": 538.1924341522003,
+          "y2": 463.83849896440927
+        },
+        "confidence": 0.95,
+        "velocity_x": 65.96217076100167,
+        "velocity_y": 19.19249482204623
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094634.0181773,
+    "frame_id": 218,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.64082213949746,
+          "y1": 341.5829128693554,
+          "x2": 530.6408221394975,
+          "y2": 461.5829128693554
+        },
+        "confidence": 0.95,
+        "velocity_x": 28.204110697487383,
+        "velocity_y": 7.91456434677718
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094634.2181773,
+    "frame_id": 219,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.3634999726723,
+          "y1": 339.5094130622776,
+          "x2": 515.3634999726723,
+          "y2": 459.5094130622776
+        },
+        "confidence": 0.95,
+        "velocity_x": -48.1825001366386,
+        "velocity_y": -2.452934688612056
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094634.4181774,
+    "frame_id": 220,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.41052695564736,
+          "y1": 344.44924063030857,
+          "x2": 534.4105269556474,
+          "y2": 464.44924063030857
+        },
+        "confidence": 0.95,
+        "velocity_x": 47.052634778236744,
+        "velocity_y": 22.2462031515428
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094634.6181774,
+    "frame_id": 221,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 479.9320654912757,
+          "y1": 337.48871897413204,
+          "x2": 529.9320654912757,
+          "y2": 457.48871897413204
+        },
+        "confidence": 0.95,
+        "velocity_x": 24.66032745637861,
+        "velocity_y": -12.556405129339803
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094634.8181775,
+    "frame_id": 222,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.16061431482245,
+          "y1": 337.92511760621727,
+          "x2": 524.1606143148224,
+          "y2": 457.92511760621727
+        },
+        "confidence": 0.95,
+        "velocity_x": -4.196928425887867,
+        "velocity_y": -10.374411968913734
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094635.0181773,
+    "frame_id": 223,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 469.3500460394605,
+          "y1": 337.9634187245783,
+          "x2": 519.3500460394605,
+          "y2": 457.9634187245783
+        },
+        "confidence": 0.95,
+        "velocity_x": -28.249769802697546,
+        "velocity_y": -10.182906377108637
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094635.2181773,
+    "frame_id": 224,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.55466703191274,
+          "y1": 344.17299687017794,
+          "x2": 512.5546670319127,
+          "y2": 464.17299687017794
+        },
+        "confidence": 0.95,
+        "velocity_x": -62.2266648404364,
+        "velocity_y": 20.86498435088961
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094635.4181774,
+    "frame_id": 225,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.3435237272967,
+          "y1": 338.7374994141128,
+          "x2": 536.3435237272968,
+          "y2": 458.7374994141128
+        },
+        "confidence": 0.95,
+        "velocity_x": 56.71761863648349,
+        "velocity_y": -6.312502929436192
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094635.6181774,
+    "frame_id": 226,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 483.0852600951248,
+          "y1": 339.0034108531107,
+          "x2": 533.0852600951248,
+          "y2": 459.0034108531107
+        },
+        "confidence": 0.95,
+        "velocity_x": 40.42630047562401,
+        "velocity_y": -4.982945734446438
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094635.8181775,
+    "frame_id": 227,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.1596885418245,
+          "y1": 336.61665592519876,
+          "x2": 538.1596885418245,
+          "y2": 456.61665592519876
+        },
+        "confidence": 0.95,
+        "velocity_x": 65.79844270912226,
+        "velocity_y": -16.916720374006122
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094636.0181773,
+    "frame_id": 228,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 463.5834089519667,
+          "y1": 335.8768997384302,
+          "x2": 513.5834089519667,
+          "y2": 455.8768997384302
+        },
+        "confidence": 0.95,
+        "velocity_x": -57.08295524016657,
+        "velocity_y": -20.61550130784907
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094636.2181773,
+    "frame_id": 229,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.3972273028112,
+          "y1": 343.4590597433247,
+          "x2": 514.3972273028112,
+          "y2": 463.4590597433247
+        },
+        "confidence": 0.95,
+        "velocity_x": -53.01386348594394,
+        "velocity_y": 17.29529871662354
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094636.4181774,
+    "frame_id": 230,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.9673856690484,
+          "y1": 344.43382752119913,
+          "x2": 520.9673856690483,
+          "y2": 464.43382752119913
+        },
+        "confidence": 0.95,
+        "velocity_x": -20.163071654758077,
+        "velocity_y": 22.169137605995715
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094636.6181774,
+    "frame_id": 231,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 463.54366080154887,
+          "y1": 336.4040541734104,
+          "x2": 513.5436608015489,
+          "y2": 456.4040541734104
+        },
+        "confidence": 0.95,
+        "velocity_x": -57.28169599225569,
+        "velocity_y": -17.97972913294823
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094636.8181775,
+    "frame_id": 232,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 462.7494017193804,
+          "y1": 342.22113105164846,
+          "x2": 512.7494017193803,
+          "y2": 462.22113105164846
+        },
+        "confidence": 0.95,
+        "velocity_x": -61.25299140309811,
+        "velocity_y": 11.105655258242248
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094637.0181773,
+    "frame_id": 233,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.11781801440696,
+          "y1": 339.66000413111055,
+          "x2": 520.117818014407,
+          "y2": 459.66000413111055
+        },
+        "confidence": 0.95,
+        "velocity_x": -24.41090992796515,
+        "velocity_y": -1.6999793444471711
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094637.2181773,
+    "frame_id": 234,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.53311755020366,
+          "y1": 342.4879448958644,
+          "x2": 526.5331175502037,
+          "y2": 462.4879448958644
+        },
+        "confidence": 0.95,
+        "velocity_x": 7.665587751018279,
+        "velocity_y": 12.43972447932222
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094637.4181774,
+    "frame_id": 235,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.8049353970215,
+          "y1": 341.853148245832,
+          "x2": 534.8049353970215,
+          "y2": 461.853148245832
+        },
+        "confidence": 0.95,
+        "velocity_x": 49.02467698510742,
+        "velocity_y": 9.26574122916005
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094637.6181774,
+    "frame_id": 236,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 472.65845701758343,
+          "y1": 342.9792910992858,
+          "x2": 522.6584570175835,
+          "y2": 462.9792910992858
+        },
+        "confidence": 0.95,
+        "velocity_x": -11.707714912082725,
+        "velocity_y": 14.896455496428796
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094637.8181775,
+    "frame_id": 237,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 487.36491416409024,
+          "y1": 341.2651169051635,
+          "x2": 537.3649141640902,
+          "y2": 461.2651169051635
+        },
+        "confidence": 0.95,
+        "velocity_x": 61.82457082045101,
+        "velocity_y": 6.325584525817445
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094638.0181773,
+    "frame_id": 238,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.0262946473773,
+          "y1": 335.9573940029518,
+          "x2": 526.0262946473773,
+          "y2": 455.9573940029518
+        },
+        "confidence": 0.95,
+        "velocity_x": 5.131473236886528,
+        "velocity_y": -20.213029985241164
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094638.2181773,
+    "frame_id": 239,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.46738375843523,
+          "y1": 338.90288100342457,
+          "x2": 535.4673837584353,
+          "y2": 458.90288100342457
+        },
+        "confidence": 0.95,
+        "velocity_x": 52.33691879217615,
+        "velocity_y": -5.485594982877213
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094638.4181774,
+    "frame_id": 240,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.99311190402597,
+          "y1": 340.2261934560867,
+          "x2": 525.9931119040259,
+          "y2": 460.2261934560867
+        },
+        "confidence": 0.95,
+        "velocity_x": 4.9655595201299185,
+        "velocity_y": 1.130967280433559
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094638.6181774,
+    "frame_id": 241,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 473.6840301859107,
+          "y1": 336.35149452686437,
+          "x2": 523.6840301859106,
+          "y2": 456.35149452686437
+        },
+        "confidence": 0.95,
+        "velocity_x": -6.579849070446624,
+        "velocity_y": -18.242527365678214
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094638.8181775,
+    "frame_id": 242,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.7312099621172,
+          "y1": 338.03563224560196,
+          "x2": 534.7312099621172,
+          "y2": 458.03563224560196
+        },
+        "confidence": 0.95,
+        "velocity_x": 48.65604981058599,
+        "velocity_y": -9.821838771990183
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094639.0181773,
+    "frame_id": 243,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.9263111171696,
+          "y1": 337.2212613939166,
+          "x2": 514.9263111171696,
+          "y2": 457.2212613939166
+        },
+        "confidence": 0.95,
+        "velocity_x": -50.36844441415218,
+        "velocity_y": -13.893693030416799
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094639.2181773,
+    "frame_id": 244,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 489.757564415875,
+          "y1": 344.8228935804475,
+          "x2": 539.757564415875,
+          "y2": 464.8228935804475
+        },
+        "confidence": 0.95,
+        "velocity_x": 73.78782207937469,
+        "velocity_y": 24.114467902237607
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094639.4181774,
+    "frame_id": 245,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.79920989631154,
+          "y1": 337.15241746049924,
+          "x2": 525.7992098963116,
+          "y2": 457.15241746049924
+        },
+        "confidence": 0.95,
+        "velocity_x": 3.9960494815577974,
+        "velocity_y": -14.237912697503692
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094639.6181774,
+    "frame_id": 246,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.5375704142776,
+          "y1": 344.8887761745763,
+          "x2": 535.5375704142775,
+          "y2": 464.8887761745763
+        },
+        "confidence": 0.95,
+        "velocity_x": 52.68785207138791,
+        "velocity_y": 24.443880872881543
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094639.8181775,
+    "frame_id": 247,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.4370687494929,
+          "y1": 337.4790146559964,
+          "x2": 515.4370687494929,
+          "y2": 457.4790146559964
+        },
+        "confidence": 0.95,
+        "velocity_x": -47.8146562525356,
+        "velocity_y": -12.604926720017817
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094640.0181773,
+    "frame_id": 248,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 469.759936670988,
+          "y1": 344.78633077873167,
+          "x2": 519.759936670988,
+          "y2": 464.78633077873167
+        },
+        "confidence": 0.95,
+        "velocity_x": -26.20031664505997,
+        "velocity_y": 23.931653893658435
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094640.2181773,
+    "frame_id": 249,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.9096894553974,
+          "y1": 336.48739448223455,
+          "x2": 534.9096894553975,
+          "y2": 456.48739448223455
+        },
+        "confidence": 0.95,
+        "velocity_x": 49.54844727698705,
+        "velocity_y": -17.563027588827328
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094640.4181774,
+    "frame_id": 250,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 475.7098239618689,
+          "y1": 340.8267819495984,
+          "x2": 525.7098239618689,
+          "y2": 460.8267819495984
+        },
+        "confidence": 0.95,
+        "velocity_x": 3.5491198093445497,
+        "velocity_y": 4.1339097479919396
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094640.6181774,
+    "frame_id": 251,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.57645360123007,
+          "y1": 335.23772141641376,
+          "x2": 515.57645360123,
+          "y2": 455.23772141641376
+        },
+        "confidence": 0.95,
+        "velocity_x": -47.11773199384964,
+        "velocity_y": -23.811392917931308
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094640.8181775,
+    "frame_id": 252,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 487.0813085450386,
+          "y1": 341.7949493203237,
+          "x2": 537.0813085450386,
+          "y2": 461.7949493203237
+        },
+        "confidence": 0.95,
+        "velocity_x": 60.40654272519305,
+        "velocity_y": 8.974746601618504
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094641.0181773,
+    "frame_id": 253,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.87663422932496,
+          "y1": 339.5766700534142,
+          "x2": 527.876634229325,
+          "y2": 459.5766700534142
+        },
+        "confidence": 0.95,
+        "velocity_x": 14.383171146624782,
+        "velocity_y": -2.116649732929017
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094641.2181773,
+    "frame_id": 254,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 467.1207836692167,
+          "y1": 337.0469125383837,
+          "x2": 517.1207836692167,
+          "y2": 457.0469125383837
+        },
+        "confidence": 0.95,
+        "velocity_x": -39.39608165391671,
+        "velocity_y": -14.765437308081445
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094641.4181774,
+    "frame_id": 255,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 469.0672676101834,
+          "y1": 340.6518700236171,
+          "x2": 519.0672676101834,
+          "y2": 460.6518700236171
+        },
+        "confidence": 0.95,
+        "velocity_x": -29.66366194908275,
+        "velocity_y": 3.259350118085562
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094641.6181774,
+    "frame_id": 256,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.1218436306635,
+          "y1": 341.4547924729057,
+          "x2": 528.1218436306635,
+          "y2": 461.4547924729057
+        },
+        "confidence": 0.95,
+        "velocity_x": 15.609218153317368,
+        "velocity_y": 7.273962364528597
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094641.8181775,
+    "frame_id": 257,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 471.3194825809209,
+          "y1": 337.2672944660025,
+          "x2": 521.319482580921,
+          "y2": 457.2672944660025
+        },
+        "confidence": 0.95,
+        "velocity_x": -18.40258709539528,
+        "velocity_y": -13.663527669987484
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094642.0181773,
+    "frame_id": 258,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 467.11747168470896,
+          "y1": 339.2577753120274,
+          "x2": 517.117471684709,
+          "y2": 459.2577753120274
+        },
+        "confidence": 0.95,
+        "velocity_x": -39.412641576455066,
+        "velocity_y": -3.7111234398629778
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094642.2181773,
+    "frame_id": 259,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.33886649449386,
+          "y1": 338.5879380917372,
+          "x2": 510.33886649449386,
+          "y2": 458.5879380917372
+        },
+        "confidence": 0.95,
+        "velocity_x": -73.30566752753073,
+        "velocity_y": -7.060309541313925
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094642.4181774,
+    "frame_id": 260,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.8660046410648,
+          "y1": 341.5570795948489,
+          "x2": 515.8660046410648,
+          "y2": 461.5570795948489
+        },
+        "confidence": 0.95,
+        "velocity_x": -45.66997679467604,
+        "velocity_y": 7.785397974244712
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094642.6181774,
+    "frame_id": 261,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.36438740410915,
+          "y1": 343.22129295323174,
+          "x2": 527.3643874041092,
+          "y2": 463.22129295323174
+        },
+        "confidence": 0.95,
+        "velocity_x": 11.82193702054585,
+        "velocity_y": 16.10646476615864
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094642.8181775,
+    "frame_id": 262,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.3494040313097,
+          "y1": 337.39019621945215,
+          "x2": 530.3494040313096,
+          "y2": 457.39019621945215
+        },
+        "confidence": 0.95,
+        "velocity_x": 26.74702015654841,
+        "velocity_y": -13.049018902739162
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094643.0181773,
+    "frame_id": 263,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 480.56468984348305,
+          "y1": 337.36044352619484,
+          "x2": 530.564689843483,
+          "y2": 457.36044352619484
+        },
+        "confidence": 0.95,
+        "velocity_x": 27.823449217415153,
+        "velocity_y": -13.19778236902565
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094643.2181773,
+    "frame_id": 264,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.67146201991466,
+          "y1": 342.6819555988851,
+          "x2": 527.6714620199147,
+          "y2": 462.6819555988851
+        },
+        "confidence": 0.95,
+        "velocity_x": 13.357310099573407,
+        "velocity_y": 13.409777994425646
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094643.4181774,
+    "frame_id": 265,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 466.687077023183,
+          "y1": 342.88959583336646,
+          "x2": 516.6870770231831,
+          "y2": 462.88959583336646
+        },
+        "confidence": 0.95,
+        "velocity_x": -41.564614884084996,
+        "velocity_y": 14.44797916683218
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094643.6181774,
+    "frame_id": 266,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 467.25736961148345,
+          "y1": 335.57109801363936,
+          "x2": 517.2573696114835,
+          "y2": 455.57109801363936
+        },
+        "confidence": 0.95,
+        "velocity_x": -38.7131519425827,
+        "velocity_y": -22.144509931803313
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094643.8181775,
+    "frame_id": 267,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.9267688248915,
+          "y1": 338.19532734397285,
+          "x2": 511.9267688248915,
+          "y2": 458.19532734397285
+        },
+        "confidence": 0.95,
+        "velocity_x": -65.36615587554253,
+        "velocity_y": -9.023363280135621
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094644.0181773,
+    "frame_id": 268,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 471.9628923396561,
+          "y1": 344.05955622348813,
+          "x2": 521.962892339656,
+          "y2": 464.05955622348813
+        },
+        "confidence": 0.95,
+        "velocity_x": -15.185538301719621,
+        "velocity_y": 20.297781117440728
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094644.2181773,
+    "frame_id": 269,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 470.60779084862634,
+          "y1": 341.80123758726035,
+          "x2": 520.6077908486263,
+          "y2": 461.80123758726035
+        },
+        "confidence": 0.95,
+        "velocity_x": -21.96104575686843,
+        "velocity_y": 9.006187936301707
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094644.4181774,
+    "frame_id": 270,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 467.2766221667178,
+          "y1": 336.6499971264648,
+          "x2": 517.2766221667177,
+          "y2": 456.6499971264648
+        },
+        "confidence": 0.95,
+        "velocity_x": -38.616889166410886,
+        "velocity_y": -16.750014367676002
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094644.6181774,
+    "frame_id": 271,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.8062349393541,
+          "y1": 336.6358981557043,
+          "x2": 528.8062349393541,
+          "y2": 456.6358981557043
+        },
+        "confidence": 0.95,
+        "velocity_x": 19.03117469677042,
+        "velocity_y": -16.820509221478552
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094644.8181775,
+    "frame_id": 272,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.8287774855508,
+          "y1": 338.34349778782695,
+          "x2": 534.8287774855507,
+          "y2": 458.34349778782695
+        },
+        "confidence": 0.95,
+        "velocity_x": 49.143887427754066,
+        "velocity_y": -8.282511060865279
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094645.0181773,
+    "frame_id": 273,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 479.33538195481003,
+          "y1": 344.04602193610873,
+          "x2": 529.33538195481,
+          "y2": 464.04602193610873
+        },
+        "confidence": 0.95,
+        "velocity_x": 21.676909774050284,
+        "velocity_y": 20.230109680543737
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094645.2181773,
+    "frame_id": 274,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.35249271974055,
+          "y1": 337.56741335375847,
+          "x2": 515.3524927197406,
+          "y2": 457.56741335375847
+        },
+        "confidence": 0.95,
+        "velocity_x": -48.23753640129724,
+        "velocity_y": -12.162933231207706
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094645.4181774,
+    "frame_id": 275,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 481.57594429921994,
+          "y1": 340.43342723350605,
+          "x2": 531.5759442992199,
+          "y2": 460.43342723350605
+        },
+        "confidence": 0.95,
+        "velocity_x": 32.879721496099776,
+        "velocity_y": 2.1671361675301526
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094645.6181774,
+    "frame_id": 276,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 489.3230807103597,
+          "y1": 335.561109466769,
+          "x2": 539.3230807103597,
+          "y2": 455.561109466769
+        },
+        "confidence": 0.95,
+        "velocity_x": 71.61540355179875,
+        "velocity_y": -22.194452666155055
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094645.8181775,
+    "frame_id": 277,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 468.2658824953481,
+          "y1": 342.21529484397263,
+          "x2": 518.265882495348,
+          "y2": 462.21529484397263
+        },
+        "confidence": 0.95,
+        "velocity_x": -33.670587523259655,
+        "velocity_y": 11.076474219863055
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094646.0181773,
+    "frame_id": 278,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.4909317992384,
+          "y1": 344.16170068869195,
+          "x2": 527.4909317992384,
+          "y2": 464.16170068869195
+        },
+        "confidence": 0.95,
+        "velocity_x": 12.454658996192194,
+        "velocity_y": 20.80850344345981
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094646.2181773,
+    "frame_id": 279,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 478.9243762582726,
+          "y1": 336.43795375962867,
+          "x2": 528.9243762582726,
+          "y2": 456.43795375962867
+        },
+        "confidence": 0.95,
+        "velocity_x": 19.62188129136317,
+        "velocity_y": -17.81023120185654
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094646.4181774,
+    "frame_id": 280,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 486.51697851585664,
+          "y1": 336.362301023243,
+          "x2": 536.5169785158566,
+          "y2": 456.362301023243
+        },
+        "confidence": 0.95,
+        "velocity_x": 57.584892579283164,
+        "velocity_y": -18.18849488378508
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094646.6181774,
+    "frame_id": 281,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.1810487267859,
+          "y1": 339.86510718846574,
+          "x2": 514.1810487267859,
+          "y2": 459.86510718846574
+        },
+        "confidence": 0.95,
+        "velocity_x": -54.0947563660705,
+        "velocity_y": -0.6744640576713845
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094646.8181775,
+    "frame_id": 282,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.20651287684626,
+          "y1": 336.8488550692392,
+          "x2": 515.2065128768463,
+          "y2": 456.8488550692392
+        },
+        "confidence": 0.95,
+        "velocity_x": -48.96743561576877,
+        "velocity_y": -15.755724653803863
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094647.0181773,
+    "frame_id": 283,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 461.7361854977305,
+          "y1": 341.15241262765466,
+          "x2": 511.7361854977305,
+          "y2": 461.15241262765466
+        },
+        "confidence": 0.95,
+        "velocity_x": -66.3190725113474,
+        "velocity_y": 5.76206313827321
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094647.2181773,
+    "frame_id": 284,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 467.82166816023573,
+          "y1": 341.79291019663617,
+          "x2": 517.8216681602357,
+          "y2": 461.79291019663617
+        },
+        "confidence": 0.95,
+        "velocity_x": -35.89165919882123,
+        "velocity_y": 8.964550983180972
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094647.4181774,
+    "frame_id": 285,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 465.8512693078129,
+          "y1": 337.1834811017551,
+          "x2": 515.8512693078129,
+          "y2": 457.1834811017551
+        },
+        "confidence": 0.95,
+        "velocity_x": -45.74365346093536,
+        "velocity_y": -14.082594491224487
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094647.6181774,
+    "frame_id": 286,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 464.14144874759205,
+          "y1": 336.3287097499731,
+          "x2": 514.141448747592,
+          "y2": 456.3287097499731
+        },
+        "confidence": 0.95,
+        "velocity_x": -54.29275626203969,
+        "velocity_y": -18.35645125013461
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094647.8181775,
+    "frame_id": 287,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.9906007029358,
+          "y1": 338.3061806264177,
+          "x2": 526.9906007029358,
+          "y2": 458.3061806264177
+        },
+        "confidence": 0.95,
+        "velocity_x": 9.953003514679004,
+        "velocity_y": -8.469096867911585
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094648.0181773,
+    "frame_id": 288,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.1658004107928,
+          "y1": 339.3162324840521,
+          "x2": 526.1658004107928,
+          "y2": 459.3162324840521
+        },
+        "confidence": 0.95,
+        "velocity_x": 5.829002053964185,
+        "velocity_y": -3.418837579739642
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094648.2181773,
+    "frame_id": 289,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.5805158474955,
+          "y1": 340.16546917863604,
+          "x2": 534.5805158474955,
+          "y2": 460.16546917863604
+        },
+        "confidence": 0.95,
+        "velocity_x": 47.902579237477525,
+        "velocity_y": 0.8273458931800892
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094648.4181774,
+    "frame_id": 290,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 484.1186519930029,
+          "y1": 339.7861127968915,
+          "x2": 534.1186519930029,
+          "y2": 459.7861127968915
+        },
+        "confidence": 0.95,
+        "velocity_x": 45.5932599650146,
+        "velocity_y": -1.069436015542684
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094648.6181774,
+    "frame_id": 291,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 474.6298559280624,
+          "y1": 336.16810342815995,
+          "x2": 524.6298559280624,
+          "y2": 456.16810342815995
+        },
+        "confidence": 0.95,
+        "velocity_x": -1.8507203596880473,
+        "velocity_y": -19.159482859200338
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094648.8181775,
+    "frame_id": 292,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.42408360601627,
+          "y1": 340.3555684999856,
+          "x2": 535.4240836060162,
+          "y2": 460.3555684999856
+        },
+        "confidence": 0.95,
+        "velocity_x": 52.120418030081325,
+        "velocity_y": 1.7778424999281617
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094649.0181773,
+    "frame_id": 293,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 485.5301877558368,
+          "y1": 344.56383022234337,
+          "x2": 535.5301877558368,
+          "y2": 464.56383022234337
+        },
+        "confidence": 0.95,
+        "velocity_x": 52.650938779183925,
+        "velocity_y": 22.819151111716938
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094649.2181773,
+    "frame_id": 294,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 460.2290908667591,
+          "y1": 336.1952400117352,
+          "x2": 510.2290908667591,
+          "y2": 456.1952400117352
+        },
+        "confidence": 0.95,
+        "velocity_x": -73.85454566620447,
+        "velocity_y": -19.023799941323855
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094649.4181774,
+    "frame_id": 295,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.159460422832,
+          "y1": 344.49462674870824,
+          "x2": 526.159460422832,
+          "y2": 464.49462674870824
+        },
+        "confidence": 0.95,
+        "velocity_x": 5.797302114160097,
+        "velocity_y": 22.47313374354124
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094649.6181774,
+    "frame_id": 296,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 476.91648870463536,
+          "y1": 340.38362200827726,
+          "x2": 526.9164887046354,
+          "y2": 460.38362200827726
+        },
+        "confidence": 0.95,
+        "velocity_x": 9.582443523176725,
+        "velocity_y": 1.9181100413861962
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094649.8181775,
+    "frame_id": 297,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 468.992083183327,
+          "y1": 338.5693950646787,
+          "x2": 518.9920831833269,
+          "y2": 458.5693950646787
+        },
+        "confidence": 0.95,
+        "velocity_x": -30.03958408336497,
+        "velocity_y": -7.153024676606412
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094650.0181773,
+    "frame_id": 298,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 477.2121783573657,
+          "y1": 338.62084136652044,
+          "x2": 527.2121783573657,
+          "y2": 458.62084136652044
+        },
+        "confidence": 0.95,
+        "velocity_x": 11.060891786828364,
+        "velocity_y": -6.8957931673978905
+      }
+    ]
+  },
+  {
+    "camera_id": "cam_border_01",
+    "timestamp": 1788094650.2181773,
+    "frame_id": 299,
+    "tracks": [
+      {
+        "track_id": "human_track_001",
+        "object_type": "human",
+        "bbox": {
+          "x1": 488.80393661626647,
+          "y1": 341.6378963068858,
+          "x2": 538.8039366162665,
+          "y2": 461.6378963068858
+        },
+        "confidence": 0.95,
+        "velocity_x": 69.01968308133215,
+        "velocity_y": 8.189481534429008
+      }
+    ]
+  }
+]

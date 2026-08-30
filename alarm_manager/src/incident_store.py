@@ -41,7 +41,9 @@ def load_or_create(incident_id: str, camera_id: str, module: str,
         "danger_label": danger_label,
         "modules_triggered": [],
         "humans_detected": 0,
+        "faces_captured": 0,
         "vehicles_detected": 0,
+        "vehicle_types": [],
         "weapons_detected": 0,
         "track_ids": [],
         "zone_breaches": [],
@@ -125,8 +127,16 @@ def enrich_meta(meta: dict, module: str, obj_attributes: dict,
     if obj_attributes.get("weapon_detected"):
         meta["weapons_detected"] += 1
 
+    if obj_attributes.get("face_captured"):
+        meta["faces_captured"] += 1
 
-def get_all_incidents(limit: int = 30) -> list[dict]:
+    if "vehicle_type" in obj_attributes:
+        v_type = obj_attributes["vehicle_type"]
+        if v_type not in meta["vehicle_types"]:
+            meta["vehicle_types"].append(v_type)
+
+
+def get_all_incidents(limit: int = 100) -> list[dict]:
     """Return most recent incident metadata dicts, sorted by last_updated desc."""
     incidents = []
     if not _INCIDENT_ROOT.exists():

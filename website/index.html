@@ -40,7 +40,7 @@ body{font-family:'Segoe UI',sans-serif;background:#080c18;color:#dde4f0;height:1
 .tab.active{color:#4fc3f7;border-bottom-color:#4fc3f7}
 
 #tab-alerts{overflow-y:auto;flex:1}
-#tab-incidents{overflow-y:auto;flex:1;display:none}
+#tab-incidents{flex:1;display:none;flex-direction:column}
 
 /* Alert card */
 .a-card{padding:12px 16px;border-bottom:1px solid #0e1525;cursor:pointer;transition:background .15s;animation:slideIn .25s ease}
@@ -136,7 +136,22 @@ body{font-family:'Segoe UI',sans-serif;background:#080c18;color:#dde4f0;height:1
       <div class="tab" onclick="switchTab('incidents',this)">📁 Incidents</div>
     </div>
     <div id="tab-alerts"></div>
-    <div id="tab-incidents"></div>
+    <div id="tab-incidents">
+      <div id="inc-toolbar" style="padding:10px 14px; background:#0e1525; border-bottom:1px solid #1a2540; display:flex; gap:10px; align-items:center;">
+        <input type="text" id="inc-search" placeholder="🔍 Search ID or Tags..." onkeyup="renderIncidents()"
+               style="flex:1; background:#050810; border:1px solid #1a2540; color:#dde4f0; padding:6px 10px; border-radius:4px; font-size:.75rem;">
+        <select id="inc-filter" onchange="renderIncidents()"
+                style="background:#050810; border:1px solid #1a2540; color:#dde4f0; padding:6px; border-radius:4px; font-size:.75rem;">
+          <option value="all">All Incidents</option>
+          <option value="has_human">Humans Detected</option>
+          <option value="has_face">Faces Captured</option>
+          <option value="has_vehicle">Vehicles Detected</option>
+          <option value="has_weapon">Weapons Detected</option>
+          <option value="high_threat">High/Critical Threat</option>
+        </select>
+      </div>
+      <div id="inc-list" style="overflow-y:auto; flex:1;"></div>
+    </div>
   </div>
 
   <!-- RIGHT: Detail -->
@@ -263,10 +278,31 @@ function loadIncidents() {
 }
 
 function renderIncidents() {
-  const el = document.getElementById('tab-incidents');
-  el.innerHTML = incidents.length===0
-    ? '<div class="no-detail">No incidents yet.</div>' : '';
-  incidents.forEach(i=>{
+  const el = document.getElementById('inc-list');
+  const q = document.getElementById('inc-search').value.toLowerCase();
+  const f = document.getElementById('inc-filter').value;
+  
+  let filtered = incidents.filter(i => {
+    // text search
+    if (q && !i.incident_id.toLowerCase().includes(q) && 
+        !i.camera_id.toLowerCase().includes(q) && 
+        !(i.activities_detected||[]).join(' ').toLowerCase().includes(q) &&
+        !(i.vehicle_types||[]).join(' ').toLowerCase().includes(q)) return false;
+    
+    // dropdown filter
+    if (f === 'has_human' && !(i.humans_detected > 0)) return false;
+    if (f === 'has_face' && !(i.faces_captured > 0)) return false;
+    if (f === 'has_vehicle' && !(i.vehicles_detected > 0)) return false;
+    if (f === 'has_weapon' && !(i.weapons_detected > 0)) return false;
+    if (f === 'high_threat' && (i.danger_score < 40)) return false;
+    
+    return true;
+  });
+
+  el.innerHTML = filtered.length===0
+    ? '<div class="no-detail">No incidents found.</div>' : '';
+    
+  filtered.forEach(i=>{
     const c = col(i.danger_label||'LOW');
     const pct = Math.min(i.danger_score||0, 100);
     const snapsHTML = (i.snapshots||[]).slice(0,6).map(s=>
@@ -288,16 +324,17 @@ function renderIncidents() {
         <div class="i-stat"><div class="v g">${i.humans_detected||0}</div><div class="k">Humans</div></div>
         <div class="i-stat"><div class="v y">${i.vehicles_detected||0}</div><div class="k">Vehicles</div></div>
         <div class="i-stat"><div class="v r">${i.weapons_detected||0}</div><div class="k">Weapons</div></div>
-        <div class="i-stat"><div class="v">${i.snapshot_count||0}</div><div class="k">Snapshots</div></div>
-        <div class="i-stat"><div class="v o">${(i.zone_breaches||[]).length}</div><div class="k">Breaches</div></div>
+        <div class="i-stat"><div class="v">${i.snapshot_count||0}</div><div class="k">Photos</div></div>
       </div>
       <div class="meter-wrap">
         <div class="meter-track"><div class="meter-fill" style="width:${pct}%;background:${c}"></div></div>
       </div>
       <div style="padding:0 14px 8px;font-size:.7rem">
         ${(i.modules_triggered||[]).map(m=>`<span class="tag">${m}</span>`).join('')}
+        ${(i.vehicle_types||[]).map(v=>`<span class="tag">🚗 ${v}</span>`).join('')}
         ${(i.activities_detected||[]).map(a=>`<span class="tag">🔍 ${a}</span>`).join('')}
         ${(i.zone_breaches||[]).map(z=>`<span class="tag">🚧 ${z}</span>`).join('')}
+        ${(i.faces_captured>0)?'<span class="tag" style="color:#4fc3f7">👤 Face Captured</span>':''}
       </div>
       <div class="i-snaps">${snapsHTML}</div>
     `;
@@ -330,7 +367,9 @@ function showIncidentDetail(i) {
         <tr><td>Incident ID</td><td>${i.incident_id}</td></tr>
         <tr><td>Camera</td><td>${i.camera_id}</td></tr>
         <tr><td>Humans</td><td>${i.humans_detected||0}</td></tr>
+        <tr><td>Faces Captured</td><td>${i.faces_captured||0}</td></tr>
         <tr><td>Vehicles</td><td>${i.vehicles_detected||0}</td></tr>
+        <tr><td>Vehicle Types</td><td>${(i.vehicle_types||[]).join(', ')||'None'}</td></tr>
         <tr><td>Weapons</td><td>${i.weapons_detected||0}</td></tr>
         <tr><td>Snapshots</td><td>${i.snapshot_count||0}</td></tr>
         <tr><td>Started</td><td>${new Date(i.started_at).toLocaleString()}</td></tr>

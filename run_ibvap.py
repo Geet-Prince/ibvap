@@ -21,6 +21,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 from human_detection.inference.detector import HumanDetector
 from human_tracking.inference.tracker import HumanTracker
 from suspicious_activity.loitering_detector import SuspiciousActivityDetector
+from virtual_fence.fence_detector import VirtualFence
 from alarm_manager.src.core import AlarmManager
 from alarm_manager.src.frame_buffer import LIVE_FRAME
 
@@ -48,17 +49,25 @@ def main():
     parser.add_argument("--source", type=str, default="0", help="Video source (0 for webcam, or path to video file)")
     args = parser.parse_args()
 
-    detector      = HumanDetector()
-    tracker       = HumanTracker()
-    suspicious    = SuspiciousActivityDetector()
-    alarm_manager = AlarmManager()
-
     # Determine video source
     source = int(args.source) if args.source.isdigit() else args.source
     cap = cv2.VideoCapture(source)
+
     if not cap.isOpened():
         print(f"ERROR: Cannot open video source: {source}")
         return
+        
+    ret, test_frame = cap.read()
+    if not ret:
+        print("ERROR: Cannot read video frame.")
+        return
+    frame_h, frame_w = test_frame.shape[:2]
+
+    detector      = HumanDetector()
+    tracker       = HumanTracker()
+    suspicious    = SuspiciousActivityDetector()
+    fence         = VirtualFence(frame_w=frame_w, frame_h=frame_h)
+    alarm_manager = AlarmManager()
 
     print(f"  Video source open: {source}. Press 'q' in the video window to stop.\n")
     frame_id = 0
@@ -78,25 +87,39 @@ def main():
             # Step 2: Track
             tracked = tracker.track(det)
             
-            # Step 3: Suspicious Activity (Omkar's module)
+            # Step 3: Suspicious Activity (Omkar) & Virtual Fence (Abhilasha)
             analyzed = suspicious.process(tracked)
+            analyzed = fence.process(analyzed)
 
             # Step 4: Alarm Manager (snapshot + scoring + broadcast)
             alarm_manager.submit(analyzed, frame=frame)
 
-            # Step 5: Draw on frame
+            # Step 5: Draw visuals on frame
+            breach_active = any(obj.attributes.get("zone_state") == "inside" for obj in analyzed.objects)
+            fence.draw_fence(frame, breach_active=breach_active)
+            
             for obj in analyzed.objects:
                 x1, y1, x2, y2 = obj.bbox
                 activity = obj.attributes.get("activity")
-                color = (0, 0, 255) if activity else (0, 255, 0)
+                is_breaching = (obj.attributes.get("zone_state") == "inside")
+                
+                # Red if breaching or suspicious, green otherwise
+                color = (0, 0, 255) if (activity or is_breaching) else (0, 255, 0)
                 
                 human_num = obj.track_id.split('-')[-1]
                 base_label = f"Human {human_num}"
-                label = f"{base_label} [{activity.upper()}]" if activity else base_label
+                
+                tags = []
+                if activity: tags.append(activity.upper())
+                if is_breaching: tags.append("BREACH")
+                
+                label = f"{base_label} [{','.join(tags)}]" if tags else base_label
 
                 cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
                 cv2.putText(frame, label, (x1, y1 - 10),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, color, 2)
+                
+                # Draw centroid
                 if "centroid" in obj.attributes:
                     cx, cy = obj.attributes["centroid"]
                     cv2.circle(frame, (int(cx), int(cy)), 5, (0, 0, 255), -1)
@@ -105,7 +128,7 @@ def main():
                 f"IBVAP | Humans: {len(analyzed.objects)} | Frame: {frame_id}",
                 (10, 26), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (4, 195, 247), 2)
 
-            # Step 5: Push frame to MJPEG buffer (for website live view)
+            # Step 6: Push frame to MJPEG buffer (for website live view)
             LIVE_FRAME.write(frame)
 
             cv2.imshow("IBVAP Live", frame)

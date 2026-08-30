@@ -81,7 +81,11 @@ class HumanTracker:
             h = y2 - y1
             bbs.append(([x1, y1, w, h], obj.confidence, obj.object_type))
             
-        tracks = self._tracker.update_tracks(bbs, frame=None)
+        # deep_sort_realtime requires a frame to extract embeddings.
+        # Since we are running in an event-driven architecture, we pass a dummy frame
+        # to force it to rely purely on Kalman Filter / IoU (SORT behavior).
+        dummy_frame = __import__('numpy').zeros((720, 1280, 3), dtype=__import__('numpy').uint8)
+        tracks = self._tracker.update_tracks(bbs, frame=dummy_frame)
 
         current_timestamp = detection_result.timestamp_utc
         dt = 0.0

@@ -1,0 +1,41 @@
+[
+  {
+    "schema_version": "1.0",
+    "module": "human_detection",
+    "camera_id": "CAM_01",
+    "frame_id": 1,
+    "timestamp_utc": "2026-08-30T10:00:00Z",
+    "objects": [
+      {
+        "object_type": "human",
+        "track_id": "track-001",
+        "confidence": 0.93,
+        "bbox": [120, 80, 260, 400],
+        "attributes": {}
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "module": "human_detection",
+    "camera_id": "CAM_01",
+    "frame_id": 2,
+    "timestamp_utc": "2026-08-30T10:00:00.200Z",
+    "objects": [
+      {
+        "object_type": "human",
+        "track_id": "track-001",
+        "confidence": 0.91,
+        "bbox": [130, 82, 270, 402],
+        "attributes": {}
+      },
+      {
+        "object_type": "human",
+        "track_id": "track-002",
+        "confidence": 0.87,
+        "bbox": [400, 100, 530, 380],
+        "attributes": {}
+      }
+    ]
+  }
+]

@@ -1,0 +1,66 @@
+# Rules — Alarm Manager Decision Config
+# =======================================
+# This file (not code inside any module) decides:
+#   - Whether a DetectionResult becomes a logged Event
+#   - The severity of that Event
+#   - Whether evidence (snapshot + clip) should be captured
+#
+# Adding a new detector = adding a new block here. Zero changes to Alarm Manager code.
+# Owner: New Member #5 (Alarm Manager)
+
+rules:
+  # ─── Informational: goes to activity_log only, no alarm fired ───────────────
+  - when:
+      module: human_detection
+    event_type: HUMAN_DETECTED
+    severity: informational
+    capture_evidence: false
+
+  - when:
+      module: vehicle_detection
+    event_type: VEHICLE_DETECTED
+    severity: informational
+    capture_evidence: false
+
+  # ─── Medium severity ─────────────────────────────────────────────────────────
+  - when:
+      module: suspicious_activity
+      attribute: confidence
+      gte: 0.75
+    event_type: SUSPICIOUS_ACTIVITY
+    severity: medium
+    capture_evidence: true
+
+  - when:
+      module: anpr
+      attribute: watchlist_match
+      equals: false
+    event_type: VEHICLE_PLATE_READ
+    severity: informational
+    capture_evidence: false
+
+  # ─── High severity ───────────────────────────────────────────────────────────
+  - when:
+      module: virtual_fence
+      attribute: zone_state
+      equals: inside
+    event_type: INTRUSION_DETECTED
+    severity: high
+    capture_evidence: true
+
+  # ─── Critical severity ───────────────────────────────────────────────────────
+  - when:
+      module: anpr
+      attribute: watchlist_match
+      equals: true
+    event_type: WATCHLIST_VEHICLE
+    severity: critical
+    capture_evidence: true
+
+  - when:
+      module: face_analysis
+      attribute: watchlist_match
+      equals: true
+    event_type: WATCHLIST_PERSON
+    severity: critical
+    capture_evidence: true

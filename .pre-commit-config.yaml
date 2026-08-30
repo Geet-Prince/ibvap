@@ -1,0 +1,21 @@
+repos:
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        language_version: python3
+
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.4.10
+    hooks:
+      - id: ruff
+        args: [--fix]
+
+  - repo: local
+    hooks:
+      - id: contract-tests
+        name: "Contract conformance tests"
+        entry: pytest tests/contract/ -v
+        language: system
+        types: [python]
+        pass_filenames: false

@@ -1,0 +1,50 @@
+[
+  {
+    "schema_version": "1.0",
+    "module": "human_tracking",
+    "camera_id": "CAM_01",
+    "frame_id": 1,
+    "timestamp_utc": "2026-08-30T10:00:00Z",
+    "objects": [
+      {
+        "object_type": "human",
+        "track_id": "track-001",
+        "confidence": 0.93,
+        "bbox": [120, 80, 260, 400],
+        "attributes": {"centroid": [190, 240], "velocity_px_per_s": [2.1, 0.5]}
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "module": "human_tracking",
+    "camera_id": "CAM_01",
+    "frame_id": 6,
+    "timestamp_utc": "2026-08-30T10:00:01Z",
+    "objects": [
+      {
+        "object_type": "human",
+        "track_id": "track-001",
+        "confidence": 0.90,
+        "bbox": [135, 82, 275, 402],
+        "attributes": {"centroid": [205, 242], "velocity_px_per_s": [3.0, 0.4]}
+      }
+    ]
+  },
+  {
+    "schema_version": "1.0",
+    "module": "human_tracking",
+    "camera_id": "CAM_01",
+    "frame_id": 12,
+    "timestamp_utc": "2026-08-30T10:00:02Z",
+    "objects": [
+      {
+        "object_type": "human",
+        "track_id": "track-001",
+        "confidence": 0.91,
+        "bbox": [200, 80, 340, 400],
+        "attributes": {"centroid": [270, 240], "velocity_px_per_s": [13.0, 0.2]}
+      }
+    ]
+  }
+]

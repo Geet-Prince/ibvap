@@ -122,8 +122,8 @@ body{font-family:'Segoe UI',sans-serif;background:#080c18;color:#dde4f0;height:1
   <div id="cam-panel">
     <h2>📹 Live Camera</h2>
     <div id="cam-wrap">
-      <img id="cam-img" src="/stream/live" alt="live"
-           onerror="document.getElementById('cam-offline').style.display='block';this.style.display='none'"/>
+      <img id="cam-img" src="" alt="live"
+           onerror="handleCamError(this)"/>
       <div id="cam-offline">📷 Camera Offline</div>
       <div id="cam-overlay">CAM_LIVE ● REC</div>
     </div>
@@ -155,6 +155,20 @@ const WS  = 'ws://localhost:8000/ws/alerts';
 
 const stats = {total:0,humans:0,medium:0,high:0,critical:0,incidents:new Set()};
 let   alerts = [], incidents = [];
+
+// ── Webcam Feed ────────────────────────────────────────────
+function initCam() {
+  const img = document.getElementById('cam-img');
+  img.style.display = 'block';
+  document.getElementById('cam-offline').style.display = 'none';
+  img.src = `${API}/stream/live?t=${new Date().getTime()}`;
+}
+function handleCamError(img) {
+  img.style.display = 'none';
+  document.getElementById('cam-offline').style.display = 'block';
+  setTimeout(initCam, 3000); // retry every 3s
+}
+initCam();
 
 // ── Tab switch ─────────────────────────────────────────────
 function switchTab(name, el) {

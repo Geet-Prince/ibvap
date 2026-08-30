@@ -203,3 +203,5 @@ http://localhost:8000/ui
 | 2026-08-30 | Website: live dashboard with alerts, snapshots, threat meter |
 | 2026-08-30 | Added mock data fixtures for Omkar's Suspicious Activity module |
 | 2026-08-30 | Full pipeline wired: Webcam → YOLO → Track → Alarm → Dashboard |
+| 2026-08-30 | Created `docs/TEAM_INTEGRATION_BRIEF.md` for AI agents to follow architecture |
+| 2026-08-30 | Fixed MJPEG stream CORS/404 issues and added automatic camera retry to UI |

@@ -1,8 +1,8 @@
 # 📋 IBVAP — Project Status Board
-> **Last Updated:** 2026-08-30 21:12 IST  
+> **Last Updated:** 2026-08-30 21:27 IST  
 > **Owner:** Prince (geet-prince)  
 > **Repo:** https://github.com/Geet-Prince/ibvap  
-> **Phase:** Phase 1 Complete → Alarm Manager + Website Built
+> **Phase:** Phase 1 Done → Alarm Manager + Full Dashboard v2 Live
 
 ---
 
@@ -35,19 +35,26 @@ IBVAP (Intelligent Border Video Analytics Platform) is an AI-powered CCTV analyt
 ### Alarm Manager (Prince)
 - [x] `AlarmManager.submit()` — single ingestion point for all modules
 - [x] Threat scoring engine via `rules.yaml` (no code changes needed to add rules)
+- [x] **Adaptive snapshot rate** — score 20→2s, 40→1s, 60→0.5s, 80+→0.2s
 - [x] Human snapshot cropper — crops bbox + 15% padding for face detection quality
 - [x] SQLite database — `activity_log` + `events` tables (`storage/events.db`)
-- [x] FastAPI server with REST API (`/api/events`) and WebSocket (`/ws/alerts`)
+- [x] FastAPI server with REST API (`/api/events`, `/api/incidents`) and WebSocket (`/ws/alerts`)
+- [x] **MJPEG live stream** — `/stream/live` endpoint for browser webcam view
+- [x] **Incident folder system** — each tracked human gets `storage/incidents/<id>/`
+- [x] **Incident JSON metadata** — humans, vehicles, weapons, zones, activities, plates, snapshots
 - [x] Threat rules configurable in `alarm_manager/configs/rules.yaml`
 
-### Website Dashboard (Prince)
-- [x] Single-page live dashboard (`website/index.html`)
-- [x] Dark theme UI with live alert feed
+### Website Dashboard v2 (Prince)
+- [x] **3-panel layout** — Live Cam | Alerts + Incidents | Detail View
+- [x] **Live webcam feed** via MJPEG stream (real-time, no plugin needed)
+- [x] Dark theme UI with live alert feed (auto-animates on new event)
+- [x] **Incidents tab** — folder-based cards with snapshot gallery, metadata stats
 - [x] Threat score meter (colour-coded: Green/Yellow/Orange/Red)
-- [x] Snapshot viewer (shows cropped human photo per alert)
+- [x] **Snapshot gallery** per incident — click to preview full image
+- [x] Stats bar (Total / Humans / Medium / High / Critical / Incidents)
 - [x] Auto-reconnect WebSocket
-- [x] Stats bar (Total / Medium / High / Critical counts)
-- [x] Historical event loader on page open
+- [x] Historical event + incident loader on page open
+- [x] Module tags, zone breach tags, activity tags per incident
 
 ### Integration & Tooling
 - [x] End-to-end pipeline runner (`run_live.py`) — Webcam → YOLO → Track → Alarm → Dashboard

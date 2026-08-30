@@ -70,7 +70,7 @@ IBVAP (Intelligent Border Video Analytics Platform) is an AI-powered CCTV analyt
 
 ### Team Modules (Waiting for teammates)
 - [ ] **Virtual Fence** — Abhilasha (consumes tracking JSON)
-- [ ] **Suspicious Activity** — Omkar (has mock data, can start now)
+- [x] **Suspicious Activity** — Omkar (Loitering/Crowd/Erratic integrated into pipeline!)
 - [ ] **Vehicle Detection + ANPR** — Prachi
 
 ### Upcoming Work

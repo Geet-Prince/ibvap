@@ -20,6 +20,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from human_detection.inference.detector import HumanDetector
 from human_tracking.inference.tracker import HumanTracker
+from suspicious_activity.loitering_detector import SuspiciousActivityDetector
 from alarm_manager.src.core import AlarmManager
 from alarm_manager.src.frame_buffer import LIVE_FRAME
 
@@ -44,6 +45,7 @@ def main():
 
     detector      = HumanDetector()
     tracker       = HumanTracker()
+    suspicious    = SuspiciousActivityDetector()
     alarm_manager = AlarmManager()
 
     cap = cv2.VideoCapture(0)
@@ -67,9 +69,12 @@ def main():
 
             # Step 2: Track
             tracked = tracker.track(det)
+            
+            # Step 3: Suspicious Activity (Omkar's module)
+            analyzed = suspicious.process(tracked)
 
-            # Step 3: Alarm Manager (snapshot + scoring + broadcast)
-            alarm_manager.submit(tracked, frame=frame)
+            # Step 4: Alarm Manager (snapshot + scoring + broadcast)
+            alarm_manager.submit(analyzed, frame=frame)
 
             # Step 4: Draw on frame
             for obj in tracked.objects:

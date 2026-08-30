@@ -1,0 +1,45 @@
+# Alarm Manager — Threat Scoring Rules
+# Add/modify rules here without touching any Python code.
+# Scores add up to form a total Danger Level per track_id.
+
+rules:
+  - name: "Human Detected"
+    module: human_detection
+    score: 20
+    severity: informational
+    capture_snapshot: false
+
+  - name: "Human Tracked"
+    module: human_tracking
+    score: 20
+    severity: informational
+    capture_snapshot: true      # Always snapshot a confirmed tracked human
+
+  - name: "Virtual Fence Breach"
+    module: virtual_fence
+    attribute: zone_state
+    equals: inside
+    score: 40
+    severity: high
+    capture_snapshot: true
+
+  - name: "Suspicious Activity"
+    module: suspicious_activity
+    score: 35
+    severity: medium
+    capture_snapshot: true
+
+  - name: "ANPR Watchlist Hit"
+    module: anpr
+    attribute: watchlist_match
+    equals: true
+    score: 50
+    severity: critical
+    capture_snapshot: true
+
+# Danger thresholds
+thresholds:
+  low: 20       # Green
+  medium: 40    # Yellow
+  high: 60      # Orange
+  critical: 80  # Red

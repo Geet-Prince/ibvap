@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IBVAP — Border Intelligence Dashboard</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0a0e1a;
+      color: #e0e6f0;
+      min-height: 100vh;
+    }
+
+    /* ── Header ─────────────────────────────────── */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 28px;
+      background: #0d1224;
+      border-bottom: 1px solid #1e2d50;
+    }
+    header h1 { font-size: 1.2rem; letter-spacing: 2px; color: #4fc3f7; text-transform: uppercase; }
+    #conn-status {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.8rem; color: #90a4ae;
+    }
+    #conn-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: #f44336; transition: background 0.3s;
+    }
+    #conn-dot.live { background: #4caf50; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* ── Stats bar ───────────────────────────────── */
+    #stats-bar {
+      display: flex; gap: 16px; padding: 12px 28px;
+      background: #0d1224; border-bottom: 1px solid #1e2d50;
+    }
+    .stat-box {
+      flex: 1; text-align: center; padding: 10px;
+      background: #131929; border-radius: 8px;
+      border: 1px solid #1e2d50;
+    }
+    .stat-box .num { font-size: 1.8rem; font-weight: 700; }
+    .stat-box .lbl { font-size: 0.7rem; color: #78909c; text-transform: uppercase; letter-spacing: 1px; }
+    .green { color: #4caf50; } .yellow { color: #ffc107; }
+    .orange { color: #ff9800; } .red { color: #f44336; }
+
+    /* ── Main layout ─────────────────────────────── */
+    main { display: flex; gap: 0; height: calc(100vh - 120px); }
+
+    /* ── Alert feed ──────────────────────────────── */
+    #alert-feed {
+      width: 400px; min-width: 340px;
+      overflow-y: auto; border-right: 1px solid #1e2d50;
+    }
+    #alert-feed h2 {
+      padding: 14px 16px; font-size: 0.85rem;
+      text-transform: uppercase; letter-spacing: 1px;
+      background: #0d1224; border-bottom: 1px solid #1e2d50;
+      position: sticky; top: 0; z-index: 1; color: #90a4ae;
+    }
+    .alert-card {
+      padding: 14px 16px; border-bottom: 1px solid #131929;
+      cursor: pointer; transition: background 0.2s;
+      animation: slideIn 0.3s ease;
+    }
+    @keyframes slideIn { from { opacity:0; transform:translateX(-12px); } to { opacity:1; transform:none; } }
+    .alert-card:hover { background: #131929; }
+    .alert-card.active { background: #1a2440; border-left: 3px solid #4fc3f7; }
+    .alert-card .badge {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; margin-bottom: 6px;
+    }
+    .badge.CRITICAL { background: #b71c1c; color: #fff; }
+    .badge.HIGH     { background: #e65100; color: #fff; }
+    .badge.MEDIUM   { background: #f57f17; color: #fff; }
+    .badge.LOW      { background: #1b5e20; color: #fff; }
+    .badge.informational { background: #263238; color: #90a4ae; }
+    .alert-title { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .alert-meta { font-size: 0.75rem; color: #78909c; }
+    .alert-score {
+      float: right; font-size: 0.8rem; font-weight: 700;
+      padding: 3px 10px; border-radius: 12px;
+      background: #1e2d50;
+    }
+
+    /* ── Detail panel ────────────────────────────── */
+    #detail-panel {
+      flex: 1; padding: 24px; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 20px;
+    }
+    #detail-panel h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: #90a4ae; }
+    #no-selection {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; color: #37474f; gap: 12px;
+    }
+    #no-selection svg { width: 64px; opacity: 0.3; }
+
+    .detail-card {
+      background: #0d1224; border: 1px solid #1e2d50;
+      border-radius: 10px; padding: 20px;
+    }
+    .detail-card h3 { font-size: 0.8rem; color: #78909c; text-transform: uppercase; margin-bottom: 12px; }
+
+    /* Danger meter */
+    .danger-meter { margin: 12px 0; }
+    .meter-track {
+      height: 12px; background: #131929;
+      border-radius: 6px; overflow: hidden;
+    }
+    .meter-fill {
+      height: 100%; border-radius: 6px;
+      transition: width 0.6s ease;
+    }
+    .meter-label { display: flex; justify-content: space-between; font-size: 0.75rem; color: #78909c; margin-top: 4px; }
+
+    /* Snapshot */
+    #snapshot-img {
+      width: 100%; max-height: 300px; object-fit: contain;
+      border-radius: 8px; background: #050810;
+      border: 1px solid #1e2d50;
+    }
+    .no-snap { text-align: center; padding: 40px; color: #37474f; font-size: 0.85rem; }
+
+    /* KV table */
+    .kv-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; }
+    .kv-table td { padding: 7px 10px; border-bottom: 1px solid #131929; }
+    .kv-table td:first-child { color: #78909c; width: 40%; }
+    .kv-table td:last-child { color: #e0e6f0; font-weight: 500; }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #0a0e1a; }
+    ::-webkit-scrollbar-thumb { background: #1e2d50; border-radius: 3px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ IBVAP — Border Intelligence Dashboard</h1>
+  <div id="conn-status">
+    <div id="conn-dot"></div>
+    <span id="conn-text">Connecting...</span>
+  </div>
+</header>
+
+<div id="stats-bar">
+  <div class="stat-box"><div class="num green" id="s-total">0</div><div class="lbl">Total Events</div></div>
+  <div class="stat-box"><div class="num yellow" id="s-medium">0</div><div class="lbl">Medium</div></div>
+  <div class="stat-box"><div class="num orange" id="s-high">0</div><div class="lbl">High</div></div>
+  <div class="stat-box"><div class="num red" id="s-critical">0</div><div class="lbl">Critical</div></div>
+</div>
+
+<main>
+  <!-- Alert feed -->
+  <div id="alert-feed">
+    <h2>🚨 Live Alerts</h2>
+    <div id="alert-list"></div>
+  </div>
+
+  <!-- Detail panel -->
+  <div id="detail-panel">
+    <div id="no-selection">
+      <svg viewBox="0 0 64 64" fill="currentColor"><circle cx="32" cy="32" r="28" stroke="currentColor" stroke-width="3" fill="none"/><path d="M32 20v16M32 40v4"/></svg>
+      <p>Click an alert to view details</p>
+    </div>
+  </div>
+</main>
+
+<script>
+  const API = 'http://localhost:8000';
+  const WS  = 'ws://localhost:8000/ws/alerts';
+  
+  let stats = { total: 0, medium: 0, high: 0, critical: 0 };
+  let alerts = [];
+  let activeId = null;
+
+  // ── Stats ────────────────────────────────────────────
+  function updateStats(a) {
+    stats.total++;
+    if (a.severity === 'medium')   stats.medium++;
+    if (a.severity === 'high')     stats.high++;
+    if (a.severity === 'critical') stats.critical++;
+    document.getElementById('s-total').textContent    = stats.total;
+    document.getElementById('s-medium').textContent   = stats.medium;
+    document.getElementById('s-high').textContent     = stats.high;
+    document.getElementById('s-critical').textContent = stats.critical;
+  }
+
+  // ── Danger color ──────────────────────────────────────
+  function dangerColor(label) {
+    return { CRITICAL:'#f44336', HIGH:'#ff9800', MEDIUM:'#ffc107', LOW:'#4caf50' }[label] || '#78909c';
+  }
+
+  // ── Render alert card ─────────────────────────────────
+  function renderCard(a) {
+    const list = document.getElementById('alert-list');
+    const div  = document.createElement('div');
+    div.className = 'alert-card';
+    div.id = 'card-' + a.event_id;
+    div.innerHTML = `
+      <div>
+        <span class="badge ${a.danger_label}">${a.danger_label}</span>
+        <span class="alert-score" style="color:${dangerColor(a.danger_label)}">${a.danger_score} pts</span>
+      </div>
+      <div class="alert-title">${a.event_type}</div>
+      <div class="alert-meta">📷 ${a.camera_id} &nbsp;|&nbsp; 🎯 ${a.track_id} &nbsp;|&nbsp; 🕐 ${new Date(a.timestamp).toLocaleTimeString()}</div>
+    `;
+    div.onclick = () => showDetail(a);
+    list.prepend(div);
+  }
+
+  // ── Show detail ───────────────────────────────────────
+  function showDetail(a) {
+    activeId = a.event_id;
+    document.querySelectorAll('.alert-card').forEach(c => c.classList.remove('active'));
+    const card = document.getElementById('card-' + a.event_id);
+    if (card) card.classList.add('active');
+
+    const score = a.danger_score;
+    const pct   = Math.min(score, 100);
+    const color = dangerColor(a.danger_label);
+
+    const snap = a.snapshot_path
+      ? `<img id="snapshot-img" src="${API}/snapshots/${encodeURIComponent(a.snapshot_path.split('/').pop())}" onerror="this.parentElement.innerHTML='<div class=no-snap>No snapshot available</div>'" />`
+      : `<div class="no-snap">No snapshot captured for this event</div>`;
+
+    document.getElementById('detail-panel').innerHTML = `
+      <h2>Event Details</h2>
+      <div class="detail-card">
+        <h3>Threat Score</h3>
+        <div class="danger-meter">
+          <div class="meter-track">
+            <div class="meter-fill" style="width:${pct}%;background:${color}"></div>
+          </div>
+          <div class="meter-label">
+            <span>${a.danger_label} — ${score} / 100 pts</span>
+            <span>${a.event_type}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail-card">
+        <h3>Snapshot</h3>
+        ${snap}
+      </div>
+
+      <div class="detail-card">
+        <h3>Event Info</h3>
+        <table class="kv-table">
+          <tr><td>Event ID</td><td>${a.event_id}</td></tr>
+          <tr><td>Module</td><td>${a.module}</td></tr>
+          <tr><td>Camera</td><td>${a.camera_id}</td></tr>
+          <tr><td>Track ID</td><td>${a.track_id}</td></tr>
+          <tr><td>Confidence</td><td>${(a.confidence * 100).toFixed(1)}%</td></tr>
+          <tr><td>Bounding Box</td><td>[${a.bbox.join(', ')}]</td></tr>
+          <tr><td>Severity</td><td>${a.severity}</td></tr>
+          <tr><td>Timestamp</td><td>${new Date(a.timestamp).toLocaleString()}</td></tr>
+        </table>
+      </div>
+    `;
+  }
+
+  // ── WebSocket ─────────────────────────────────────────
+  function connect() {
+    const dot  = document.getElementById('conn-dot');
+    const text = document.getElementById('conn-text');
+    const ws   = new WebSocket(WS);
+
+    ws.onopen = () => {
+      dot.classList.add('live');
+      text.textContent = 'Live';
+      // Load historical events on connect
+      fetch(`${API}/api/events`)
+        .then(r => r.json())
+        .then(evts => evts.reverse().forEach(e => { renderCard(e); updateStats(e); }))
+        .catch(() => {});
+    };
+
+    ws.onmessage = (e) => {
+      const alert = JSON.parse(e.data);
+      alerts.unshift(alert);
+      renderCard(alert);
+      updateStats(alert);
+    };
+
+    ws.onclose = () => {
+      dot.classList.remove('live');
+      text.textContent = 'Reconnecting...';
+      setTimeout(connect, 3000);
+    };
+  }
+
+  connect();
+</script>
+</body>
+</html>

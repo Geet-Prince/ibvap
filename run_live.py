@@ -1,85 +1,85 @@
+"""
+run_live.py  — IBVAP Full Pipeline
+===================================
+Runs: YOLO Detection → Tracking → AlarmManager → WebSocket Dashboard
+
+Usage:
+    Terminal 1:  python run_live.py        (camera + detection pipeline)
+    Terminal 2:  python start_server.py    (FastAPI server + dashboard)
+    Browser:     http://localhost:8000/ui
+"""
+import sys
 import cv2
-import time
+from pathlib import Path
 from datetime import datetime, timezone
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from human_detection.inference.detector import HumanDetector
 from human_tracking.inference.tracker import HumanTracker
-from contracts.schema import DetectionResult
-
-class MockAlarmManager:
-    def submit(self, result: DetectionResult):
-        print(f"[{result.timestamp_utc.strftime('%H:%M:%S')}] Frame: {result.frame_id} | Humans Tracked: {len(result.objects)}")
+from alarm_manager.src.core import AlarmManager
 
 def main():
-    print("Initializing components...")
-    detector = HumanDetector()
-    tracker = HumanTracker()
-    alarm_manager = MockAlarmManager()
+    print("=" * 55)
+    print("  IBVAP Border Intelligence — Live Pipeline")
+    print("  Dashboard: http://localhost:8000/ui")
+    print("=" * 55)
 
-    # Try to open webcam (0)
+    detector     = HumanDetector()
+    tracker      = HumanTracker()
+    alarm_manager = AlarmManager()
+
     cap = cv2.VideoCapture(0)
     if not cap.isOpened():
-        print("Error: Could not open webcam. Ensure a camera is connected.")
+        print("ERROR: Cannot open webcam.")
         return
 
-    print("Camera opened successfully. A window should appear on your screen!")
-    print("Press 'q' while focused on the video window to stop.")
-    
+    print("Camera open. Press 'q' to stop.")
     frame_id = 0
+
     try:
         while True:
             ret, frame = cap.read()
             if not ret:
-                print("Failed to grab frame.")
                 break
-            
+
             frame_id += 1
             timestamp = datetime.now(timezone.utc)
-            
-            # Step 1: Detect
-            det_result = detector.detect(
-                frame=frame,
-                camera_id="CAM_LIVE",
-                frame_id=frame_id,
-                timestamp_utc=timestamp
-            )
-            
-            # Step 2: Track
+
+            # Step 1: Detect humans with YOLO
+            det_result = detector.detect(frame, "CAM_LIVE", frame_id, timestamp)
+
+            # Step 2: Track with DeepSORT
             track_result = tracker.track(det_result)
-            
-            # Step 3: Submit to Alarm Manager
-            alarm_manager.submit(track_result)
-            
-            # Step 4: Draw visuals on the frame
+
+            # Step 3: Submit to AlarmManager (also crops snapshot from frame)
+            alarm_manager.submit(track_result, frame=frame)
+
+            # Step 4: Draw visuals
             for obj in track_result.objects:
                 x1, y1, x2, y2 = obj.bbox
-                track_id = obj.track_id
-                
-                # Draw bounding box
                 cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
-                
-                # Draw label with ID
-                label = f"{track_id}"
-                cv2.putText(frame, label, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
-                
-                # Draw centroid
+                cv2.putText(frame, obj.track_id, (x1, y1 - 10),
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.55, (0, 255, 0), 2)
                 if "centroid" in obj.attributes:
                     cx, cy = obj.attributes["centroid"]
-                    cv2.circle(frame, (cx, cy), 4, (0, 0, 255), -1)
+                    cv2.circle(frame, (cx, cy), 5, (0, 0, 255), -1)
 
-            # Show the video feed with the visuals
-            cv2.imshow("IBVAP Live Tracking", frame)
-            
-            # Press 'q' to quit
+            # Step 5: Show HUD
+            cv2.putText(frame,
+                f"Humans: {len(track_result.objects)}  Frame: {frame_id}",
+                (10, 28), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (4, 195, 247), 2)
+
+            cv2.imshow("IBVAP Live — Press q to stop", frame)
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
     except KeyboardInterrupt:
-        print("\nStopping via KeyboardInterrupt...")
+        pass
     finally:
         cap.release()
         cv2.destroyAllWindows()
-        print("Cleaned up camera and windows.")
+        print("Pipeline stopped.")
 
 if __name__ == "__main__":
     main()

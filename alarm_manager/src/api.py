@@ -17,9 +17,10 @@ from fastapi.staticfiles import StaticFiles
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from alarm_manager.src.database import get_recent_events, init_db
-from alarm_manager.src.incident_store import get_all_incidents
+from alarm_manager.src.database import get_recent_events, init_db, update_event_status
+from alarm_manager.src.incident_store import get_all_incidents, update_status
 from alarm_manager.src.frame_buffer import LIVE_FRAME
+from alarm_manager.src.stats import compute_stats
 from alarm_manager.src import register_subscriber, unregister_subscriber
 
 app = FastAPI(title="IBVAP API v2")
@@ -81,6 +82,56 @@ async def api_incident_detail(incident_id: str):
         return JSONResponse(status_code=404, content={"error": "not found"})
     import json
     return JSONResponse(content=json.loads(meta_file.read_text()))
+
+
+# ── Status updates (Escalate / Mark Reviewed) ───────────────────────────────
+@app.patch("/api/alerts/{alert_id}")
+async def api_update_alert(alert_id: str, body: dict):
+    status = (body or {}).get("status", "").strip()
+    if not status:
+        return JSONResponse(status_code=400, content={"error": "status required"})
+    if not update_event_status(alert_id, status):
+        return JSONResponse(status_code=404, content={"error": "alert not found"})
+    return {"event_id": alert_id, "status": status}
+
+
+@app.patch("/api/events/{event_id}")
+async def api_update_event(event_id: str, body: dict):
+    status = (body or {}).get("status", "").strip()
+    if not status:
+        return JSONResponse(status_code=400, content={"error": "status required"})
+    if not update_event_status(event_id, status):
+        return JSONResponse(status_code=404, content={"error": "event not found"})
+    return {"event_id": event_id, "status": status}
+
+
+@app.patch("/api/incidents/{incident_id}")
+async def api_update_incident(incident_id: str, body: dict):
+    status = (body or {}).get("status", "").strip()
+    if not status:
+        return JSONResponse(status_code=400, content={"error": "status required"})
+    if not update_status(incident_id, status):
+        return JSONResponse(status_code=404, content={"error": "incident not found"})
+    return {"incident_id": incident_id, "status": status}
+
+
+# ── Aggregated stats for the dashboard ───────────────────────────────────────
+@app.get("/api/stats")
+async def api_stats():
+    return compute_stats()
+
+
+# ── Live pipeline telemetry (per-frame human count, same source as feed) ──────
+@app.get("/api/live")
+async def api_live():
+    info = LIVE_FRAME.live()
+    if not info["live"]:
+        # Make a stalled pipeline visible instead of silently reporting 0.
+        import logging
+        logging.getLogger("ibvap.api").warning(
+            "live source stale — pipeline may not be writing frames."
+        )
+    return info
 
 
 # ── WebSocket live alerts ───────────────────────────────────────────────────

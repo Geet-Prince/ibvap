@@ -61,6 +61,18 @@ def save(incident_id: str, meta: dict) -> None:
         json.dump(meta, f, indent=2)
 
 
+def update_status(incident_id: str, status: str) -> bool:
+    """Persist a new status onto an existing incident.json. Returns True if found."""
+    path = _meta_path(incident_id)
+    if not path.exists():
+        return False
+    with open(path) as f:
+        meta = json.load(f)
+    meta["status"] = status
+    save(incident_id, meta)
+    return True
+
+
 def add_snapshot(incident_id: str, frame: np.ndarray,
                  bbox: tuple, meta: dict) -> Optional[str]:
     """

@@ -98,3 +98,14 @@ def get_recent_events(limit: int = 50) -> list[dict]:
     ).fetchall()
     conn.close()
     return [dict(r) for r in rows]
+
+
+def update_event_status(event_id: str, status: str) -> bool:
+    """Set the status of one event row. Returns True if a row was updated."""
+    conn = get_connection()
+    cur = conn.execute(
+        "UPDATE events SET status=? WHERE event_id=?", (status, event_id)
+    )
+    conn.commit()
+    conn.close()
+    return cur.rowcount > 0

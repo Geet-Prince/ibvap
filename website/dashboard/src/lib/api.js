@@ -43,6 +43,7 @@ export function normalizeAlert(raw) {
     humansDetected: Number(raw.humans_detected || parseAttrsNum(raw.attributes, 'humans_detected') || 0),
     zoneBreaches: raw.zone_breaches || [],
     activities: raw.activities || [],
+    plateNo: raw.plate_no || parseAttrs(raw.attributes, 'plate_no') || '',
     _raw: raw,
   };
 }

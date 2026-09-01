@@ -1,4 +1,4 @@
-﻿import json
+import json
 import numpy as np
 import cv2
 from pathlib import Path
@@ -102,15 +102,18 @@ class VirtualFence:
     def draw_fence(self, frame, breach_active=False):
         if self.contour is None or len(self.contour) < 3:
             return
-        overlay = frame.copy()
-        fill_color = (0, 0, 255) if breach_active else (0, 0, 120)
-        cv2.fillPoly(overlay, [self.contour], fill_color)
-        cv2.addWeighted(overlay, 0.18, frame, 0.82, 0, frame)
-        cv2.polylines(frame, [self.contour], isClosed=True, color=(0, 0, 255), thickness=3)
-        for pt in self.contour:
-            cv2.circle(frame, (int(pt[0]), int(pt[1])), 5, (0, 80, 255), -1)
+        
         if breach_active:
+            overlay = frame.copy()
+            cv2.fillPoly(overlay, [self.contour], (0, 0, 255))
+            cv2.addWeighted(overlay, 0.18, frame, 0.82, 0, frame)
+            
             cx = int(self.contour[:, 0].mean())
             cy = int(self.contour[:, 1].mean())
             cv2.putText(frame, "RESTRICTED ZONE", (cx - 80, cy),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 255), 2, cv2.LINE_AA)
+        
+        # Always draw the outline and vertices
+        cv2.polylines(frame, [self.contour], isClosed=True, color=(0, 0, 255), thickness=3)
+        for pt in self.contour:
+            cv2.circle(frame, (int(pt[0]), int(pt[1])), 5, (0, 80, 255), -1)

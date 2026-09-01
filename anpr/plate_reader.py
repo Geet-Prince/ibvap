@@ -7,15 +7,18 @@ class PlateReader:
         self.reader = easyocr.Reader(['en'], gpu=True)
         self.pattern = re.compile(r'[^A-Z0-9]')
 
-    def read_plate(self, frame, bbox):
-        x1, y1, x2, y2 = [int(v) for v in bbox]
-        h, w = frame.shape[:2]
-        x1 = max(0, x1)
-        y1 = max(0, y1)
-        x2 = min(w, x2)
-        y2 = min(h, y2)
-        
-        crop = frame[y1:y2, x1:x2]
+    def read_plate(self, frame, bbox=None):
+        if bbox is not None:
+            x1, y1, x2, y2 = [int(v) for v in bbox]
+            h, w = frame.shape[:2]
+            x1 = max(0, x1)
+            y1 = max(0, y1)
+            x2 = min(w, x2)
+            y2 = min(h, y2)
+            crop = frame[y1:y2, x1:x2]
+        else:
+            crop = frame
+            
         if crop.size == 0:
             return None
             

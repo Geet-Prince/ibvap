@@ -64,8 +64,14 @@ export default function DetailPanel({ item, onStatusChange }) {
         </div>
       </Section>
 
-      <Section title="Snapshot">
-        {item.snapshotUrl ? (
+      <Section title="Snapshots">
+        {item.snapshots && item.snapshots.length > 0 ? (
+          <div className="flex gap-2 overflow-x-auto pb-2 custom-scrollbar">
+            {item.snapshots.map((src, i) => (
+              <img key={i} src={src} alt="snapshot" className="h-32 rounded border border-hairline object-cover" />
+            ))}
+          </div>
+        ) : item.snapshotUrl ? (
           <img src={item.snapshotUrl} alt="snapshot" className="w-full rounded border border-hairline object-cover" />
         ) : (
           <div className="flex h-24 items-center justify-center rounded border border-dashed border-hairline text-[11px] text-ghost">
@@ -90,6 +96,14 @@ export default function DetailPanel({ item, onStatusChange }) {
             <>
               <dt className="mono text-ghost">Humans</dt>
               <dd className="flex items-center gap-1 text-nominal"><Users className="h-3 w-3" />{item.humansDetected}</dd>
+            </>
+          )}
+          {(item.plateNumbers?.length > 0 || item.plateNo) && (
+            <>
+              <dt className="mono text-ghost">License Plate</dt>
+              <dd className="mono text-live font-bold bg-live/10 px-1 rounded inline-block">
+                {item.plateNumbers?.join(', ') || item.plateNo}
+              </dd>
             </>
           )}
         </dl>

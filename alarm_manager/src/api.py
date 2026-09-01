@@ -64,6 +64,17 @@ async def live_stream():
     )
 
 
+@app.get('/stream/snapshot/{cam_id}')
+async def camera_snapshot(cam_id: str):
+    from fastapi import Response
+    buf = CAMERA_REGISTRY.get(cam_id)
+    if buf is None:
+        return JSONResponse(status_code=404, content={'error': f'Camera {cam_id} not found'})
+    frame = buf.read()
+    if not frame:
+        return JSONResponse(status_code=503, content={'error': 'Frame not available'})
+    return Response(content=frame, media_type='image/jpeg')
+
 @app.get("/stream/camera/{cam_id}")
 async def camera_stream(cam_id: str):
     """Individual camera MJPEG stream."""

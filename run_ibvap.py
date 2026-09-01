@@ -1,4 +1,4 @@
-﻿"""
+"""
 run_ibvap.py â€” IBVAP Single Entry Point (V8 Multi-Camera Architecture)
 =============================================================================
 Changes from V7:
@@ -214,7 +214,8 @@ class ConsolidatedBatchedAI:
 
         import os
         from pathlib import Path
-        _ENGINE = Path(r'C:\Users\omkar\Downloads\SIH-2026\yolov8s.engine')
+        _default_engine = Path(__file__).resolve().parent / 'yolov8s.engine'
+        _ENGINE = Path(os.environ.get('IBVAP_TRT_ENGINE', str(_default_engine)))
         _FALLBACK = 'yolov8s.pt'
 
         if _ENGINE.exists():
@@ -239,19 +240,52 @@ class ConsolidatedBatchedAI:
             try:
                 self._anpr = PlateReader()
                 print('  [ANPR] Plate reader initialised.')
+                import queue, threading
+                self._anpr_queue = queue.Queue(maxsize=50)
+                self._anpr_results = {}
+                self._anpr_lock = threading.Lock()
+                self._anpr_thread = threading.Thread(target=self._anpr_worker_loop, daemon=True)
+                self._anpr_thread.start()
             except Exception as exc:
                 print(f'  [WARN] ANPR init failed: {exc}')
 
+    def _anpr_worker_loop(self):
+        while True:
+            try:
+                cam_id, track_key, frame_crop = self._anpr_queue.get()
+                if self._anpr is not None:
+                    plate = self._anpr.read_plate(frame_crop)
+                    if plate:
+                        with self._anpr_lock:
+                            self._anpr_results[(cam_id, track_key)] = plate
+                self._anpr_queue.task_done()
+            except Exception as e:
+                print("ALARM WORKER ERROR:", e)
+
     def warmup(self, n_cams: int = 1) -> None:
-        """Warm up the model graph with the real batch size.
-        TRT engines bake in FP16 already, so half=True is set for PyTorch fallback only.
-        """
         try:
-            use_half = not getattr(self, '_using_trt', False)
-            for bs in sorted({1, min(n_cams, 4)}):
-                dummy = [np.zeros((640, 640, 3), dtype=np.uint8)] * bs
-                self.model.predict(dummy, device=0, half=use_half, verbose=False)
-            print(f'  [GPU] Warmup done (bs=1 and bs={min(n_cams,4)}, TRT={getattr(self,"_using_trt",False)})')
+            if getattr(self, '_using_trt', False):
+                # Init the predictor with a single frame
+                self.model.predict([np.zeros((640, 640, 3), dtype=np.uint8)], device=0, verbose=False)
+                backend = getattr(self.model.predictor, 'model', None)
+                if backend and hasattr(backend, 'bindings'):
+                    shape = backend.bindings['images'].shape
+                    self.max_batch = int(shape[0]) if shape[0] > 0 else 1
+                    self.is_dynamic_batch = getattr(backend, 'dynamic', False)
+                else:
+                    self.max_batch = 1
+                    self.is_dynamic_batch = False
+                print(f'  [GPU] TRT Model max batch size: {self.max_batch} (dynamic: {self.is_dynamic_batch})')
+                if self.max_batch > 1:
+                    dummy = [np.zeros((640, 640, 3), dtype=np.uint8)] * min(n_cams, self.max_batch)
+                    self.model.predict(dummy, device=0, verbose=False)
+            else:
+                for bs in sorted({1, min(n_cams, 4)}):
+                    dummy = [np.zeros((640, 640, 3), dtype=np.uint8)] * bs
+                    self.model.predict(dummy, device=0, verbose=False)
+                self.max_batch = 16
+                self.is_dynamic_batch = True
+            print(f'  [GPU] Warmup done')
         except Exception as exc:
             print(f'Warmup error: {exc}')
 
@@ -276,7 +310,7 @@ class ConsolidatedBatchedAI:
             with torch.no_grad():
                 # Batch chunking to avoid TRT max batch size limits
                 # TRT engines have a baked-in max batch size. Extract it if possible.
-                MAX_BATCH = getattr(self.model.model, 'batch_size', 1) if getattr(self, '_using_trt', False) else len(frames)
+                MAX_BATCH = getattr(self, 'max_batch', 1)
                 if MAX_BATCH is None or MAX_BATCH < 1:
                     MAX_BATCH = 1
                 yolo_results = []
@@ -288,7 +322,7 @@ class ConsolidatedBatchedAI:
                         conf=0.25,
                         imgsz=640,
                         device=0,
-                        half=(not getattr(self, '_using_trt', False)),
+                        
                         verbose=False,
                     )
                     yolo_results.extend(chunk_results)
@@ -304,14 +338,28 @@ class ConsolidatedBatchedAI:
                     clses = res.boxes.cls.cpu().numpy().astype(int)
                     confs = res.boxes.conf.cpu().numpy()
                     raw_dets = [
-                        {"bbox": tuple(xyxy[j]), "cls": int(clses[j]), "conf": float(confs[j])}
+                        {"bbox": tuple(map(int, xyxy[j])), "cls": int(clses[j]), "conf": float(confs[j])}
                         for j in range(len(xyxy))
                     ]
 
-                # â”€â”€ Per-camera IOU tracking â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                # ── Per-camera IOU tracking ─────────────────────────────
                 tracked = cam.tracker.update(raw_dets)
 
-                # â”€â”€ Build DetectionResult objects â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+                # Cleanup dead tracks from camera memory
+                active_tids = set(cam.tracker.tracks.keys())
+                for tid in list(cam.track_history.keys()):
+                    if tid not in active_tids:
+                        del cam.track_history[tid]
+                for v_key in list(cam.vehicle_plates.keys()):
+                    tid_str = v_key.replace("veh-", "")
+                    if tid_str.isdigit() and int(tid_str) not in active_tids:
+                        del cam.vehicle_plates[v_key]
+                for v_key in list(cam.vehicle_plate_retries.keys()):
+                    tid_str = v_key.replace("veh-", "")
+                    if tid_str.isdigit() and int(tid_str) not in active_tids:
+                        del cam.vehicle_plate_retries[v_key]
+
+                # ── Build DetectionResult objects ───────────────────────
                 dr_h = DetectionResult(
                     module="human_tracking", camera_id=cam.id,
                     frame_id=cam.latest_frame_id, timestamp_utc=ts,
@@ -365,16 +413,22 @@ class ConsolidatedBatchedAI:
                             
                         if v_track_key in cam.vehicle_plates:
                             v_attrs["plate_no"] = cam.vehicle_plates[v_track_key]
-                        elif self._anpr is not None and cam.vehicle_plate_retries.get(v_track_key, 0) < 5:
-                            cam.vehicle_plate_retries[v_track_key] = cam.vehicle_plate_retries.get(v_track_key, 0) + 1
-                            try:
-                                plate = self._anpr.read_plate(
-                                    frames[i], (x1, y1, x2, y2))
-                                if plate:
-                                    v_attrs["plate_no"] = plate
-                                    cam.vehicle_plates[v_track_key] = plate
-                            except Exception:
-                                pass
+                        elif getattr(self, '_anpr', None) is not None:
+                            cached = None
+                            with getattr(self, '_anpr_lock', None) or __import__('contextlib').nullcontext():
+                                if hasattr(self, '_anpr_results'):
+                                    cached = self._anpr_results.get((cam.id, v_track_key))
+                            if cached:
+                                v_attrs["plate_no"] = cached
+                                cam.vehicle_plates[v_track_key] = cached
+                            elif cam.vehicle_plate_retries.get(v_track_key, 0) < 5:
+                                cam.vehicle_plate_retries[v_track_key] = cam.vehicle_plate_retries.get(v_track_key, 0) + 1
+                                try:
+                                    # Crop the plate region
+                                    crop = frames[i][y1:y2, x1:x2].copy()
+                                    self._anpr_queue.put_nowait((cam.id, v_track_key, crop))
+                                except Exception:
+                                    pass
 
                         dr_v.objects.append(DetectedObject(
                             object_type="vehicle",
@@ -473,8 +527,8 @@ def main():
             analyzed, frame_copy = alarm_queue.get()
             try:
                 alarm_manager.submit(analyzed, frame=frame_copy)
-            except Exception:
-                pass
+            except Exception as e:
+                print("ALARM WORKER ERROR:", e)
 
     threading.Thread(target=alarm_worker, daemon=True).start()
 

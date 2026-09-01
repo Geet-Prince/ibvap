@@ -68,6 +68,9 @@ class AlarmManager:
         self._last_snap: dict[str, float] = {}
         self._meta_cache: dict[str, dict] = {}
         self._dirty_meta: set[str] = set()
+        self._last_alert: dict[str, float] = {}
+        self._last_flush = time.time()
+        self._last_known_plates: dict[str, str] = {}
         logger.info("AlarmManager v2 ready with %d rules.", len(self._rules))
 
     # ── Public API ──────────────────────────────────────────────────────
@@ -117,60 +120,86 @@ class AlarmManager:
 
             # Persist incident JSON
             self._dirty_meta.add(incident_id)
-            # Periodically flush dirty cache (e.g., every 50 frames or some heuristic)
-            if len(self._dirty_meta) > 10:
+            # Flush dirty cache periodically (e.g. every 1.5 seconds)
+            now = time.time()
+            if now - self._last_flush > 1.5 and self._dirty_meta:
                 for iid in list(self._dirty_meta):
                     incident_store.save(iid, self._meta_cache[iid])
-                    self._dirty_meta.remove(iid)
+                self._dirty_meta.clear()
+                self._last_flush = now
 
-            # Log to events DB if a rule matched
             if matched_rule:
-                log_event(
-                    event_id=incident_id,
-                    event_type=matched_rule["name"].upper().replace(" ", "_"),
-                    severity=matched_rule["severity"],
-                    camera_id=result.camera_id,
-                    track_id=obj.track_id,
-                    danger_score=score,
-                    snapshot_path=snapshot_file or "",
-                    module=result.module,
-                    attributes=obj.attributes,
-                )
+                plate_no = obj.attributes.get("plate_no")
+                is_new_plate = plate_no and self._last_known_plates.get(incident_id) != plate_no
+                time_since_last = now - self._last_alert.get(incident_id, 0)
+                
+                # Broadcast and log ONLY if: it's a new incident (>3s since last alert), 
+                # OR we just captured a new snapshot, OR we just detected a new license plate
+                if time_since_last > 3.0 or snapshot_file or is_new_plate:
+                    if plate_no:
+                        self._last_known_plates[incident_id] = plate_no
+                    self._last_alert[incident_id] = now
+                    
+                    log_event(
+                        event_id=incident_id,
+                        event_type=matched_rule.get("event_type", module).upper().replace(" ", "_"),
+                        severity=matched_rule["severity"],
+                        camera_id=result.camera_id,
+                        track_id=obj.track_id,
+                        danger_score=score,
+                        # If no snapshot this frame, don't overwrite with empty in the DB UPSERT, but upsert needs a value.
+                        # Wait, we pass the latest snapshot from meta instead of just this frame's snapshot!
+                        snapshot_path=meta["snapshots"][-1] if meta["snapshots"] else "",
+                        module=result.module,
+                        attributes=obj.attributes,
+                    )
 
-            # Build and broadcast alert
-            alert = {
-                "incident_id":    incident_id,
-                "event_type":     matched_rule["name"] if matched_rule else result.module,
-                "severity":       matched_rule["severity"] if matched_rule else "informational",
-                "danger_label":   label,
-                "danger_score":   score,
-                "camera_id":      result.camera_id,
-                "track_id":       obj.track_id,
-                "module":         result.module,
-                "confidence":     obj.confidence,
-                "bbox":           list(obj.bbox),
-                "snapshot":       snapshot_file,
-                "humans_detected": meta["humans_detected"],
-                "zone_breaches":  meta["zone_breaches"],
-                "activities":     meta["activities_detected"],
-                "timestamp":      result.timestamp_utc.isoformat(),
-            }
-            self._broadcast(alert)
+                    alert = {
+                        "incident_id":    incident_id,
+                        "event_type":     matched_rule.get("event_type", module),
+                        "severity":       matched_rule["severity"],
+                        "danger_label":   label,
+                        "danger_score":   score,
+                        "camera_id":      result.camera_id,
+                        "track_id":       obj.track_id,
+                        "module":         result.module,
+                        "confidence":     obj.confidence,
+                        "bbox":           list(obj.bbox),
+                        "snapshot":       meta["snapshots"][-1] if meta["snapshots"] else None,
+                        "humans_detected": meta["humans_detected"],
+                        "zone_breaches":  meta["zone_breaches"],
+                        "activities":     meta["activities_detected"],
+                        "timestamp":      result.timestamp_utc.isoformat(),
+                        "plate_no":       plate_no,
+                    }
+                    self._broadcast(alert)
 
     # ── Scoring ─────────────────────────────────────────────────────────
     def _score(self, module: str, attributes: dict) -> tuple[int, Optional[dict]]:
         best_rule, best_score = None, 0
         for rule in self._rules:
-            if rule["module"] != module:
+            when = rule.get("when", {})
+            if when.get("module") != module:
                 continue
-            if "attribute" in rule:
-                val = attributes.get(rule["attribute"])
-                if rule.get("equals") is not None and val != rule["equals"]:
+            if "attribute" in when:
+                val = attributes.get(when["attribute"])
+                if when.get("equals") is not None and val != when["equals"]:
                     continue
-                if rule.get("gte") is not None and (val is None or val < rule["gte"]):
+                if when.get("gte") is not None and (val is None or val < when["gte"]):
                     continue
-            if rule["score"] > best_score:
-                best_score = rule["score"]
+            
+            # Map severity to a base score if 'score' isn't provided
+            sev = rule.get("severity", "informational").lower()
+            score = rule.get("score")
+            if score is None:
+                if sev == "critical": score = 90
+                elif sev == "high": score = 70
+                elif sev == "medium": score = 50
+                elif sev == "low": score = 30
+                else: score = 10
+                
+            if score > best_score:
+                best_score = score
                 best_rule  = rule
         return best_score, best_rule
 

@@ -27,12 +27,20 @@ class FrameBuffer:
         # Throttle JPEG encoding to save CPU (e.g., max 12 FPS)
         if now - self._updated_at < (1.0 / self._fps_limit):
             return
+        self._updated_at = now
 
+        if getattr(self, '_pool', None) is None:
+            from concurrent.futures import ThreadPoolExecutor
+            self._pool = ThreadPoolExecutor(max_workers=1)
+        
+        # Fire-and-forget encode to prevent blocking the main pipeline
+        self._pool.submit(self._encode_async, frame)
+
+    def _encode_async(self, frame: np.ndarray) -> None:
         # Lower quality = much faster CPU encode
-        _, buf = cv2.imencode(".jpg", frame, [cv2.IMWRITE_JPEG_QUALITY, 55])
+        _, buf = cv2.imencode('.jpg', frame, [cv2.IMWRITE_JPEG_QUALITY, 55])
         with self._lock:
             self._frame_bytes = buf.tobytes()
-            self._updated_at = now
 
     def read(self) -> Optional[bytes]:
         with self._lock:

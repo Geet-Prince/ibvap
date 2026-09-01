@@ -45,6 +45,15 @@ export default function DashboardLayout() {
   }, []);
 
   // Initial load (then clear the loading flags either way).
+  // Periodic refresh for stats and incidents (every 5s)
+  useEffect(() => {
+    const t = setInterval(() => {
+      api.incidents().then((rows) => { setIncidents(rows); saveLS('ibvap.incidents', rows); }).catch(() => {});
+      api.stats().then((rows) => { setStats(rows); saveLS('ibvap.stats', rows); }).catch(() => {});
+    }, 5000);
+    return () => clearInterval(t);
+  }, []);
+
   useEffect(() => {
     let cancelled = false;
     const load = async () => {

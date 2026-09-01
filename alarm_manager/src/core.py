@@ -71,7 +71,8 @@ class AlarmManager:
         self._last_alert: dict[str, float] = {}
         self._last_flush = time.time()
         self._last_known_plates: dict[str, str] = {}
-        logger.info("AlarmManager v2 ready with %d rules.", len(self._rules))
+        valid_rules = sum(1 for r in self._rules if r.get("module"))
+        logger.info(f"AlarmManager v2 ready. Loaded {len(self._rules)} rules from {_RULES_PATH} (valid modules: {valid_rules}).")
 
     # ── Public API ──────────────────────────────────────────────────────
     def submit(self, result: DetectionResult,
@@ -142,7 +143,7 @@ class AlarmManager:
                     
                     log_event(
                         event_id=incident_id,
-                        event_type=matched_rule.get("event_type", module).upper().replace(" ", "_"),
+                        event_type=matched_rule["name"].upper().replace(" ", "_"),
                         severity=matched_rule["severity"],
                         camera_id=result.camera_id,
                         track_id=obj.track_id,
@@ -156,7 +157,7 @@ class AlarmManager:
 
                     alert = {
                         "incident_id":    incident_id,
-                        "event_type":     matched_rule.get("event_type", module),
+                        "event_type":     matched_rule["name"],
                         "severity":       matched_rule["severity"],
                         "danger_label":   label,
                         "danger_score":   score,
@@ -178,14 +179,13 @@ class AlarmManager:
     def _score(self, module: str, attributes: dict) -> tuple[int, Optional[dict]]:
         best_rule, best_score = None, 0
         for rule in self._rules:
-            when = rule.get("when", {})
-            if when.get("module") != module:
+            if rule.get("module") != module:
                 continue
-            if "attribute" in when:
-                val = attributes.get(when["attribute"])
-                if when.get("equals") is not None and val != when["equals"]:
+            if "attribute" in rule:
+                val = attributes.get(rule["attribute"])
+                if rule.get("equals") is not None and val != rule["equals"]:
                     continue
-                if when.get("gte") is not None and (val is None or val < when["gte"]):
+                if rule.get("gte") is not None and (val is None or val < rule["gte"]):
                     continue
             
             # Map severity to a base score if 'score' isn't provided

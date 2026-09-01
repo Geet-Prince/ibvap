@@ -66,6 +66,8 @@ class AlarmManager:
         self._thresholds = cfg["thresholds"]
         # track_id → last snapshot unix timestamp
         self._last_snap: dict[str, float] = {}
+        self._meta_cache: dict[str, dict] = {}
+        self._dirty_meta: set[str] = set()
         logger.info("AlarmManager v2 ready with %d rules.", len(self._rules))
 
     # ── Public API ──────────────────────────────────────────────────────
@@ -93,8 +95,10 @@ class AlarmManager:
             ).hexdigest()[:12]
 
             # Load or create incident metadata
-            meta = incident_store.load_or_create(
-                incident_id, result.camera_id, result.module, score, label)
+            if incident_id not in self._meta_cache:
+                self._meta_cache[incident_id] = incident_store.load_or_create(
+                    incident_id, result.camera_id, result.module, score, label)
+            meta = self._meta_cache[incident_id]
 
             # Enrich metadata with all available signal
             incident_store.enrich_meta(
@@ -112,7 +116,12 @@ class AlarmManager:
                     self._last_snap[obj.track_id] = time.time()
 
             # Persist incident JSON
-            incident_store.save(incident_id, meta)
+            self._dirty_meta.add(incident_id)
+            # Periodically flush dirty cache (e.g., every 50 frames or some heuristic)
+            if len(self._dirty_meta) > 10:
+                for iid in list(self._dirty_meta):
+                    incident_store.save(iid, self._meta_cache[iid])
+                    self._dirty_meta.remove(iid)
 
             # Log to events DB if a rule matched
             if matched_rule:

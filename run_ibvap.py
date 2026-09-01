@@ -210,35 +210,50 @@ class ConsolidatedBatchedAI:
     ``predict()`` for pure detection (no tracking state to contaminate)."""
 
     def __init__(self):
-        print("  [GPU] Initializing Consolidated YOLOv8 Batchedâ€¦")
-        self.model = YOLO("yolov8n.pt")
-        self.model.to("cuda")
+        print('  [GPU] Loading TensorRT engine (yolov8s.engine)...')
 
-        # torch.compile fuses CUDA kernels (~20-40% faster inference, PyTorch 2.x)
-        try:
-            self.model.model = torch.compile(
-                self.model.model, mode="reduce-overhead", fullgraph=False
-            )
-            print("  [GPU] torch.compile enabled")
-        except Exception as _e:
-            print(f"  [WARN] torch.compile unavailable: {_e}")
+        import os
+        from pathlib import Path
+        _ENGINE = Path(r'C:\Users\omkar\Downloads\SIH-2026\yolov8s.engine')
+        _FALLBACK = 'yolov8s.pt'
+
+        if _ENGINE.exists():
+            self.model = YOLO(str(_ENGINE))
+            self._using_trt = True
+            print('  [GPU] TensorRT engine loaded — FP16, fused kernels active')
+        else:
+            print(f'  [WARN] Engine not found at {_ENGINE}, falling back to {_FALLBACK}')
+            self.model = YOLO(_FALLBACK)
+            self.model.to('cuda')
+            self._using_trt = False
+            try:
+                self.model.model = torch.compile(
+                    self.model.model, mode='reduce-overhead', fullgraph=False
+                )
+                print('  [GPU] torch.compile enabled (TRT not found)')
+            except Exception as _e:
+                print(f'  [WARN] torch.compile unavailable: {_e}')
+
         self._anpr = None
         if _ANPR_AVAILABLE:
             try:
                 self._anpr = PlateReader()
-                print("  [ANPR] Plate reader initialised.")
+                print('  [ANPR] Plate reader initialised.')
             except Exception as exc:
-                print(f"  [WARN] ANPR init failed: {exc}")
+                print(f'  [WARN] ANPR init failed: {exc}')
 
     def warmup(self, n_cams: int = 1) -> None:
-        """Warmup with actual batch size and FP16 (avoids cold CUDA compile on first real call)."""
+        """Warm up the model graph with the real batch size.
+        TRT engines bake in FP16 already, so half=True is set for PyTorch fallback only.
+        """
         try:
+            use_half = not getattr(self, '_using_trt', False)
             for bs in sorted({1, min(n_cams, 4)}):
                 dummy = [np.zeros((640, 640, 3), dtype=np.uint8)] * bs
-                self.model.predict(dummy, device=0, half=True, verbose=False)
-            print(f"  [GPU] Warmup done (bs=1 and bs={min(n_cams,4)})")
+                self.model.predict(dummy, device=0, half=use_half, verbose=False)
+            print(f'  [GPU] Warmup done (bs=1 and bs={min(n_cams,4)}, TRT={getattr(self,"_using_trt",False)})')
         except Exception as exc:
-            print(f"Warmup error: {exc}")
+            print(f'Warmup error: {exc}')
 
     # ------------------------------------------------------------------ #
     def process_batch(
@@ -259,15 +274,24 @@ class ConsolidatedBatchedAI:
 
         try:
             with torch.no_grad():
-                yolo_results = self.model.predict(
-                    source=frames,
-                    classes=[0, 2, 3, 5, 7],
-                    conf=0.25,
-                    imgsz=640,
-                    device=0,
-                    half=True,
-                    verbose=False,
-                )
+                # Batch chunking to avoid TRT max batch size limits
+                # TRT engines have a baked-in max batch size. Extract it if possible.
+                MAX_BATCH = getattr(self.model.model, 'batch_size', 1) if getattr(self, '_using_trt', False) else len(frames)
+                if MAX_BATCH is None or MAX_BATCH < 1:
+                    MAX_BATCH = 1
+                yolo_results = []
+                for b_idx in range(0, len(frames), MAX_BATCH):
+                    chunk = frames[b_idx:b_idx+MAX_BATCH]
+                    chunk_results = self.model.predict(
+                        source=chunk,
+                        classes=[0, 2, 3, 5, 7],
+                        conf=0.25,
+                        imgsz=640,
+                        device=0,
+                        half=(not getattr(self, '_using_trt', False)),
+                        verbose=False,
+                    )
+                    yolo_results.extend(chunk_results)
 
             for i, res in enumerate(yolo_results):
                 cam = cam_nodes[i]
@@ -378,6 +402,12 @@ def start_server():
 
 # â”€â”€ Main â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 def main():
+    import ctypes
+    try:
+        ctypes.windll.winmm.timeBeginPeriod(1)
+        print('  [SYS] Windows 1ms timer precision enabled')
+    except Exception:
+        pass
     print("=" * 60)
     print("  IBVAP â€” Border Intelligence Platform (V8 Multi-Camera)")
     print("  Dashboard: http://localhost:8000/ui")
@@ -667,7 +697,12 @@ def main():
                     g_idx = grid_cams.index(cam.id)
                     r, c = divmod(g_idx, cols)
                     if r < rows:
-                        cell = cv2.resize(display, (cell_w, cell_h))
+                        if hasattr(cv2, 'cuda') and cv2.cuda.getCudaEnabledDeviceCount() > 0:
+                            gpu_frame = cv2.cuda_GpuMat()
+                            gpu_frame.upload(display)
+                            cell = cv2.cuda.resize(gpu_frame, (cell_w, cell_h)).download()
+                        else:
+                            cell = cv2.resize(display, (cell_w, cell_h))
                         grid[r * cell_h:(r + 1) * cell_h,
                              c * cell_w:(c + 1) * cell_w] = cell
 

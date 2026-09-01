@@ -10,9 +10,9 @@ from contracts.schema import DetectionResult, DetectedObject
 class SuspiciousActivityDetector:
     def __init__(self, 
                  time_threshold=3.0, 
-                 distance_threshold=150.0, 
+                 distance_threshold=250.0, 
                  cleanup_threshold=2.0,
-                 crowd_distance_threshold=150.0,
+                 crowd_distance_threshold=200.0,
                  crowd_min_people=3,
                  speed_threshold=50.0):
         # Slightly tuned thresholds for real-time testing

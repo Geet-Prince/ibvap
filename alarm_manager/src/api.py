@@ -1,5 +1,5 @@
 """
-alarm_manager/src/api.py  (v2 — with MJPEG live stream + incident endpoints)
+alarm_manager/src/api.py  (v3 — per-camera streams + cameras API)
 Owner: Prince
 """
 from __future__ import annotations
@@ -19,16 +19,16 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from alarm_manager.src.database import get_recent_events, init_db
 from alarm_manager.src.incident_store import get_all_incidents
-from alarm_manager.src.frame_buffer import LIVE_FRAME
+from alarm_manager.src.frame_buffer import LIVE_FRAME, CAMERA_REGISTRY
 from alarm_manager.src import register_subscriber, unregister_subscriber
 
-app = FastAPI(title="IBVAP API v2")
+app = FastAPI(title="IBVAP API v3")
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
                    allow_methods=["*"], allow_headers=["*"])
 
 # Static: snapshots, incidents, website
 _STORAGE     = Path(__file__).resolve().parents[2] / "storage"
-_WEBSITE_DIR = Path(__file__).resolve().parents[2] / "website"
+_WEBSITE_DIR = Path(__file__).resolve().parents[2] / "website" / "dashboard" / "dist"
 _INCIDENTS   = _STORAGE / "incidents"
 
 app.mount("/storage", StaticFiles(directory=str(_STORAGE)), name="storage")
@@ -42,14 +42,14 @@ async def _startup(): init_db()
 
 @app.get("/")
 async def root():
-    return {"status": "IBVAP v2 running", "dashboard": "/ui", "docs": "/docs"}
+    return {"status": "IBVAP v3 running", "dashboard": "/ui", "docs": "/docs"}
 
 
-# ── Live MJPEG Stream ───────────────────────────────────────────────────────
-async def _mjpeg_gen():
-    """Yield JPEG frames as multipart for the browser <img> tag."""
+# ── MJPEG Stream helpers ────────────────────────────────────────────────────
+async def _mjpeg_gen(buffer):
+    """Yield JPEG frames from any FrameBuffer as multipart."""
     while True:
-        frame = LIVE_FRAME.read()
+        frame = buffer.read()
         if frame:
             yield (b"--frame\r\nContent-Type: image/jpeg\r\n\r\n" + frame + b"\r\n")
         await asyncio.sleep(0.04)   # ~25 fps max
@@ -57,13 +57,92 @@ async def _mjpeg_gen():
 
 @app.get("/stream/live")
 async def live_stream():
+    """Combined grid view of all cameras."""
     return StreamingResponse(
-        _mjpeg_gen(),
+        _mjpeg_gen(CAMERA_REGISTRY.grid),
+        media_type="multipart/x-mixed-replace; boundary=frame"
+    )
+
+
+@app.get("/stream/camera/{cam_id}")
+async def camera_stream(cam_id: str):
+    """Individual camera MJPEG stream."""
+    buf = CAMERA_REGISTRY.get(cam_id)
+    if buf is None:
+        return JSONResponse(status_code=404, content={"error": f"Camera {cam_id} not found"})
+    return StreamingResponse(
+        _mjpeg_gen(buf),
         media_type="multipart/x-mixed-replace; boundary=frame"
     )
 
 
 # ── REST APIs ───────────────────────────────────────────────────────────────
+@app.get("/api/cameras")
+async def api_cameras():
+    """List all registered cameras with status."""
+    return JSONResponse(content=CAMERA_REGISTRY.get_cameras())
+
+
+@app.post("/api/cameras/{cam_id}/select")
+async def api_select_camera(cam_id: str):
+    """Set which camera receives AI processing."""
+    CAMERA_REGISTRY.set_ai_cam(cam_id)
+    return {"status": "success", "active_ai_cam": CAMERA_REGISTRY.active_ai_cam}
+
+
+from pydantic import BaseModel
+class FenceUpdate(BaseModel):
+    polygon: list[list[int]]
+
+@app.get("/api/cameras/{cam_id}/fence")
+async def get_camera_fence(cam_id: str):
+    nodes = getattr(CAMERA_REGISTRY, '_cam_nodes', [])
+    for cam in nodes:
+        if cam.id == cam_id:
+            # return polygon normalized to current frame dimensions if needed,
+            # but usually it's the raw points or the scaled points.
+            # VirtualFence scales points in __init__, wait, VirtualFence
+            # stores `self.polygon` as scaled points, but the frontend might
+            # want points relative to frame size.
+            return {"status": "success", "polygon": cam.fence.polygon}
+    return JSONResponse(status_code=404, content={"error": f"Camera {cam_id} not running"})
+
+@app.post("/api/cameras/{cam_id}/fence")
+async def update_camera_fence(cam_id: str, payload: FenceUpdate):
+    nodes = getattr(CAMERA_REGISTRY, '_cam_nodes', [])
+    for cam in nodes:
+        if cam.id == cam_id:
+            cam.fence.update_polygon(payload.polygon)
+            return {"status": "success"}
+    return JSONResponse(status_code=404, content={"error": f"Camera {cam_id} not running"})
+
+
+@app.get("/api/live")
+async def api_live():
+    """Per-frame live telemetry from the camera pipeline."""
+    return JSONResponse(content=CAMERA_REGISTRY.get_live_info())
+
+
+@app.get("/api/stats")
+async def api_stats():
+    """Aggregate stats for the dashboard stat cards."""
+    events = get_recent_events(500)
+    total = len(events)
+    humans = sum(1 for e in events if 'HUMAN' in (e.get('event_type') or ''))
+    medium = sum(1 for e in events if (e.get('severity') or '').lower() == 'medium')
+    high = sum(1 for e in events if (e.get('severity') or '').lower() == 'high')
+    critical = sum(1 for e in events if (e.get('severity') or '').lower() == 'critical')
+    incidents_list = get_all_incidents(500)
+    return {
+        "events":    {"value": total, "label": "Total Events"},
+        "humans":    {"value": humans, "label": "Humans"},
+        "medium":    {"value": medium, "label": "Medium"},
+        "high":      {"value": high, "label": "High"},
+        "critical":  {"value": critical, "label": "Critical"},
+        "incidents": {"value": len(incidents_list), "label": "Incidents"},
+    }
+
+
 @app.get("/api/events")
 async def api_events(limit: int = 50):
     return JSONResponse(content=get_recent_events(limit))

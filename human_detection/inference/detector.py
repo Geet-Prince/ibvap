@@ -125,6 +125,7 @@ class HumanDetector:
             iou=iou_thresh,
             device=device,
             verbose=False,
+            half=True,
         )
 
         detections = []

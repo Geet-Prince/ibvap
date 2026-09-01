@@ -41,7 +41,7 @@ class VehicleANPR:
         )
 
         # Classes: 2: car, 3: motorcycle, 5: bus, 7: truck
-        results = self.vehicle_model.track(frame, persist=True, classes=[2, 3, 5, 7], verbose=False)
+        results = self.vehicle_model.track(frame, persist=True, classes=[2, 3, 5, 7], verbose=False, device=0, half=True)
         
         if results and len(results) > 0 and results[0].boxes and results[0].boxes.id is not None:
             boxes = results[0].boxes.xyxy.cpu().numpy().astype(int)

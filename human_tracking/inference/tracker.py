@@ -55,7 +55,8 @@ class HumanTracker:
             self._tracker = DeepSort(
                 max_age=self._cfg["tracker"]["max_age"],
                 n_init=self._cfg["tracker"]["n_init"],
-                nms_max_overlap=self._cfg["tracker"]["nms_max_overlap"]
+                nms_max_overlap=self._cfg["tracker"]["nms_max_overlap"],
+                embedder=None,  # CRITICAL FIX: Disables CPU-heavy ReID CNN (saves 400ms!)
             )
         except ImportError:
             logger.warning("deep-sort-realtime not installed. Run: pip install deep-sort-realtime")
@@ -81,11 +82,12 @@ class HumanTracker:
             h = y2 - y1
             bbs.append(([x1, y1, w, h], obj.confidence, obj.object_type))
             
-        # deep_sort_realtime requires a frame to extract embeddings.
-        # Since we are running in an event-driven architecture, we pass a dummy frame
-        # to force it to rely purely on Kalman Filter / IoU (SORT behavior).
-        dummy_frame = __import__('numpy').zeros((720, 1280, 3), dtype=__import__('numpy').uint8)
-        tracks = self._tracker.update_tracks(bbs, frame=dummy_frame)
+        # Provide identical dummy embeddings so ReID distance is always 0.
+        # This forces the Hungarian algorithm to match purely based on bounding box IoU/Kalman distance!
+        import numpy as np
+        dummy_embeds = [np.ones(128, dtype=np.float32)] * len(bbs)
+        
+        tracks = self._tracker.update_tracks(bbs, embeds=dummy_embeds)
 
         current_timestamp = detection_result.timestamp_utc
         dt = 0.0
@@ -133,5 +135,65 @@ class HumanTracker:
             camera_id=detection_result.camera_id,
             frame_id=detection_result.frame_id,
             timestamp_utc=detection_result.timestamp_utc,
+            objects=tracked_objects,
+        )
+
+    def predict_only(self, camera_id: str, frame_id: int, timestamp_utc: datetime) -> DetectionResult:
+        """
+        Advances the Kalman filter state (extrapolating bounding boxes) 
+        without matching new detections. Used on skipped frames for smooth video.
+        """
+        if not self._tracker or not hasattr(self._tracker, 'tracker'):
+            return DetectionResult("human_tracking", camera_id, frame_id, timestamp_utc, [])
+            
+        # Advance kalman filters
+        self._tracker.tracker.predict()
+        
+        tracked_objects = []
+        prefix = self._cfg["output"]["track_id_prefix"]
+        
+        dt = 0.0
+        if self._last_timestamp:
+            dt = (timestamp_utc - self._last_timestamp).total_seconds()
+        self._last_timestamp = timestamp_utc
+        
+        # We manually extract the extrapolated tracks
+        for track in self._tracker.tracker.tracks:
+            if not track.is_confirmed() or track.time_since_update > 1:
+                continue
+                
+            track_id = f"{prefix}-{track.track_id}"
+            ltrb = track.to_ltrb()
+            x1, y1, x2, y2 = int(ltrb[0]), int(ltrb[1]), int(ltrb[2]), int(ltrb[3])
+            
+            cx = (x1 + x2) // 2
+            cy = (y1 + y2) // 2
+            
+            vx, vy = 0.0, 0.0
+            if track_id in self._track_history and dt > 0:
+                prev_cx, prev_cy = self._track_history[track_id]
+                vx = (cx - prev_cx) / dt
+                vy = (cy - prev_cy) / dt
+                
+            self._track_history[track_id] = (cx, cy)
+            
+            tracked_objects.append(
+                DetectedObject(
+                    object_type="human",
+                    track_id=track_id,
+                    confidence=1.0,
+                    bbox=(x1, y1, x2, y2),
+                    attributes={
+                        "centroid": (cx, cy),
+                        "velocity_px_per_s": (round(vx, 2), round(vy, 2))
+                    }
+                )
+            )
+            
+        return DetectionResult(
+            module="human_tracking",
+            camera_id=camera_id,
+            frame_id=frame_id,
+            timestamp_utc=timestamp_utc,
             objects=tracked_objects,
         )

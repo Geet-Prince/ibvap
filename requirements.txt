@@ -8,8 +8,8 @@ ultralytics>=8.0        # YOLO v8/v11
 # deep-sort-realtime>=1.3
 
 # ANPR OCR (choose one — both pretrained, no custom training)
-paddleocr>=2.7
-# easyocr>=1.7
+# paddleocr>=2.7
+easyocr>=1.7
 
 # Alarm Manager / API
 fastapi>=0.111

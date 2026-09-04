@@ -1,4 +1,4 @@
-import { MousePointerClick, Flag, CheckCheck, Camera, MapPin, Crosshair, Users, FileDown } from 'lucide-react';
+import { MousePointerClick, Flag, CheckCheck, Camera, MapPin, Crosshair, Users, FileDown, Car } from 'lucide-react';
 import { SEV_COLOR } from '../../lib/theme';
 import { downloadIncidentReport } from '../../lib/pdfReport';
 
@@ -72,7 +72,7 @@ export default function DetailPanel({ item, onStatusChange }) {
             ))}
           </div>
         ) : item.snapshotUrl ? (
-          <img src={item.snapshotUrl} alt="snapshot" className="w-full rounded border border-hairline object-cover" />
+          <img src={item.snapshotUrl} alt="snapshot" className="w-full max-h-48 rounded border border-hairline object-contain bg-black" />
         ) : (
           <div className="flex h-24 items-center justify-center rounded border border-dashed border-hairline text-[11px] text-ghost">
             No snapshot yet
@@ -98,6 +98,12 @@ export default function DetailPanel({ item, onStatusChange }) {
               <dd className="flex items-center gap-1 text-nominal"><Users className="h-3 w-3" />{item.humansDetected}</dd>
             </>
           )}
+          {item.vehiclesDetected > 0 && (
+            <>
+              <dt className="mono text-ghost">Vehicles</dt>
+              <dd className="flex items-center gap-1 text-nominal"><Car className="h-3 w-3" />{item.vehiclesDetected}</dd>
+            </>
+          )}
           {(item.plateNumbers?.length > 0 || item.plateNo) && (
             <>
               <dt className="mono text-ghost">License Plate</dt>
@@ -113,7 +119,7 @@ export default function DetailPanel({ item, onStatusChange }) {
         <Section title="Tags">
           <div className="flex flex-wrap gap-1.5">
             {item.zoneBreaches.map((z) => (
-              <span key={z} className="rounded-full bg-hairline px-2 py-0.5 text-[10px] text-dim">🚧 {z}</span>
+              <span key={z} className="rounded-full bg-hairline px-2 py-0.5 text-[10px] text-dim">🚧 {z} (Fence Breached)</span>
             ))}
             {item.activities.map((a) => (
               <span key={a} className="rounded-full bg-hairline px-2 py-0.5 text-[10px] text-dim">🔍 {a}</span>

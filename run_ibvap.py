@@ -137,9 +137,11 @@ class ThreadedCamera:
         self.last_raw_vehicles: list = []
         self.running = True
         self.track_history: dict = {}
-        self.vehicle_plates: dict = {}         # track_key -> plate string
+        self.vehicle_plates: dict = {}          # track_key -> plate string
         self.vehicle_plate_retries: dict = {}   # track_key -> retry count
+        self.vehicle_best_conf: dict = {}       # track_key -> float
         self._decode_failures = 0
+        self.video_ended = False
 
         self.thread = threading.Thread(target=self._update, daemon=True)
         self.thread.start()
@@ -154,7 +156,12 @@ class ThreadedCamera:
                 if self.cap is not None:
                     self.cap.release()
                     self.cap = None
+                self.video_ended = False
                 time.sleep(0.5)
+                continue
+
+            if getattr(self, 'video_ended', False):
+                time.sleep(0.1)
                 continue
 
             if self.cap is None:
@@ -174,18 +181,20 @@ class ThreadedCamera:
             ret, frame = self.cap.read() if self.cap else (False, None)
 
             if not ret:
-                self._decode_failures += 1
-                if self._decode_failures > 100:
-                    print(f"  [WARN] {self.id}: Too many decode failures, "
-                          f"re-opening sourceâ€¦")
-                    if self.cap:
-                        self.cap.release()
-                        self.cap = None
-                    self._decode_failures = 0
-                    time.sleep(1.0)
-                    continue
-                if self.cap:
-                    self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
+                if self.cap and self.cap.get(cv2.CAP_PROP_FRAME_COUNT) > 0:
+                    # It's a video file and we reached the end. 
+                    # Pause playback until user switches camera away and back.
+                    self.video_ended = True
+                else:
+                    self._decode_failures += 1
+                    if self._decode_failures > 100:
+                        print(f"  [WARN] {self.id}: Too many decode failures, "
+                              f"re-opening sourceâ€¦")
+                        if self.cap:
+                            self.cap.release()
+                            self.cap = None
+                        self._decode_failures = 0
+                        time.sleep(1.0)
                 continue
 
             # Good frame â€” reset failure counter.
@@ -250,6 +259,8 @@ class ConsolidatedBatchedAI:
                 print(f'  [WARN] ANPR init failed: {exc}')
 
     def _anpr_worker_loop(self):
+        import hashlib, cv2
+        from pathlib import Path
         while True:
             try:
                 cam_id, track_key, frame_crop = self._anpr_queue.get()
@@ -258,6 +269,20 @@ class ConsolidatedBatchedAI:
                     if plate:
                         with self._anpr_lock:
                             self._anpr_results[(cam_id, track_key)] = plate
+                        
+                        try:
+                            incident_id = hashlib.md5(f"{cam_id}-{track_key}".encode()).hexdigest()[:12]
+                            inc_dir = Path(__file__).resolve().parent / "storage" / "incidents" / cam_id / incident_id
+                            inc_dir.mkdir(parents=True, exist_ok=True)
+                            cv2.imwrite(str(inc_dir / f"plate_{plate}.jpg"), frame_crop)
+                            
+                            # Also save to a global plates folder
+                            plates_dir = Path(__file__).resolve().parent / "storage" / "plates" / cam_id
+                            plates_dir.mkdir(parents=True, exist_ok=True)
+                            cv2.imwrite(str(plates_dir / f"plate_{plate}.jpg"), frame_crop)
+                        except Exception as e:
+                            print("Plate save error:", e)
+
                 self._anpr_queue.task_done()
             except Exception as e:
                 print("ALARM WORKER ERROR:", e)
@@ -421,10 +446,10 @@ class ConsolidatedBatchedAI:
                             if cached:
                                 v_attrs["plate_no"] = cached
                                 cam.vehicle_plates[v_track_key] = cached
-                            elif cam.vehicle_plate_retries.get(v_track_key, 0) < 5:
+                            elif conf > cam.vehicle_best_conf.get(v_track_key, 0.0) or cam.vehicle_plate_retries.get(v_track_key, 0) < 5:
+                                cam.vehicle_best_conf[v_track_key] = max(conf, cam.vehicle_best_conf.get(v_track_key, 0.0))
                                 cam.vehicle_plate_retries[v_track_key] = cam.vehicle_plate_retries.get(v_track_key, 0) + 1
                                 try:
-                                    # Crop the plate region
                                     crop = frames[i][y1:y2, x1:x2].copy()
                                     self._anpr_queue.put_nowait((cam.id, v_track_key, crop))
                                 except Exception:
@@ -622,7 +647,8 @@ def main():
 
                     # Merge vehicles into the human result for unified
                     # downstream processing (suspicious + fence + alarm).
-                    tracked_humans.objects.extend(cam.last_raw_vehicles)
+                    humans_only = [o for o in tracked_humans.objects if o.object_type == "human"]
+                    tracked_humans.objects = humans_only + cam.last_raw_vehicles
 
                     # Suspicious activity heuristics.
                     analyzed = cam.suspicious.process(tracked_humans)
@@ -691,11 +717,10 @@ def main():
                         activity = obj.attributes.get("activity")
                         is_breach = (
                             obj.attributes.get("zone_state") == "inside")
-                        color = (
-                            (255, 0, 0) if obj.object_type == "vehicle"
-                            else ((0, 0, 255) if (activity or is_breach)
-                                  else (0, 255, 0))
-                        )
+                        if is_breach or activity:
+                            color = (0, 0, 255) # RED
+                        else:
+                            color = (255, 0, 0) if obj.object_type == "vehicle" else (0, 255, 0)
 
                         track_num = obj.track_id.split("-")[-1]
                         base = f"{obj.object_type.capitalize()} {track_num}"

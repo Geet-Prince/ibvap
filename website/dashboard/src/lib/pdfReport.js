@@ -9,7 +9,22 @@ const SEV_RGB = {
   informational: [74, 222, 128],
 };
 
-export function downloadIncidentReport(item) {
+async function fetchImageAsBase64(url) {
+  try {
+    const res = await fetch(url);
+    const blob = await res.blob();
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  } catch (err) {
+    return null;
+  }
+}
+
+export async function downloadIncidentReport(item) {
   if (!item || item.kind !== 'incident') return;
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
   const W = doc.internal.pageSize.getWidth();
@@ -129,6 +144,25 @@ export function downloadIncidentReport(item) {
       doc.text(tLines, M, y);
       y += tLines.length * 4.4;
       if (y > H - 30) break;
+    }
+  }
+
+  // ── Snapshot Image ─────────────────────────────────────────────────────────
+  if (item.snapshotUrl) {
+    try {
+      const imgData = await fetchImageAsBase64(item.snapshotUrl);
+      if (imgData) {
+        y += 5;
+        const imgW = W - M * 2;
+        const imgH = imgW * 9 / 16;
+        if (y + imgH > H - 20) {
+          doc.addPage();
+          y = M;
+        }
+        doc.addImage(imgData, 'JPEG', M, y, imgW, imgH);
+      }
+    } catch (err) {
+      console.warn('Could not embed snapshot', err);
     }
   }
 

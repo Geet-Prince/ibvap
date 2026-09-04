@@ -13,7 +13,7 @@ class SuspiciousActivityDetector:
                  distance_threshold=120.0, 
                  cleanup_threshold=2.0,
                  crowd_distance_threshold=200.0,
-                 crowd_min_people=3,
+                 crowd_min_people=5,
                  speed_threshold=50.0):
         # Slightly tuned thresholds for real-time testing
         self.time_threshold = time_threshold

@@ -1,5 +1,6 @@
-import { ShieldCheck } from 'lucide-react';
+import { ShieldCheck, Folder, ChevronDown, ChevronRight, Camera } from 'lucide-react';
 import AlertRow from './AlertRow';
+import { useState } from 'react';
 
 function Skeleton({ count = 6 }) {
   return (
@@ -34,18 +35,74 @@ function Empty({ label }) {
   );
 }
 
+function CameraFolder({ cameraId, items, selectedId, onSelect }) {
+  const [open, setOpen] = useState(true);
+  
+  return (
+    <div className="flex flex-col border-b border-hairline/50 last:border-b-0">
+      <button 
+        onClick={() => setOpen(!open)}
+        className="flex items-center gap-2 bg-[#0a0e0b] px-3 py-2 text-left hover:bg-white/5 border-y border-hairline/30 sticky top-0 z-10"
+      >
+        {open ? <ChevronDown className="h-3.5 w-3.5 text-ghost" /> : <ChevronRight className="h-3.5 w-3.5 text-ghost" />}
+        <Folder className="h-3.5 w-3.5 text-live/70" fill="currentColor" fillOpacity={0.2} />
+        <span className="mono text-[11px] font-semibold tracking-wider text-fg/90">{cameraId}</span>
+        <span className="ml-auto rounded-full bg-white/10 px-1.5 py-0.5 mono text-[9px] text-ghost">
+          {items.length}
+        </span>
+      </button>
+      {open && (
+        <div className="flex flex-col bg-panel">
+          {items.map((item) => (
+            <div key={item._id} className="pl-4 border-l-2 border-live/10 ml-4 relative">
+              <div className="absolute left-[-2px] top-0 bottom-0 w-2" />
+              <AlertRow item={item} selected={item._id === selectedId} onSelect={onSelect} />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AlertList({ items = [], loading = false, selectedId, onSelect, label = 'alerts' }) {
+  if (loading) {
+    return <div className="max-h-[460px] flex-1 overflow-y-auto"><Skeleton /></div>;
+  }
+  
+  if (items.length === 0) {
+    return <div className="max-h-[460px] flex-1 overflow-y-auto"><Empty label={label} /></div>;
+  }
+
+  // If showing incidents, group by camera
+  if (label === 'incidents') {
+    const groups = {};
+    items.forEach(item => {
+      const cam = item.cameraId || 'Unknown';
+      if (!groups[cam]) groups[cam] = [];
+      groups[cam].push(item);
+    });
+    
+    return (
+      <div className="max-h-[460px] flex-1 overflow-y-auto bg-panel-2">
+        {Object.entries(groups).map(([cam, groupItems]) => (
+          <CameraFolder 
+            key={cam} 
+            cameraId={cam} 
+            items={groupItems} 
+            selectedId={selectedId} 
+            onSelect={onSelect} 
+          />
+        ))}
+      </div>
+    );
+  }
+
   return (
     <div className="max-h-[460px] flex-1 overflow-y-auto">
-      {loading ? (
-        <Skeleton />
-      ) : items.length === 0 ? (
-        <Empty label={label} />
-      ) : (
-        items.map((item) => (
-          <AlertRow key={item._id} item={item} selected={item._id === selectedId} onSelect={onSelect} />
-        ))
-      )}
+      {items.map((item) => (
+        <AlertRow key={item._id} item={item} selected={item._id === selectedId} onSelect={onSelect} />
+      ))}
     </div>
   );
 }

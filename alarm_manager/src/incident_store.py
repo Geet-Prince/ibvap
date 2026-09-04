@@ -16,19 +16,19 @@ import numpy as np
 _INCIDENT_ROOT = Path(__file__).resolve().parents[2] / "storage" / "incidents"
 
 
-def _incident_dir(incident_id: str) -> Path:
-    d = _INCIDENT_ROOT / incident_id
+def _incident_dir(incident_id: str, camera_id: str) -> Path:
+    d = _INCIDENT_ROOT / camera_id / incident_id
     d.mkdir(parents=True, exist_ok=True)
     return d
 
 
-def _meta_path(incident_id: str) -> Path:
-    return _incident_dir(incident_id) / "incident.json"
+def _meta_path(incident_id: str, camera_id: str) -> Path:
+    return _incident_dir(incident_id, camera_id) / "incident.json"
 
 
 def load_or_create(incident_id: str, camera_id: str, module: str,
                    danger_score: int, danger_label: str) -> dict:
-    path = _meta_path(incident_id)
+    path = _meta_path(incident_id, camera_id)
     if path.exists():
         with open(path) as f:
             return json.load(f)
@@ -52,12 +52,13 @@ def load_or_create(incident_id: str, camera_id: str, module: str,
         "snapshot_count": 0,
         "snapshots": [],
         "last_snapshot_at": None,
+        "confidence": 0.0,
     }
 
 
 def save(incident_id: str, meta: dict) -> None:
     meta["last_updated"] = datetime.now(timezone.utc).isoformat()
-    with open(_meta_path(incident_id), "w") as f:
+    with open(_meta_path(incident_id, meta["camera_id"]), "w") as f:
         json.dump(meta, f, indent=2)
 
 
@@ -81,7 +82,7 @@ def add_snapshot(incident_id: str, frame: np.ndarray,
 
     seq = meta["snapshot_count"] + 1
     filename = f"snapshot_{seq:03d}.jpg"
-    cv2.imwrite(str(_incident_dir(incident_id) / filename), crop,
+    cv2.imwrite(str(_incident_dir(incident_id, meta["camera_id"]) / filename), crop,
                 [cv2.IMWRITE_JPEG_QUALITY, 95])
     meta["snapshot_count"] = seq
     meta["snapshots"].append(filename)
@@ -91,7 +92,8 @@ def add_snapshot(incident_id: str, frame: np.ndarray,
 
 def enrich_meta(meta: dict, module: str, obj_attributes: dict,
                 obj_type: str, track_id: str, danger_score: int,
-                danger_label: str) -> None:
+                danger_label: str, frame_humans: int = 0, frame_vehicles: int = 0,
+                confidence: float = 0.0) -> None:
     """Pull all useful fields from a DetectedObject into the incident metadata."""
     if module not in meta["modules_triggered"]:
         meta["modules_triggered"].append(module)
@@ -102,11 +104,14 @@ def enrich_meta(meta: dict, module: str, obj_attributes: dict,
 
     if track_id not in meta["track_ids"]:
         meta["track_ids"].append(track_id)
+        
+    if confidence > meta.get("confidence", 0.0):
+        meta["confidence"] = confidence
 
-    if obj_type == "human":
-        meta["humans_detected"] = len(meta["track_ids"])
-    elif obj_type == "vehicle":
-        meta["vehicles_detected"] += 1
+    if frame_humans > meta.get("humans_detected", 0):
+        meta["humans_detected"] = frame_humans
+    if frame_vehicles > meta.get("vehicles_detected", 0):
+        meta["vehicles_detected"] = frame_vehicles
 
     # Enrich from module-specific attributes
     if "zone_id" in obj_attributes and obj_attributes.get("zone_state") == "inside":
@@ -141,12 +146,17 @@ def get_all_incidents(limit: int = 100) -> list[dict]:
     incidents = []
     if not _INCIDENT_ROOT.exists():
         return incidents
-    for folder in sorted(_INCIDENT_ROOT.iterdir(), key=lambda p: p.stat().st_mtime, reverse=True)[:limit]:
-        meta_file = folder / "incident.json"
-        if meta_file.exists():
-            try:
-                with open(meta_file) as f:
-                    incidents.append(json.load(f))
-            except Exception:
-                pass
+    
+    # We now have _INCIDENT_ROOT / <camera_id> / <incident_id> / incident.json
+    all_meta_files = list(_INCIDENT_ROOT.rglob("incident.json"))
+    
+    # Sort by modification time desc
+    all_meta_files.sort(key=lambda p: p.stat().st_mtime, reverse=True)
+    
+    for meta_file in all_meta_files[:limit]:
+        try:
+            with open(meta_file) as f:
+                incidents.append(json.load(f))
+        except Exception:
+            pass
     return incidents

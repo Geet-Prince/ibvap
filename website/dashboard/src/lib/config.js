@@ -1,9 +1,9 @@
 // Shared backend access config.
 export const API_BASE = import.meta.env.VITE_API_BASE ?? '';
 
-export function snapshotUrl(incidentId, file) {
+export function snapshotUrl(cameraId, incidentId, file) {
   if (!file) return null;
-  return `${API_BASE}/storage/incidents/${incidentId}/${file}`;
+  return `${API_BASE}/storage/incidents/${cameraId}/${incidentId}/${file}`;
 }
 
 export function liveStreamUrl() {

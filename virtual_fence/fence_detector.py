@@ -30,8 +30,8 @@ class VirtualFence:
         self.contour = None
         self.load_config()
         self._inside_frames = {}
-        self._enter_threshold = 2
-        self._grace_frames = 6
+        self._enter_threshold = 5  # Increased from 2 to require more sustained presence before alerting
+        self._grace_frames = 10
 
     def load_config(self):
         if self.roi_path and Path(self.roi_path).exists():
@@ -71,49 +71,80 @@ class VirtualFence:
         result = cv2.pointPolygonTest(self.contour, (float(pt[0]), float(pt[1])), measureDist=False)
         return result >= 0
 
-    def is_inside(self, bbox):
-        return self._point_inside(self._get_foot_point(bbox)) or self._point_inside(self._get_centroid(bbox))
+    def is_inside(self, bbox, object_type="human"):
+        # For humans, use foot point to prevent false alarms from leaning over.
+        # For vehicles, use the centroid since their bounding boxes are massive 
+        # and their "foot point" is the rear bumper which enters late.
+        if object_type == "vehicle":
+            cx = (bbox[0] + bbox[2]) / 2
+            cy = (bbox[1] + bbox[3]) / 2
+            return self._point_inside((cx, cy))
+        return self._point_inside(self._get_foot_point(bbox))
 
     def process(self, result):
-        if self.contour is None:
+        contour = self.contour
+        if contour is None or len(contour) < 3 or contour.size == 0:
             return result
+        
         current_ids = set()
         for obj in result.objects:
             if obj.object_type not in ("human", "vehicle"):
                 continue
+            
             track_id = obj.track_id
             current_ids.add(track_id)
-            physically_inside = self.is_inside(obj.bbox)
-            prev = self._inside_frames.get(track_id, 0)
+            
+            physically_inside = self.is_inside(obj.bbox, obj.object_type)
+            
+            # State is a dict: {"val": int, "active": bool}
+            state = self._inside_frames.get(track_id, {"val": 0, "active": False})
+            
             if physically_inside:
-                new_val = min(prev + 1, self._enter_threshold + 20)
+                state["val"] += (2 if obj.object_type == "vehicle" else 1)
             else:
-                new_val = max(prev - 1, -(self._grace_frames + 1))
-            self._inside_frames[track_id] = new_val
-            if new_val >= self._enter_threshold or (new_val < 0 and new_val >= -self._grace_frames):
+                state["val"] -= (2 if obj.object_type == "vehicle" else 1)
+                
+            # Clamp the accumulator
+            state["val"] = max(-self._grace_frames, min(self._enter_threshold, state["val"]))
+            
+            # Hysteresis trigger
+            if state["val"] >= self._enter_threshold:
+                state["active"] = True
+            elif state["val"] <= -self._grace_frames:
+                state["active"] = False
+                
+            self._inside_frames[track_id] = state
+            
+            if state["active"]:
                 obj.attributes["zone_state"] = "inside"
                 obj.attributes["zone_id"] = "border_fence"
-        expired = [tid for tid, v in self._inside_frames.items()
-                   if tid not in current_ids and v <= -(self._grace_frames + 1)]
+                
+        # Cleanup stale tracks
+        expired = [tid for tid in self._inside_frames.keys() if tid not in current_ids]
         for tid in expired:
             del self._inside_frames[tid]
+            
         return result
 
     def draw_fence(self, frame, breach_active=False):
-        if self.contour is None or len(self.contour) < 3:
+        contour = self.contour
+        if contour is None or len(contour) < 3:
             return
-        
+        # Ensure contour is valid for OpenCV drawing (needs shape (N, 2) or (N, 1, 2) with N >= 3)
+        if contour.size == 0 or len(contour.shape) < 2 or contour.shape[-1] != 2:
+            return
+            
         if breach_active:
             overlay = frame.copy()
-            cv2.fillPoly(overlay, [self.contour], (0, 0, 255))
+            cv2.fillPoly(overlay, [contour], (0, 0, 255))
             cv2.addWeighted(overlay, 0.18, frame, 0.82, 0, frame)
             
-            cx = int(self.contour[:, 0].mean())
-            cy = int(self.contour[:, 1].mean())
+            cx = int(contour[:, 0].mean())
+            cy = int(contour[:, 1].mean())
             cv2.putText(frame, "RESTRICTED ZONE", (cx - 80, cy),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 0, 255), 2, cv2.LINE_AA)
         
         # Always draw the outline and vertices
-        cv2.polylines(frame, [self.contour], isClosed=True, color=(0, 0, 255), thickness=3)
-        for pt in self.contour:
+        cv2.polylines(frame, [contour], isClosed=True, color=(0, 0, 255), thickness=3)
+        for pt in contour:
             cv2.circle(frame, (int(pt[0]), int(pt[1])), 5, (0, 80, 255), -1)

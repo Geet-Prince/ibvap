@@ -214,9 +214,9 @@ export default function MainFeed({ cameraId, streamSrc, detections = [], cameraN
                 </button>
                 <button
                   onClick={savePolygon}
-                  disabled={polygon.length < 3}
+                  disabled={polygon.length > 0 && polygon.length < 3}
                   className="flex items-center gap-1.5 rounded bg-green-600/80 px-3 py-1.5 text-xs text-white hover:bg-green-600 disabled:opacity-40 disabled:cursor-not-allowed"
-                  title={polygon.length < 3 ? 'Need at least 3 points' : 'Save fence polygon'}
+                  title={polygon.length > 0 && polygon.length < 3 ? 'Need at least 3 points' : 'Save fence polygon'}
                 >
                   <Save className="h-4 w-4" /> Save
                 </button>

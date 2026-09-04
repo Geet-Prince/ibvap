@@ -28,11 +28,14 @@ export function useLiveAlerts({ sector } = {}) {
     // Merge newest-first, dedup by _id so socket confirmations reconcile
     // with anything optimistically applied.
     const map = new Map();
-    if (items) [...items, ...alertsRef.current].forEach((a) => map.set(a._id, a));
+    // Merge oldest-first so that newer items overwrite older ones in the map.
+    if (items) [...alertsRef.current, ...items].forEach((a) => map.set(a._id, a));
     else alertsRef.current.forEach((a) => map.set(a._id, a));
-    alertsRef.current = Array.from(map.values()).sort(
-      (a, b) => new Date(b.timestamp) - new Date(a.timestamp),
-    );
+    
+    alertsRef.current = Array.from(map.values())
+      .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+      .slice(0, 100); // Keep max 100 live alerts in memory
+      
     setAlerts(alertsRef.current);
     saveCached(alertsRef.current);
   };

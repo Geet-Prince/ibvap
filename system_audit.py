@@ -6,9 +6,9 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-PASS = "✅"
-FAIL = "❌"
-WARN = "⚠️ "
+PASS = "PASS"
+FAIL = "FAIL"
+WARN = "WARN"
 
 results = []
 
@@ -17,7 +17,7 @@ def check(name, fn):
         fn()
         results.append((PASS, name))
     except Exception as e:
-        results.append((FAIL, f"{name}  →  {e}"))
+        results.append((FAIL, f"{name}  ->  {e}"))
 
 # ─── 1. Contracts ───────────────────────────────────────────────────────────
 def _contracts():
@@ -47,7 +47,7 @@ check("Alarm Manager — rules.yaml loaded", _rules)
 def _score_human():
     from alarm_manager.src.core import AlarmManager
     am = AlarmManager()
-    score, rule = am._score("human_tracking", {})
+    score, rule = am._score("human_tracking", {}, object_type="human")
     assert score == 20, f"Expected 20, got {score}"
 check("Scoring — human_tracking gets score=20", _score_human)
 
@@ -55,7 +55,7 @@ check("Scoring — human_tracking gets score=20", _score_human)
 def _score_fence():
     from alarm_manager.src.core import AlarmManager
     am = AlarmManager()
-    score, rule = am._score("human_tracking", {"zone_state": "inside", "zone_id": "border_fence"})
+    score, rule = am._score("human_tracking", {"zone_state": "inside", "zone_id": "border_fence"}, object_type="human")
     assert score == 40, f"Expected 40, got {score}"
 check("Scoring — fence breach gets score=40", _score_fence)
 
@@ -156,7 +156,7 @@ print("\n" + "=" * 60)
 print("  IBVAP FULL SYSTEM AUDIT REPORT")
 print("=" * 60)
 for status, name in results:
-    print(f"  {status}  {name}")
+    print(f"  [{status}]  {name}")
 
 passed = sum(1 for s, _ in results if s == PASS)
 failed = sum(1 for s, _ in results if s == FAIL)

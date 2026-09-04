@@ -11,12 +11,30 @@ rules:
 
   - name: "Human Tracked"
     module: human_tracking
+    object_type: human
     score: 20
     severity: informational
-    capture_snapshot: true      # Always snapshot a confirmed tracked human
+    capture_snapshot: false
+
+  - name: "Vehicle Tracked"
+    module: human_tracking
+    object_type: vehicle
+    score: 20
+    severity: informational
+    capture_snapshot: false
 
   - name: "Virtual Fence Breach"
     module: human_tracking
+    object_type: human
+    attribute: zone_state
+    equals: inside
+    score: 40
+    severity: high
+    capture_snapshot: true
+
+  - name: "Vehicle Fence Breach"
+    module: human_tracking
+    object_type: vehicle
     attribute: zone_state
     equals: inside
     score: 40
@@ -41,7 +59,7 @@ rules:
     module: vehicle_detection
     score: 25
     severity: informational
-    capture_snapshot: true
+    capture_snapshot: false
 
   - name: "Loitering"
     module: human_tracking

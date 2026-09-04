@@ -77,9 +77,13 @@ class AlarmManager:
     # ── Public API ──────────────────────────────────────────────────────
     def submit(self, result: DetectionResult,
                frame: Optional[np.ndarray] = None) -> None:
+        
+        frame_humans = sum(1 for o in result.objects if o.object_type == "human")
+        frame_vehicles = sum(1 for o in result.objects if o.object_type == "vehicle")
+        
         for obj in result.objects:
-            score, matched_rule = self._score(result.module, obj.attributes)
-            label = _danger_label(score, self._thresholds)
+            score, matched_rule = self._score(result.module, obj.attributes, obj.object_type)
+            label = matched_rule["severity"].capitalize() if matched_rule else _danger_label(score, self._thresholds)
 
             # Always log to activity_log
             log_activity(
@@ -90,28 +94,40 @@ class AlarmManager:
                 score=score,
             )
 
-            if score == 0:
-                continue
-
-            # Stable incident ID tied to this track on this camera
             incident_id = hashlib.md5(
                 f"{result.camera_id}-{obj.track_id}".encode()
             ).hexdigest()[:12]
 
+            # If this is a low-threat event AND we've never created an incident for it, skip.
+            # But if it's already an active incident, we must keep enriching it (e.g. for async ANPR plates)
+            if score < 30 and not (matched_rule and matched_rule.get("capture_snapshot", False)):
+                if incident_id not in self._meta_cache:
+                    continue
+
+            effective_module = "vehicle_tracking" if obj.object_type == "vehicle" and result.module == "human_tracking" else result.module
+
             # Load or create incident metadata
             if incident_id not in self._meta_cache:
                 self._meta_cache[incident_id] = incident_store.load_or_create(
-                    incident_id, result.camera_id, result.module, score, label)
+                    incident_id, result.camera_id, effective_module, score, label)
             meta = self._meta_cache[incident_id]
 
             # Enrich metadata with all available signal
             incident_store.enrich_meta(
-                meta, result.module, obj.attributes,
-                obj.object_type, obj.track_id, score, label)
+                meta, effective_module, obj.attributes,
+                obj.object_type, obj.track_id, score, label,
+                frame_humans, frame_vehicles, obj.confidence)
 
+            plate_no = obj.attributes.get("plate_no")
+            if plate_no:
+                plate_file = f"plate_{plate_no}.jpg"
+                if plate_file not in meta["snapshots"]:
+                    meta["snapshots"].append(plate_file)
+                    
             # Adaptive snapshot: only capture if enough time has passed
             snapshot_file = None
-            if frame is not None and score >= 20:
+            should_snapshot = matched_rule.get("capture_snapshot", False) if matched_rule else False
+            if frame is not None and should_snapshot:
                 interval = _snapshot_interval(score)
                 last = self._last_snap.get(obj.track_id, 0.0)
                 if time.time() - last >= interval:
@@ -119,13 +135,16 @@ class AlarmManager:
                         incident_id, frame, obj.bbox, meta)
                     self._last_snap[obj.track_id] = time.time()
 
-            # Persist incident JSON
-            self._dirty_meta.add(incident_id)
+            # Persist incident JSON only if it has evidence or is a significant threat (>= 30)
+            if snapshot_file or meta.get("snapshot_count", 0) > 0 or score >= 30:
+                self._dirty_meta.add(incident_id)
+                
             # Flush dirty cache periodically (e.g. every 1.5 seconds)
             now = time.time()
             if now - self._last_flush > 1.5 and self._dirty_meta:
                 for iid in list(self._dirty_meta):
-                    incident_store.save(iid, self._meta_cache[iid])
+                    if iid in self._meta_cache:
+                        incident_store.save(iid, self._meta_cache[iid])
                 self._dirty_meta.clear()
                 self._last_flush = now
 
@@ -151,7 +170,7 @@ class AlarmManager:
                         # If no snapshot this frame, don't overwrite with empty in the DB UPSERT, but upsert needs a value.
                         # Wait, we pass the latest snapshot from meta instead of just this frame's snapshot!
                         snapshot_path=meta["snapshots"][-1] if meta["snapshots"] else "",
-                        module=result.module,
+                        module=effective_module,
                         attributes=obj.attributes,
                     )
 
@@ -163,7 +182,7 @@ class AlarmManager:
                         "danger_score":   score,
                         "camera_id":      result.camera_id,
                         "track_id":       obj.track_id,
-                        "module":         result.module,
+                        "module":         effective_module,
                         "confidence":     obj.confidence,
                         "bbox":           list(obj.bbox),
                         "snapshot":       meta["snapshots"][-1] if meta["snapshots"] else None,
@@ -176,10 +195,12 @@ class AlarmManager:
                     self._broadcast(alert)
 
     # ── Scoring ─────────────────────────────────────────────────────────
-    def _score(self, module: str, attributes: dict) -> tuple[int, Optional[dict]]:
+    def _score(self, module: str, attributes: dict, object_type: str = None) -> tuple[int, Optional[dict]]:
         best_rule, best_score = None, 0
         for rule in self._rules:
             if rule.get("module") != module:
+                continue
+            if "object_type" in rule and rule["object_type"] != object_type:
                 continue
             if "attribute" in rule:
                 val = attributes.get(rule["attribute"])

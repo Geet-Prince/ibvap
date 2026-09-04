@@ -137,21 +137,11 @@ async def api_live():
 @app.get("/api/stats")
 async def api_stats():
     """Aggregate stats for the dashboard stat cards."""
-    events = get_recent_events(500)
-    total = len(events)
-    humans = sum(1 for e in events if 'HUMAN' in (e.get('event_type') or ''))
-    medium = sum(1 for e in events if (e.get('severity') or '').lower() == 'medium')
-    high = sum(1 for e in events if (e.get('severity') or '').lower() == 'high')
-    critical = sum(1 for e in events if (e.get('severity') or '').lower() == 'critical')
-    incidents_list = get_all_incidents(500)
-    return {
-        "events":    {"value": total, "label": "Total Events"},
-        "humans":    {"value": humans, "label": "Humans"},
-        "medium":    {"value": medium, "label": "Medium"},
-        "high":      {"value": high, "label": "High"},
-        "critical":  {"value": critical, "label": "Critical"},
-        "incidents": {"value": len(incidents_list), "label": "Incidents"},
-    }
+    from alarm_manager.src.database import get_stats
+    stats = get_stats()
+    incidents_list = get_all_incidents(10000) # just get a rough count or modify get_all_incidents to count
+    stats["incidents"] = {"value": len(incidents_list), "label": "Total Incidents"}
+    return stats
 
 
 @app.get("/api/events")

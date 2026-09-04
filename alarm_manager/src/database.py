@@ -1,4 +1,4 @@
-﻿"""
+"""
 alarm_manager/src/database.py  (v2 — high-performance SQLite)
 
 Key improvements over v1:
@@ -187,5 +187,41 @@ def get_recent_events(limit: int = 50) -> list[dict]:
             "SELECT * FROM events ORDER BY created_at DESC LIMIT ?", (limit,)
         ).fetchall()
         return [dict(r) for r in rows]
+    finally:
+        rconn.close()
+
+
+def get_stats() -> dict:
+    """Return real-time counts from the database."""
+    _DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    rconn = sqlite3.connect(str(_DB_PATH), check_same_thread=False)
+    try:
+        cur = rconn.cursor()
+        cur.execute("SELECT COUNT(*) FROM events")
+        total = cur.fetchone()[0]
+        
+        cur.execute("SELECT COUNT(*) FROM events WHERE severity='medium'")
+        medium = cur.fetchone()[0]
+        
+        cur.execute("SELECT COUNT(*) FROM events WHERE severity='high'")
+        high = cur.fetchone()[0]
+        
+        cur.execute("SELECT COUNT(*) FROM events WHERE severity='critical'")
+        critical = cur.fetchone()[0]
+        
+        cur.execute("SELECT COUNT(*) FROM activity_log WHERE object_type='human'")
+        humans = cur.fetchone()[0]
+        
+        cur.execute("SELECT COUNT(*) FROM activity_log WHERE object_type='vehicle'")
+        vehicles = cur.fetchone()[0]
+
+        return {
+            "events":    {"value": total, "label": "Total Events"},
+            "humans":    {"value": humans, "label": "Total Humans Detected"},
+            "vehicles":  {"value": vehicles, "label": "Total Vehicles Detected"},
+            "medium":    {"value": medium, "label": "Medium Severity"},
+            "high":      {"value": high, "label": "High Severity"},
+            "critical":  {"value": critical, "label": "Critical Severity"},
+        }
     finally:
         rconn.close()

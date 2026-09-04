@@ -3,12 +3,12 @@ import { Radar } from 'lucide-react';
 // Severity → color, same keys used across the alert list / stat cards.
 // informational maps to green (effectively nominal threat).
 const BLIP_COLOR = {
-  critical: '#ef4444', // red
-  high: '#ff8a3d',     // orange
-  medium: '#f5a623',   // amber
-  low: '#2ecc71',      // green
-  nominal: '#2ecc71',  // green
-  informational: '#2ecc71', // green (low threat)
+  critical: '#ef4444', // combat red
+  high: '#ff8a3d',     // tactical orange
+  medium: '#f5a623',   // hazard amber
+  low: '#22c55e',      // tactical army green
+  nominal: '#22c55e',  // tactical army green
+  informational: '#4ade80', // army phosphor green
 };
 
 // Schematic radar — accepts sector-relative {x, y (0..100), severity, item} points.
@@ -31,13 +31,13 @@ export default function RadarMap({
       </div>
 
       <div className="relative flex flex-1 w-full items-center justify-center">
-        {/* Technical grid — spans the full panel behind the radar, low contrast */}
+        {/* Technical grid — spans the full panel behind the radar, tactical army olive */}
         <div
           className="absolute inset-0"
           style={{
             backgroundImage:
-              'linear-gradient(rgba(30,39,51,0.4) 1px, transparent 1px),' +
-              'linear-gradient(90deg, rgba(30,39,51,0.4) 1px, transparent 1px)',
+              'linear-gradient(rgba(34,49,36,0.5) 1px, transparent 1px),' +
+              'linear-gradient(90deg, rgba(34,49,36,0.5) 1px, transparent 1px)',
             backgroundSize: '28px 28px',
           }}
         />
@@ -49,7 +49,7 @@ export default function RadarMap({
           className="relative aspect-square h-[250px] max-h-full w-full max-w-[250px]"
           style={{
             backgroundImage:
-              'radial-gradient(circle at center, rgba(34,211,238,0.06), transparent 68%)',
+              'radial-gradient(circle at center, rgba(74,222,128,0.08), transparent 68%)',
           }}
         >
           {[20, 40, 60].map((r) => (
@@ -66,15 +66,15 @@ export default function RadarMap({
           <div className="pointer-events-none absolute left-1/2 top-0 h-full w-px bg-hairline/30" />
           <div className="pointer-events-none absolute left-0 top-1/2 h-px w-full bg-hairline/30" />
 
-          {/* rotating sweep arc with soft cyan glow */}
+          {/* rotating sweep arc with tactical phosphor green glow */}
           <div
             className="pointer-events-none absolute inset-0 animate-radar-sweep"
             style={{
               transformOrigin: '50% 50%',
               borderRadius: '50%',
-              boxShadow: '0 0 32px 2px rgba(34,211,238,0.09)',
+              boxShadow: '0 0 32px 2px rgba(74,222,128,0.12)',
               background:
-                'conic-gradient(from 0deg, rgba(34,211,238,0.16), rgba(34,211,238,0.03) 30deg, transparent 60deg)',
+                'conic-gradient(from 0deg, rgba(74,222,128,0.22), rgba(74,222,128,0.04) 30deg, transparent 60deg)',
             }}
           />
 

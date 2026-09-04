@@ -1,4 +1,4 @@
-﻿import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { VideoOff, Edit3, Save, X, Trash2 } from 'lucide-react';
 import { useClock } from '../../hooks/useClock';
 import { liveStreamUrl, API_BASE } from '../../lib/config';
@@ -116,7 +116,7 @@ export default function MainFeed({ cameraId, streamSrc, detections = [], cameraN
         style={{ aspectRatio: ratio }}
       >
         {down ? (
-          <div className="flex h-full w-full items-center justify-center bg-[#070b11]">
+          <div className="flex h-full w-full items-center justify-center bg-[#090e0a]">
             <VideoOff className="h-8 w-8 text-ghost/40" />
           </div>
         ) : (
@@ -187,7 +187,7 @@ export default function MainFeed({ cameraId, streamSrc, detections = [], cameraN
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 p-4 sm:p-12 backdrop-blur-sm">
           <div className="flex max-h-full max-w-full flex-col overflow-hidden rounded-lg bg-panel border border-hairline shadow-2xl w-full" style={{ maxWidth: '90vw', maxHeight: '90vh' }}>
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-hairline px-4 py-3 bg-[#070b11] flex-shrink-0">
+            <div className="flex items-center justify-between border-b border-hairline px-4 py-3 bg-[#090e0a] flex-shrink-0">
               <div className="flex flex-col">
                 <span className="mono text-xs uppercase text-ghost tracking-widest">
                   Restricted Zone Editor — {cameraName || cameraId}

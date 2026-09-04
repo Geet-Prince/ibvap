@@ -21,7 +21,7 @@ function ConnPill({ status }) {
     >
       <span
         className={`h-1.5 w-1.5 rounded-full ${
-          live ? 'bg-live shadow-[0_0_6px_1px_rgba(34,211,238,0.7)]' : status === 'connecting' ? 'bg-ghost animate-pulse' : 'bg-ghost/50'
+          live ? 'bg-live shadow-[0_0_6px_1px_rgba(74,222,128,0.7)]' : status === 'connecting' ? 'bg-ghost animate-pulse' : 'bg-ghost/50'
         }`}
       />
       {live ? 'Live' : status === 'connecting' ? 'Reconnecting' : 'Offline'}
@@ -42,8 +42,8 @@ export default function TopBar({ sector, onSectorChange, connectionStatus }) {
           <RadioTower className="absolute -right-1 -top-1 h-2.5 w-2.5 text-nominal" />
         </div>
         <div className="leading-none">
-          <div className="text-[15px] font-semibold tracking-wide text-fg">IBVAP</div>
-          <div className="mono text-[10px] tracking-[0.25em] uppercase text-ghost">Border Intelligence</div>
+          <div className="text-[15px] font-semibold tracking-wide text-fg">SEEMA DRISHTI</div>
+          <div className="mono text-[10px] tracking-[0.25em] uppercase text-ghost">Army Border Intelligence</div>
         </div>
       </div>
 

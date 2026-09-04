@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { api, radarPoint } from '../../lib/api';
 import { liveStreamUrl, cameraStreamUrl } from '../../lib/config';
 import { useLiveAlerts } from '../../hooks/useLiveAlerts';
@@ -21,8 +21,8 @@ function saveLS(key, value) {
 export default function DashboardLayout() {
   const { alerts, status: connStatus, push } = useLiveAlerts();
 
-  const [incidents, setIncidents] = useState(() => loadLS('ibvap.incidents', []));
-  const [stats, setStats] = useState(() => loadLS('ibvap.stats', []));
+  const [incidents, setIncidents] = useState(() => loadLS('seemadrishti.incidents', []));
+  const [stats, setStats] = useState(() => loadLS('seemadrishti.stats', []));
   const [statsLoading, setStatsLoading] = useState(true);
   const [incLoading, setIncLoading] = useState(true);
   const [sector, setSector] = useState('sector-a');
@@ -39,8 +39,8 @@ export default function DashboardLayout() {
   // still shows the last known data instead of a blank dashboard.
   const refreshAll = useCallback(() => {
     api.events().then((rows) => push(rows)).catch(() => {});
-    api.incidents().then((rows) => { setIncidents(rows); saveLS('ibvap.incidents', rows); }).catch(() => {});
-    api.stats().then((rows) => { setStats(rows); saveLS('ibvap.stats', rows); }).catch(() => {});
+    api.incidents().then((rows) => { setIncidents(rows); saveLS('seemadrishti.incidents', rows); }).catch(() => {});
+    api.stats().then((rows) => { setStats(rows); saveLS('seemadrishti.stats', rows); }).catch(() => {});
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -48,8 +48,8 @@ export default function DashboardLayout() {
   // Periodic refresh for stats and incidents (every 5s)
   useEffect(() => {
     const t = setInterval(() => {
-      api.incidents().then((rows) => { setIncidents(rows); saveLS('ibvap.incidents', rows); }).catch(() => {});
-      api.stats().then((rows) => { setStats(rows); saveLS('ibvap.stats', rows); }).catch(() => {});
+      api.incidents().then((rows) => { setIncidents(rows); saveLS('seemadrishti.incidents', rows); }).catch(() => {});
+      api.stats().then((rows) => { setStats(rows); saveLS('seemadrishti.stats', rows); }).catch(() => {});
     }, 5000);
     return () => clearInterval(t);
   }, []);
@@ -59,8 +59,8 @@ export default function DashboardLayout() {
     const load = async () => {
       await Promise.allSettled([
         api.events().then((rows) => { if (!cancelled) push(rows); }),
-        api.incidents().then((rows) => { if (!cancelled) { setIncidents(rows); saveLS('ibvap.incidents', rows); } }),
-        api.stats().then((rows) => { if (!cancelled) { setStats(rows); saveLS('ibvap.stats', rows); } }),
+        api.incidents().then((rows) => { if (!cancelled) { setIncidents(rows); saveLS('seemadrishti.incidents', rows); } }),
+        api.stats().then((rows) => { if (!cancelled) { setStats(rows); saveLS('seemadrishti.stats', rows); } }),
       ]);
       if (!cancelled) { setStatsLoading(false); setIncLoading(false); }
     };
@@ -159,7 +159,7 @@ export default function DashboardLayout() {
     if (item.kind === 'incident') {
       const next = incidents.map((it) => (it._id === item._id ? { ...it, status } : it));
       setIncidents(next);
-      saveLS('ibvap.incidents', next);
+      saveLS('seemadrishti.incidents', next);
     } else {
       const updated = alerts.map((it) => (it._id === item._id ? { ...it, status } : it));
       push(updated);
@@ -170,7 +170,7 @@ export default function DashboardLayout() {
     // backend-derived counts update without a full page refresh.
     api.updateStatus(item, status)
       .then(() => {
-        api.stats().then((rows) => { setStats(rows); saveLS('ibvap.stats', rows); }).catch(() => {});
+        api.stats().then((rows) => { setStats(rows); saveLS('seemadrishti.stats', rows); }).catch(() => {});
       })
       .catch(() => {});
   }

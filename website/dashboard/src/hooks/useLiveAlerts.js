@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { API_BASE } from '../lib/config';
 import { normalizeAlert } from '../lib/api';
 
-const LS_KEY = 'ibvap.alerts';
+const LS_KEY = 'seemadrishti.alerts';
 
 function loadCached() {
   try {
@@ -52,6 +52,28 @@ export function useLiveAlerts({ sector } = {}) {
           const raw = JSON.parse(e.data);
           const alert = normalizeAlert(raw);
           push([alert]);
+          
+          // Play alarm sound if it's a virtual fence breach
+          if (alert.title && (alert.title.toLowerCase().includes('fence breach') || alert.title.toLowerCase().includes('intrusion'))) {
+            try {
+              const ctx = new (window.AudioContext || window.webkitAudioContext)();
+              const osc = ctx.createOscillator();
+              const gain = ctx.createGain();
+              
+              osc.type = 'square';
+              osc.frequency.setValueAtTime(600, ctx.currentTime);
+              osc.frequency.exponentialRampToValueAtTime(1200, ctx.currentTime + 0.3);
+              
+              gain.gain.setValueAtTime(0, ctx.currentTime);
+              gain.gain.linearRampToValueAtTime(0.3, ctx.currentTime + 0.05);
+              gain.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.5);
+              
+              osc.connect(gain);
+              gain.connect(ctx.destination);
+              osc.start(ctx.currentTime);
+              osc.stop(ctx.currentTime + 0.5);
+            } catch(err) { /* ignore audio errors */ }
+          }
         } catch { /* ignore malformed frames */ }
       };
       ws.onerror = () => { if (!disposed) setStatus('error'); };

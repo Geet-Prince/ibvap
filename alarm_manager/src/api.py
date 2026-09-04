@@ -22,7 +22,7 @@ from alarm_manager.src.incident_store import get_all_incidents
 from alarm_manager.src.frame_buffer import LIVE_FRAME, CAMERA_REGISTRY
 from alarm_manager.src import register_subscriber, unregister_subscriber
 
-app = FastAPI(title="IBVAP API v3")
+app = FastAPI(title="SEEMA DRISHTI API v3")
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
                    allow_methods=["*"], allow_headers=["*"])
 
@@ -42,7 +42,7 @@ async def _startup(): init_db()
 
 @app.get("/")
 async def root():
-    return {"status": "IBVAP v3 running", "dashboard": "/ui", "docs": "/docs"}
+    return {"status": "SEEMA DRISHTI v3 running", "dashboard": "/ui", "docs": "/docs"}
 
 
 # ── MJPEG Stream helpers ────────────────────────────────────────────────────

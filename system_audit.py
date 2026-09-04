@@ -145,6 +145,8 @@ def _frame_buffer():
     from alarm_manager.src.frame_buffer import LIVE_FRAME
     dummy = np.zeros((100, 100, 3), dtype=np.uint8)
     LIVE_FRAME.write(dummy)
+    import time
+    time.sleep(0.05)
     data = LIVE_FRAME.read()
     assert data is not None and len(data) > 0
 check("Frame Buffer — thread-safe read/write works", _frame_buffer)

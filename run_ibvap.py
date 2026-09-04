@@ -463,7 +463,7 @@ def main():
     except Exception:
         pass
     print("=" * 60)
-    print("  IBVAP â€” Border Intelligence Platform (V8 Multi-Camera)")
+    print("  SEEMA DRISHTI — Border Intelligence Platform (V8 Multi-Camera)")
     print("  Dashboard: http://localhost:8000/ui")
     print("=" * 60)
 

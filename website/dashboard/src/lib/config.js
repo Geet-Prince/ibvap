@@ -20,8 +20,8 @@ export const SEVERITY = {
   critical: { color: '#ef4444', label: 'Critical' },
   high: { color: '#ff8a3d', label: 'High' },
   medium: { color: '#f5a623', label: 'Medium' },
-  low: { color: '#2ecc71', label: 'Low' },
-  informational: { color: '#22d3ee', label: 'Informational' },
+  low: { color: '#22c55e', label: 'Low' },
+  informational: { color: '#4ade80', label: 'Informational' },
 };
 
 export function severityKey(label) {

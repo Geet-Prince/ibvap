@@ -4,9 +4,9 @@ const SEV_RGB = {
   critical: [239, 68, 68],
   high: [255, 138, 61],
   medium: [245, 166, 35],
-  low: [46, 204, 113],
-  nominal: [46, 204, 113],
-  informational: [34, 211, 238],
+  low: [34, 197, 94],
+  nominal: [34, 197, 94],
+  informational: [74, 222, 128],
 };
 
 export function downloadIncidentReport(item) {
@@ -23,7 +23,7 @@ export function downloadIncidentReport(item) {
   doc.setTextColor(10, 14, 20);
   doc.setFont('helvetica', 'bold');
   doc.setFontSize(13);
-  doc.text('IBVAP — INCIDENT REPORT', M, 8.5);
+  doc.text('SEEMA DRISHTI — INCIDENT REPORT', M, 8.5);
   doc.setTextColor(255, 255, 255);
   doc.setFontSize(9);
   doc.setFont('helvetica', 'normal');
@@ -81,7 +81,7 @@ export function downloadIncidentReport(item) {
 
   // ── Detection summary ──────────────────────────────────────────────────────
   const summaryH = 22;
-  doc.setFillColor(15, 21, 30);
+  doc.setFillColor(17, 23, 18);
   doc.rect(M, y, W - M * 2, summaryH, 'F');
 
   doc.setTextColor(219, 228, 238);
@@ -139,7 +139,7 @@ export function downloadIncidentReport(item) {
   doc.setFontSize(7.5);
   doc.setTextColor(139, 152, 171);
   doc.setFont('helvetica', 'normal');
-  doc.text(`Generated ${new Date().toLocaleString()} — IBVAP Border Intelligence`, M, H - 10);
+  doc.text(`Generated ${new Date().toLocaleString()} — SEEMA DRISHTI Army Border Intelligence`, M, H - 10);
   doc.setTextColor(...color);
   doc.setFont('helvetica', 'bold');
   doc.text(item._id || '', W - M, H - 10, { align: 'right' });

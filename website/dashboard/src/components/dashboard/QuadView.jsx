@@ -38,7 +38,7 @@ function CamTile({ cam, isActive, onClick }) {
       tabIndex={0}
       className={`relative cursor-pointer select-none overflow-hidden rounded-md border transition-all duration-200 ${
         isActive
-          ? 'border-live ring-1 ring-live/40 shadow-[0_0_8px_2px_rgba(34,211,238,0.35)]'
+          ? 'border-live ring-1 ring-live/40 shadow-[0_0_8px_2px_rgba(74,222,128,0.35)]'
           : 'border-hairline hover:border-live/40'
       }`}
       style={{ aspectRatio: '16/9', background: '#000' }}
@@ -46,7 +46,7 @@ function CamTile({ cam, isActive, onClick }) {
       onKeyDown={(e) => e.key === 'Enter' && onClick?.()}
     >
       {broken ? (
-        <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-[#070b11]">
+        <div className="flex h-full w-full flex-col items-center justify-center gap-1 bg-[#0a0f0b]">
           <span className="text-ghost/30 text-[10px] mono uppercase">Offline</span>
         </div>
       ) : (
@@ -59,7 +59,7 @@ function CamTile({ cam, isActive, onClick }) {
       )}
 
       {isActive && (
-        <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-live shadow-[0_0_5px_2px_rgba(34,211,238,0.7)] animate-pulse" />
+        <span className="absolute top-1.5 right-1.5 h-2 w-2 rounded-full bg-live shadow-[0_0_5px_2px_rgba(74,222,128,0.7)] animate-pulse" />
       )}
 
       <div
@@ -107,7 +107,7 @@ export default function QuadView({ cameras = [], activeCameraId, onSelect }) {
       {/* Dropdown Toggle Button */}
       <button 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between w-full px-3 py-2 bg-[#0d131f] hover:bg-white/5 border-b border-hairline transition-colors"
+        className="flex items-center justify-between w-full px-3 py-2 bg-[#131c14] hover:bg-white/5 border-b border-hairline transition-colors"
       >
         <span className="text-xs mono tracking-wider text-white/80">
           Selected: <span className="text-live">{activeCam?.name || activeCam?.id || 'None'}</span>
@@ -117,7 +117,7 @@ export default function QuadView({ cameras = [], activeCameraId, onSelect }) {
 
       {/* Expandable Grid */}
       {isOpen && (
-        <div className="grid grid-cols-2 gap-1.5 p-2 max-h-[400px] overflow-y-auto custom-scrollbar bg-[#0a0f18]">
+        <div className="grid grid-cols-2 gap-1.5 p-2 max-h-[400px] overflow-y-auto custom-scrollbar bg-[#0d140e]">
           {visible.map((cam) => (
             <CamTile
               key={cam.id}

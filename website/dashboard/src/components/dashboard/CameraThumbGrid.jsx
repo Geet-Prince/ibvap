@@ -21,7 +21,7 @@ export default function CameraThumbGrid({ cameras = [], activeCameraId, onSelect
             <Radio className="h-5 w-5 text-live/60" />
             <span className="ml-2 text-ghost uppercase tracking-wider text-xs">Grid View</span>
             {activeCameraId === '__grid__' && (
-              <span className="absolute left-2 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-live shadow-[0_0_5px_1px_rgba(34,211,238,0.7)]" />
+              <span className="absolute left-2 top-1/2 -translate-y-1/2 h-2 w-2 rounded-full bg-live shadow-[0_0_5px_1px_rgba(74,222,128,0.7)]" />
             )}
           </div>
         </button>
@@ -30,7 +30,7 @@ export default function CameraThumbGrid({ cameras = [], activeCameraId, onSelect
       {cameras.length > 0 && (
         <div className="px-2 pb-2">
           <select 
-            className="w-full bg-[#0a0f17] border border-hairline rounded px-2 py-2 text-sm text-ghost mono uppercase focus:outline-none focus:border-live/50"
+            className="w-full bg-[#0d140e] border border-hairline rounded px-2 py-2 text-sm text-ghost mono uppercase focus:outline-none focus:border-live/50"
             value={activeCameraId !== '__grid__' ? activeCameraId : ""}
             onChange={(e) => {
               if (e.target.value) onSelect?.(e.target.value);

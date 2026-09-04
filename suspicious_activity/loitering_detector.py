@@ -9,8 +9,8 @@ from contracts.schema import DetectionResult, DetectedObject
 
 class SuspiciousActivityDetector:
     def __init__(self, 
-                 time_threshold=3.0, 
-                 distance_threshold=250.0, 
+                 time_threshold=4.0, 
+                 distance_threshold=120.0, 
                  cleanup_threshold=2.0,
                  crowd_distance_threshold=200.0,
                  crowd_min_people=3,
@@ -60,11 +60,17 @@ class SuspiciousActivityDetector:
                 history = self.track_history[track_id]
                 history['last_seen_timestamp'] = timestamp
                 
-                time_elapsed = timestamp - history['first_seen_timestamp']
                 distance_moved = self.calculate_distance(history['initial_position'], centroid)
 
                 # --- Loitering Condition ---
-                if time_elapsed >= self.time_threshold and distance_moved <= self.distance_threshold:
+                # If they move outside the radius, reset the anchor point and timer.
+                if distance_moved > self.distance_threshold:
+                    history['initial_position'] = centroid
+                    history['first_seen_timestamp'] = timestamp
+                    history['activities'].discard("loitering")
+                
+                time_elapsed = timestamp - history['first_seen_timestamp']
+                if time_elapsed >= self.time_threshold:
                     history['activities'].add("loitering")
                 
                 # --- Erratic Movement Condition ---

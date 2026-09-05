@@ -29,7 +29,7 @@ function ConnPill({ status }) {
   );
 }
 
-export default function TopBar({ sector, onSectorChange, connectionStatus }) {
+export default function TopBar({ sector, onSectorChange, connectionStatus, onPersonnelClick }) {
   const now = useClock();
   const time = now.toLocaleTimeString('en-GB', { hour12: false });
   const date = now.toLocaleDateString('en-GB', { weekday: 'short', day: '2-digit', month: 'short' });
@@ -62,6 +62,13 @@ export default function TopBar({ sector, onSectorChange, connectionStatus }) {
             ))}
           </select>
         </label>
+
+        <button 
+          onClick={onPersonnelClick}
+          className="rounded border border-hairline bg-panel-2 px-3 py-1 text-[11px] font-semibold text-fg hover:bg-white/5 transition-colors uppercase tracking-wider mono flex items-center gap-2"
+        >
+          <span className="hidden sm:inline">Manage</span> Personnel
+        </button>
 
         <div className="rounded border border-hairline bg-panel-2 px-3 py-1 text-right leading-tight">
           <div className="mono text-[13px] font-semibold text-fg">{time}</div>

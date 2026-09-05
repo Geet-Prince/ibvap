@@ -26,6 +26,17 @@ app = FastAPI(title="SEEMA DRISHTI API v3")
 app.add_middleware(CORSMiddleware, allow_origins=["*"],
                    allow_methods=["*"], allow_headers=["*"])
 
+try:
+    from face_recognition.router import router as face_router
+    app.include_router(face_router)
+except Exception as e:
+    import traceback
+    print("==================================================")
+    print(f"CRITICAL ERROR: Could not import face_recognition router!")
+    print("The API endpoints for face recognition will NOT be available.")
+    traceback.print_exc()
+    print("==================================================")
+
 # Static: snapshots, incidents, website
 _STORAGE     = Path(__file__).resolve().parents[2] / "storage"
 _WEBSITE_DIR = Path(__file__).resolve().parents[2] / "website" / "dashboard" / "dist"

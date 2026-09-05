@@ -14,6 +14,21 @@ import queue
 import threading
 import time
 import cv2
+import subprocess
+
+# Auto-install missing packages for the user's specific environment
+try:
+    import multipart
+except ImportError:
+    print("Auto-installing python-multipart into your environment...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "python-multipart"])
+    
+try:
+    import insightface
+except ImportError:
+    print("Auto-installing insightface and faiss-cpu into your environment...")
+    subprocess.check_call([sys.executable, "-m", "pip", "install", "insightface", "faiss-cpu", "onnxruntime"])
+
 import uvicorn
 import numpy as np
 import torch
@@ -557,6 +572,14 @@ def main():
 
     threading.Thread(target=alarm_worker, daemon=True).start()
 
+    try:
+        from face_recognition.core import FaceRecognitionWorker
+        face_worker = FaceRecognitionWorker()
+        face_worker.start()
+    except Exception as e:
+        print(f"Face recognition init failed: {e}")
+        face_worker = None
+
     batched_ai = ConsolidatedBatchedAI()
     batched_ai.warmup(n_cams=len(cam_nodes))
 
@@ -650,6 +673,32 @@ def main():
                     humans_only = [o for o in tracked_humans.objects if o.object_type == "human"]
                     tracked_humans.objects = humans_only + cam.last_raw_vehicles
 
+                    # Face Recognition Interception
+                    if face_worker:
+                        frame = frames[i]
+                        for obj in tracked_humans.objects:
+                            if obj.object_type == "human":
+                                identity_info = face_worker.get_identity(obj.track_id)
+                                if identity_info:
+                                    obj.attributes['identity'] = identity_info['name']
+                                    obj.attributes['badge_number'] = identity_info.get('badge_number', '')
+                                    obj.attributes['image_path'] = identity_info.get('image_path', '')
+                                else:
+                                    obj.attributes['identity'] = "Unknown"
+                                    # Enqueue tighter upper-body crop for clearer face detection
+                                    x1, y1, x2, y2 = obj.bbox
+                                    h, w = frame.shape[:2]
+                                    w_pad = int((x2 - x1) * 0.10)
+                                    h_pad = int((y2 - y1) * 0.10)
+                                    # Crop top 45% of the body where the head is located
+                                    y2_head = min(h, int(y1 + (y2 - y1) * 0.45) + h_pad)
+                                    
+                                    x1_p, y1_p = max(0, x1 - w_pad), max(0, y1 - h_pad)
+                                    x2_p = min(w, x2 + w_pad)
+                                    crop = frame[y1_p:y2_head, x1_p:x2_p]
+                                    if crop.size > 0:
+                                        face_worker.enqueue_crop(obj.track_id, crop)
+
                     # Suspicious activity heuristics.
                     analyzed = cam.suspicious.process(tracked_humans)
                     # Virtual fence breach checks.
@@ -657,15 +706,21 @@ def main():
                     cam.last_analyzed = analyzed
 
                     # Submit to alarm system (non-blocking).
-                    try:
-                        alarm_queue.put_nowait(
-                            (analyzed, frames[i].copy()))
-                    except queue.Full:
-                        pass
-                # else: skipped frame â€” keep cam.last_analyzed for render
+                    for obj in analyzed.objects:
+                        is_breach = (obj.attributes.get("zone_state") == "inside")
+                        activity = obj.attributes.get("activity")
+                        if is_breach or activity:
+                            key = f"{cam.id}_{obj.track_id}"
+                            if key not in ALARM_COOLDOWN or (ts - ALARM_COOLDOWN[key]) > 1.0:
+                                ALARM_COOLDOWN[key] = ts
+                                try:
+                                    alarm_queue.put_nowait((analyzed, frames[i].copy()))
+                                except queue.Full:
+                                    pass
+                # else: skipped frame — keep cam.last_analyzed for render
             t_track = time.time() - t_track_start
 
-            # â”€â”€ STAGE 4: RENDER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+            # ——— STAGE 4: RENDER ———————————————————————————————————————————
             t_render_start = time.time()
             grid = np.zeros(
                 (rows * cell_h, cols * cell_w, 3), dtype=np.uint8)
@@ -717,13 +772,52 @@ def main():
                         activity = obj.attributes.get("activity")
                         is_breach = (
                             obj.attributes.get("zone_state") == "inside")
-                        if is_breach or activity:
+                        identity = obj.attributes.get("identity", "Unknown")
+                        badge = obj.attributes.get("badge_number", "")
+                        img_path = obj.attributes.get("image_path", "")
+                        
+                        if identity != "Unknown" and not activity and not is_breach:
+                            color = (0, 255, 0)
+                        elif is_breach or activity:
                             color = (0, 0, 255) # RED
                         else:
                             color = (255, 0, 0) if obj.object_type == "vehicle" else (0, 255, 0)
 
                         track_num = obj.track_id.split("-")[-1]
-                        base = f"{obj.object_type.capitalize()} {track_num}"
+                        
+                        if identity != "Unknown":
+                            base = f"[{identity} | Badge: {badge}]" if badge else f"[{identity}]"
+                        else:
+                            base = f"{obj.object_type.capitalize()} {track_num}"
+
+                        # Draw the person's photo next to the bounding box if matched
+                        if identity != "Unknown" and img_path:
+                            try:
+                                import os
+                                # Convert absolute web path /storage/... to local path
+                                local_path = img_path
+                                if local_path.startswith('/storage'):
+                                    local_path = str(Path(__file__).resolve().parent.parent / "storage" / img_path.split('/storage/')[-1])
+                                if os.path.exists(local_path):
+                                    person_img = cv2.imread(local_path)
+                                    if person_img is not None:
+                                        fh, fw = display.shape[:2]
+                                        size = 60 # Thumbnail size
+                                        person_img = cv2.resize(person_img, (size, size))
+                                        # Top-right corner of the bounding box
+                                        py1, py2 = max(0, y1 - size), max(0, y1)
+                                        if py2 - py1 < size: # If bounding box is at the very top, draw it inside
+                                            py1, py2 = y1, y1 + size
+                                        px1, px2 = max(0, x2), max(0, x2) + size
+                                        if px2 > fw:
+                                            px1, px2 = fw - size, fw
+                                        
+                                        # Overlay the thumbnail
+                                        display[py1:py2, px1:px2] = person_img
+                                        # Draw border around thumbnail
+                                        cv2.rectangle(display, (px1, py1), (px2, py2), (0, 255, 0), 2)
+                            except Exception as e:
+                                pass # Ignore drawing errors so pipeline doesn't crash
 
                         tags: list[str] = []
                         if "vehicle_type" in obj.attributes:
@@ -736,6 +830,8 @@ def main():
                             tags.append(activity.upper())
                         if is_breach:
                             tags.append("BREACH")
+                        if identity == "Unknown" and obj.object_type == "human":
+                            tags.append("UNKNOWN")
 
                         label = (f"{base} {' '.join(tags)}"
                                  if tags else base)

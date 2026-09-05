@@ -36,8 +36,16 @@ class SuspiciousActivityDetector:
         
         active_human_tracks = [obj for obj in result.objects if obj.object_type == "human"]
 
-        # 1. INDIVIDUAL HEURISTICS (Loitering & Erratic Movement)
+        # Filter out authorized personnel (do not apply suspicious checks to known guards)
+        filtered_human_tracks = []
         for track in active_human_tracks:
+            identity = track.attributes.get("identity", "Unknown")
+            if identity != "Unknown":
+                continue 
+            filtered_human_tracks.append(track)
+
+        # 1. INDIVIDUAL HEURISTICS (Loitering & Erratic Movement)
+        for track in filtered_human_tracks:
             track_id = track.track_id
             
             # Extract centroid and velocity from tracker's attributes
@@ -81,8 +89,8 @@ class SuspiciousActivityDetector:
                     track.attributes['activity'] = ", ".join(list(history['activities']))
 
         # 2. GROUP HEURISTICS (Crowd Formation)
-        if len(active_human_tracks) >= self.crowd_min_people:
-            clusters = self._find_clusters(active_human_tracks)
+        if len(filtered_human_tracks) >= self.crowd_min_people:
+            clusters = self._find_clusters(filtered_human_tracks)
             for cluster in clusters:
                 if len(cluster) >= self.crowd_min_people:
                     for member in cluster:

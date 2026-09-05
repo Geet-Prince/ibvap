@@ -117,6 +117,14 @@ def init_db() -> None:
                 created_at      TEXT
             );
 
+            CREATE TABLE IF NOT EXISTS known_personnel (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                badge_number TEXT,
+                image_path TEXT,
+                embedding_json TEXT
+            );
+
             -- Indexes for fast time-ordered and per-camera reads
             CREATE INDEX IF NOT EXISTS idx_activity_created
                 ON activity_log(created_at DESC);
@@ -223,5 +231,32 @@ def get_stats() -> dict:
             "high":      {"value": high, "label": "High Severity"},
             "critical":  {"value": critical, "label": "Critical Severity"},
         }
+    finally:
+        rconn.close()
+
+def insert_known_personnel(name: str, badge_number: str, image_path: str, embedding: list[float]) -> int:
+    with _conn_lock:
+        conn = get_connection()
+        cur = conn.cursor()
+        cur.execute(
+            "INSERT INTO known_personnel (name, badge_number, image_path, embedding_json) VALUES (?, ?, ?, ?)",
+            (name, badge_number, image_path, json.dumps(embedding))
+        )
+        conn.commit()
+        return cur.lastrowid
+
+def get_all_known_personnel() -> list[dict]:
+    _DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+    rconn = sqlite3.connect(str(_DB_PATH), check_same_thread=False)
+    rconn.row_factory = sqlite3.Row
+    try:
+        rows = rconn.execute("SELECT * FROM known_personnel").fetchall()
+        result = []
+        for r in rows:
+            d = dict(r)
+            d['embedding'] = json.loads(d['embedding_json']) if d['embedding_json'] else []
+            del d['embedding_json']
+            result.append(d)
+        return result
     finally:
         rconn.close()

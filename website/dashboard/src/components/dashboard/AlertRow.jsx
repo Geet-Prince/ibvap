@@ -1,4 +1,4 @@
-import { Activity, Camera, MapPin, Clock, FileDown } from 'lucide-react';
+import { Activity, Camera, MapPin, Clock, FileDown, User } from 'lucide-react';
 import { SEV_COLOR, relTime } from '../../lib/theme';
 import { downloadIncidentReport } from '../../lib/pdfReport';
 
@@ -10,6 +10,23 @@ export default function AlertRow({ item, selected, onSelect }) {
     item.snapshotCount != null ||
     item.modules?.length ||
     item.startedAt;
+
+  // Parse attributes to extract identity
+  let attrs = {};
+  if (item.attributes) {
+    if (typeof item.attributes === 'string') {
+      try {
+        attrs = JSON.parse(item.attributes);
+      } catch (e) {}
+    } else if (typeof item.attributes === 'object') {
+      attrs = item.attributes;
+    }
+  }
+  
+  // Only try to show identity if the alert actually involves humans
+  const hasIdentity = attrs.identity != null || (item.humansDetected > 0);
+  const identityName = attrs.identity || "Unknown";
+  const imagePath = attrs.image_path;
 
   return (
     <div
@@ -43,6 +60,13 @@ export default function AlertRow({ item, selected, onSelect }) {
             {relTime(item.timestamp)}
           </span>
           <span className="mx-1 h-3 w-px shrink-0 bg-hairline-2" />
+          
+          {hasIdentity && (
+            <span className="flex items-center gap-1 text-[10px] font-medium text-fg">
+              Identity: {identityName} {attrs.badge_number ? `(${attrs.badge_number})` : ''}
+            </span>
+          )}
+
           {item.confidence != null && (
             <span className="flex items-center gap-1 mono text-[9px] text-dim">
               <Activity className="h-2.5 w-2.5" />
@@ -70,12 +94,28 @@ export default function AlertRow({ item, selected, onSelect }) {
         </div>
       </div>
       {thumb && (
-        <img
-          src={thumb}
-          alt=""
-          className="h-11 w-11 shrink-0 rounded border border-hairline object-cover"
-          onError={(e) => (e.currentTarget.style.display = 'none')}
-        />
+        <div className="flex flex-col items-center gap-1 shrink-0">
+          <img
+            src={thumb}
+            alt=""
+            className="h-11 w-11 rounded border border-hairline object-cover"
+            onError={(e) => (e.currentTarget.style.display = 'none')}
+          />
+          {hasIdentity && (
+            identityName !== 'Unknown' && imagePath ? (
+              <img 
+                src={imagePath} 
+                title={identityName}
+                className="h-8 w-8 rounded-full border border-live object-cover mt-1 bg-panel" 
+                onError={(e) => (e.currentTarget.style.display = 'none')} 
+              />
+            ) : (
+              <div className="flex h-8 w-8 items-center justify-center rounded-full border border-hairline bg-panel mt-1 text-dim" title="Unknown Identity">
+                <User size={16} />
+              </div>
+            )
+          )}
+        </div>
       )}
     </div>
   );

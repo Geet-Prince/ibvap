@@ -1,4 +1,4 @@
-import { MousePointerClick, Flag, CheckCheck, Camera, MapPin, Crosshair, Users, FileDown, Car } from 'lucide-react';
+import { MousePointerClick, Flag, CheckCheck, Camera, MapPin, Crosshair, Users, FileDown, Car, User } from 'lucide-react';
 import { SEV_COLOR } from '../../lib/theme';
 import { downloadIncidentReport } from '../../lib/pdfReport';
 
@@ -35,6 +35,22 @@ export default function DetailPanel({ item, onStatusChange }) {
     item.snapshots?.length ||
     item.modules?.length ||
     item.startedAt;
+
+  // Parse attributes to extract identity
+  let attrs = {};
+  if (item.attributes) {
+    if (typeof item.attributes === 'string') {
+      try {
+        attrs = JSON.parse(item.attributes);
+      } catch (e) {}
+    } else if (typeof item.attributes === 'object') {
+      attrs = item.attributes;
+    }
+  }
+  
+  const hasIdentity = attrs.identity != null || (item.humansDetected > 0);
+  const identityName = attrs.identity || "Unknown";
+  const imagePath = attrs.image_path;
 
   return (
     <div className="flex flex-col gap-3">
@@ -88,9 +104,26 @@ export default function DetailPanel({ item, onStatusChange }) {
           <dd className="flex items-center gap-1 text-dim"><Camera className="h-3 w-3 text-ghost" />{item.cameraName}</dd>
           <dt className="mono text-ghost">Module</dt>
           <dd className="text-dim">{item.module || '—'}</dd>
-          <dt className="mono text-ghost">Track</dt>
+          <dt className="mono text-ghost flex items-center">Track</dt>
           <dd className="flex items-center gap-1 text-dim"><Crosshair className="h-3 w-3 text-ghost" />{item.trackId || '—'}</dd>
-          <dt className="mono text-ghost">Timestamp</dt>
+          
+          {hasIdentity && (
+            <>
+              <dt className="mono text-ghost flex items-center h-6">Identity</dt>
+              <dd className="flex items-center gap-2 text-fg font-medium">
+                {identityName !== 'Unknown' && imagePath ? (
+                  <img src={imagePath} className="h-5 w-5 rounded-full border border-live object-cover" title={identityName} />
+                ) : (
+                  <div className="flex h-5 w-5 items-center justify-center rounded-full border border-hairline bg-panel text-dim">
+                    <User size={10} />
+                  </div>
+                )}
+                <span>{identityName} {attrs.badge_number ? `(${attrs.badge_number})` : ''}</span>
+              </dd>
+            </>
+          )}
+
+          <dt className="mono text-ghost flex items-center">Timestamp</dt>
           <dd className="mono text-dim">{new Date(item.timestamp).toLocaleString()}</dd>
           {item.humansDetected > 0 && (
             <>

@@ -7,6 +7,7 @@ import StatStrip from './StatStrip';
 import CameraPanel from './CameraPanel';
 import MonitorPanel from './MonitorPanel';
 import DetailPanel from './DetailPanel';
+import PersonnelManager from './PersonnelManager';
 
 function loadLS(key, fallback) {
   try {
@@ -20,6 +21,8 @@ function saveLS(key, value) {
 
 export default function DashboardLayout() {
   const { alerts, status: connStatus, push } = useLiveAlerts();
+  
+  const [showPersonnelModal, setShowPersonnelModal] = useState(false);
 
   const [incidents, setIncidents] = useState(() => loadLS('seemadrishti.incidents', []));
   const [stats, setStats] = useState(() => loadLS('seemadrishti.stats', []));
@@ -177,10 +180,17 @@ export default function DashboardLayout() {
 
   return (
     <div className="flex min-h-screen flex-col bg-ink">
+      {showPersonnelModal && <PersonnelManager onClose={() => setShowPersonnelModal(false)} />}
+      
       {connStatus !== 'live' && (
         <div className={`h-0.5 shrink-0 ${connStatus === 'connecting' ? 'bg-ghost' : 'bg-sev-critical'}`} />
       )}
-      <TopBar sector={sector} onSectorChange={setSector} connectionStatus={connStatus} />
+      <TopBar 
+        sector={sector} 
+        onSectorChange={setSector} 
+        connectionStatus={connStatus} 
+        onPersonnelClick={() => setShowPersonnelModal(true)} 
+      />
 
       {connStatus !== 'live' && (
         <div className={`flex items-center justify-center gap-2 border-b px-4 py-1.5 ${

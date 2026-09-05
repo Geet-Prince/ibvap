@@ -51,6 +51,14 @@ def main():
     except ImportError:
         winsound = None
 
+    try:
+        from face_recognition.core import FaceRecognitionWorker
+        face_worker = FaceRecognitionWorker()
+        face_worker.start()
+    except Exception as e:
+        print(f"Face recognition init failed: {e}")
+        face_worker = None
+
     beeped_events = set()
 
     try:
@@ -69,6 +77,29 @@ def main():
             # Step 2: Track with DeepSORT
             track_result = tracker.track(det_result)
 
+            # Face Recognition Interception
+            if face_worker:
+                for obj in track_result.objects:
+                    if obj.object_type == "human":
+                        identity_info = face_worker.get_identity(obj.track_id)
+                        if identity_info:
+                            obj.attributes['identity'] = identity_info['name']
+                            obj.attributes['badge_number'] = identity_info.get('badge_number', '')
+                            obj.attributes['image_path'] = identity_info.get('image_path', '')
+                        else:
+                            obj.attributes['identity'] = "Unknown"
+                            # Enqueue crop for identification
+                            x1, y1, x2, y2 = obj.bbox
+                            # Add 15% padding
+                            h, w = frame.shape[:2]
+                            w_pad = int((x2 - x1) * 0.15)
+                            h_pad = int((y2 - y1) * 0.15)
+                            x1_p, y1_p = max(0, x1 - w_pad), max(0, y1 - h_pad)
+                            x2_p, y2_p = min(w, x2 + w_pad), min(h, y2 + h_pad)
+                            crop = frame[y1_p:y2_p, x1_p:x2_p]
+                            if crop.size > 0:
+                                face_worker.enqueue_crop(obj.track_id, crop)
+
             # Step 3: Suspicious Activity Detection (Loitering, Erratic movement, Crowds)
             analyzed_result = suspicious_det.process(track_result)
 
@@ -79,10 +110,21 @@ def main():
             for obj in analyzed_result.objects:
                 x1, y1, x2, y2 = obj.bbox
                 activity = obj.attributes.get("activity")
-                color = (0, 0, 255) if activity else (0, 255, 0)
+                identity = obj.attributes.get("identity", "Unknown")
                 
+                # Colors: Green for known, Red for suspicious/unknown
+                if identity != "Unknown" and not activity:
+                    color = (0, 255, 0) # Safe/Known
+                else:
+                    color = (0, 0, 255) # Threat/Unknown
+                    
                 human_num = obj.track_id.split('-')[-1]
-                base_label = f"Human {human_num}"
+                
+                if identity != "Unknown":
+                    base_label = f"[{identity}]"
+                else:
+                    base_label = f"Human {human_num} [UNKNOWN]"
+                    
                 label = f"{base_label} [{activity.upper()}]" if activity else base_label
 
                 if activity and winsound:
@@ -90,7 +132,6 @@ def main():
                         event_key = f"{obj.track_id}_{act}"
                         if event_key not in beeped_events:
                             beeped_events.add(event_key)
-                            # SND_ASYNC plays without blocking the video frame
                             winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS | winsound.SND_ASYNC)
 
                 cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
@@ -98,7 +139,7 @@ def main():
                             cv2.FONT_HERSHEY_SIMPLEX, 0.55, color, 2)
                 if "centroid" in obj.attributes:
                     cx, cy = obj.attributes["centroid"]
-                    cv2.circle(frame, (int(cx), int(cy)), 5, (0, 0, 255), -1)
+                    cv2.circle(frame, (int(cx), int(cy)), 5, color, -1)
 
             # Step 6: Show HUD
             cv2.putText(frame,

@@ -81,7 +81,31 @@ class AlarmManager:
         frame_humans = sum(1 for o in result.objects if o.object_type == "human")
         frame_vehicles = sum(1 for o in result.objects if o.object_type == "vehicle")
         
+        if not hasattr(self, '_track_start_times'):
+            self._track_start_times = {}
+        
+        current_time = time.time()
+        
         for obj in result.objects:
+            identity = obj.attributes.get("identity", "Unknown")
+            
+            # KNOWN personnel should not trigger fence breaches or suspicious activity alarms.
+            # We strip these attributes so they only trigger the low-level "Human Tracked" informational log.
+            if identity != "Unknown":
+                obj.attributes.pop("zone_state", None)
+                obj.attributes.pop("activity", None)
+            else:
+                # For UNKNOWN humans, wait 1.5s before allowing any rule matching
+                # This gives Face Recognition time to identify them before a false alarm triggers.
+                if obj.object_type == "human":
+                    start_time = self._track_start_times.get(obj.track_id)
+                    if start_time is None:
+                        self._track_start_times[obj.track_id] = current_time
+                        start_time = current_time
+                    
+                    if current_time - start_time < 1.5:
+                        continue # Suppress alarms for first 1.5s
+            
             score, matched_rule = self._score(result.module, obj.attributes, obj.object_type)
             label = matched_rule["severity"].capitalize() if matched_rule else _danger_label(score, self._thresholds)
 

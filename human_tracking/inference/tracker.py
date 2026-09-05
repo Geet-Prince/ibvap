@@ -99,7 +99,7 @@ class HumanTracker:
         prefix = self._cfg["output"]["track_id_prefix"]
 
         for track in tracks:
-            if not track.is_confirmed():
+            if not track.is_confirmed() or track.time_since_update > 2:
                 continue
             
             track_id = f"{prefix}-{track.track_id}"

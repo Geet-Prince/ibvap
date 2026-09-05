@@ -47,6 +47,13 @@ def main():
     frame_id = 0
 
     try:
+        import winsound
+    except ImportError:
+        winsound = None
+
+    beeped_events = set()
+
+    try:
         while True:
             ret, frame = cap.read()
             if not ret:
@@ -77,6 +84,14 @@ def main():
                 human_num = obj.track_id.split('-')[-1]
                 base_label = f"Human {human_num}"
                 label = f"{base_label} [{activity.upper()}]" if activity else base_label
+
+                if activity and winsound:
+                    for act in activity.split(", "):
+                        event_key = f"{obj.track_id}_{act}"
+                        if event_key not in beeped_events:
+                            beeped_events.add(event_key)
+                            # SND_ASYNC plays without blocking the video frame
+                            winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS | winsound.SND_ASYNC)
 
                 cv2.rectangle(frame, (x1, y1), (x2, y2), color, 2)
                 cv2.putText(frame, label, (x1, y1 - 10),

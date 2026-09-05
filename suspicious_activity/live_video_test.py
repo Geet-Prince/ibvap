@@ -37,7 +37,7 @@ def run_live_test(video_path="test_video.mp4"):
         time_threshold=5.0, 
         distance_threshold=150.0,
         crowd_distance_threshold=150.0,
-        crowd_min_people=3,
+        crowd_min_people=4,
         speed_threshold=150.0  # Pixels per second
     )
 
@@ -119,6 +119,14 @@ def run_live_test(video_path="test_video.mp4"):
             subtype = event.metadata['subtype']
             print(f"\n[ALERT FIRED] {subtype.upper()}! ID: {event.event_id}")
             for tid in event.track_ids:
+                # active_alerts is a dict of {tid: (subtype, timestamp)}. We check if it's already alerted for THIS subtype.
+                if tid not in active_alerts or active_alerts[tid][0] != subtype:
+                    try:
+                        import winsound
+                        # Play beep asynchronously
+                        winsound.PlaySound("SystemExclamation", winsound.SND_ALIAS | winsound.SND_ASYNC)
+                    except ImportError:
+                        pass
                 active_alerts[tid] = (subtype, current_time)
                 
         # 6. Draw the results on the video frame
